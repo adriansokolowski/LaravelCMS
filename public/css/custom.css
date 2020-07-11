@@ -1,0 +1,138 @@
+body {
+    font-family: tahoma, verdana;
+    background-color: #F7EFE3;
+    background-image: url('../dist/images/back.gif');
+    background-repeat: repeat-x;
+    margin: 0;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 900px;
+    display: flex;
+}
+
+#left {
+    width: 60%;
+    margin-right: 0.5%
+}
+
+#right {
+    width: 39.5%;
+}
+
+
+.block {
+    margin-bottom: 10px;
+    background-color: #f0e3cf;
+    box-shadow: #999999 0 0 10px;
+}
+
+.head {
+    border-top: 2px solid #a49484;
+    color: #E9E9E9;
+    font-weight: bold;
+    padding: 7px;
+    background-image: linear-gradient(#705d4a, #9e886d);
+}
+
+.item {
+    display: flex;
+    margin: 5px 2px 5px 2px;
+    border: 1px solid #494949;
+    padding: 5px;
+}
+
+.info {
+    padding: 0 0 0 7px;
+    width: 100%;
+}
+
+.info a {
+    color: #453B31;
+    text-decoration: none;
+}
+
+.info a:hover {
+    color: #786654;
+    text-decoration: none;
+}
+
+.info a:visited {
+    color: #AF8A71;
+}
+
+.thumb {
+    height: 153px;
+}
+
+.body {
+    padding: 5px 10px;
+}
+
+.categories {
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.category {
+    padding: 5px 0 5px 15px;
+    font-size: 12px;
+    border: 1px solid #888;
+}
+
+.text-center {
+    text-align: center;
+}
+
+p {
+    font-size: 11px;
+}
+
+h3 {
+    font-size: 13px;
+}
+
+.desc {
+    height: 60px;
+}
+
+.bar {
+    background-color: #af9673;
+    color: #f9f9f9!important;
+    border: 1px solid #494949;
+    padding: 2px;
+    text-align: center;
+}
+
+#top {
+    font-size: 24px;
+    padding: 15px 0;
+}
+
+.about_movie {
+    display: flex;
+}
+
+.about_movie_title {
+    font-size: 13px;
+    background-color: #af9673;
+    color: #f9f9f9!important;
+    border: 1px solid #494949;
+    padding: 2px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.field {
+    width: 45%;
+}
+
+input {
+    background-color: #F3E7E0;
+    color: #453B31;
+    border: 1px #888888 solid;
+    padding: 5px;
+}
