@@ -6,7 +6,7 @@
             Ostatnio dodane Popularne
         </div>
         <div class="body">
-            @foreach ($movies as $movie)
+            @forelse ($movies as $movie)
                 <div class="item">
                     <div class="poster">
                         <img src="{{ asset('static/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
@@ -15,7 +15,7 @@
                         <h3><a href="{{ $movie->path() }}">{{ Str::limit($movie->title, 55) }}</a></h3>
                         <p>{{ $movie->year }} | 
                             @foreach ($movie->categories as $category)
-                                <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }}</a>
+                                <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }}</a>@if (!$loop->last),@endif
                             @endforeach
 
                         </p>
@@ -24,7 +24,9 @@
                         </p>
                     </div>
                 </div>
-            @endforeach
+                @empty
+                <p>Brak wyników</p>
+            @endforelse
         </div>
         {{ $movies->withQueryString()->links() }}
 
