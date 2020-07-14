@@ -53,7 +53,7 @@
                 <div class="body categories">
                     @foreach ($categories as $category)
                         <div class="category">
-                        <a href="#">{{ $category->name }} ({{ $category->movies->count() }})</a>
+                            <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }} ({{ $category->movies->count() }})</a>
                         </div>
                     @endforeach
                 </div>
