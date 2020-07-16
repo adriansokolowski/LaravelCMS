@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'IndexController@index');
@@ -27,6 +26,9 @@ Route::get('/film/{movie}/edit', 'MoviesController@edit');
 Route::put('/film/{movie}', 'MoviesController@update')->name('movies.show');
 Route::get('/filmy/create', 'MoviesController@create');
 Route::post('/filmy', 'MoviesController@store');
+
+// Series
+Route::get('/seriale', 'SeriesController@index')->name('series.index');
 
 // Crawlers
 Route::get('/fdb', function () {

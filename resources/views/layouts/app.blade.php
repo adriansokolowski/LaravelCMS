@@ -6,6 +6,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
     <title>@yield('title')</title>
+
 </head>
 <body>
     <div class="wrapper">
@@ -17,7 +18,11 @@
         <div id="left">
             <div class="block">
                 <div class="head text-center white">
-                    <a href="{{ route('movies.index') }}">Filmy</a> | Seriale
+                    <a href="{{ route('movies.index') }}">Filmy</a>
+                     | 
+                     <a href="{{ route('series.index') }}">
+                        Seriale
+                     </a>
                 </div>
                 <div class="body text-center">
                     <input type="text" placeholder="Tytuł filmu lub serialu">

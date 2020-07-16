@@ -55,27 +55,38 @@
             } else {
                 $desc = '';
             }            
-            
-            DB::table('movies')->insert([
-                'title' => $name,
-                'desc' => $desc,
-                'year' => $year,
-                'fdb' => $fdb,
-                'rate' => $rate,
-                'view' => rand(1000, 100000),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-            $movie_id = DB::getPdo()->lastInsertId();
-            copy($img, '../public/static/poster/'.DB::getPdo()->lastInsertId().'.jpg');
-                foreach ($categories as $category){
-                    $cat = DB::table('categories')->where('name', $category)->first();
-                    DB::table('category_movie')->insert([
-                        'movie_id' => $movie_id,
-                        'category_id' => $cat->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
+            if (preg_match('/episodes/', $html, $matches)){
+                DB::table('series')->insert([
+                    'title' => $name,
+                    'desc' => $desc,
+                    'year' => '9999',
+                    'fdb' => $fdb,
+                    'rate' => $rate,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            } else {
+                DB::table('movies')->insert([
+                    'title' => $name,
+                    'desc' => $desc,
+                    'year' => $year,
+                    'fdb' => $fdb,
+                    'rate' => $rate,
+                    'view' => rand(1000, 100000),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                $movie_id = DB::getPdo()->lastInsertId();
+                copy($img, '../public/static/poster/'.DB::getPdo()->lastInsertId().'.jpg');
+                    foreach ($categories as $category){
+                        $cat = DB::table('categories')->where('name', $category)->first();
+                        DB::table('category_movie')->insert([
+                            'movie_id' => $movie_id,
+                            'category_id' => $cat->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
                 }
         }
         

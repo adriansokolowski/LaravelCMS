@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Serie;
+
+class SeriesController extends Controller
+{
+    public function index()
+    {
+        $series = Serie::latest()->paginate(20);
+        return view('series.index', compact('series'));
+    }
+}

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', $movie->title.' ('.$movie->year.')')
 @section ('content')
     <div class="block">
         <div class="head text-center">
