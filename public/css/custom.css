@@ -66,15 +66,30 @@ body {
 }
 
 .categories {
-    font-weight: bold;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 2px;
+    padding: 2px 1px;
+    font-weight: bold;
 }
 
 .category {
     padding: 5px 0 5px 15px;
     font-size: 12px;
     border: 1px solid #888;
+}
+
+.category a {
+    color: black;
+    text-decoration: none;
+}
+
+.category a:hover {
+    font-size: 13px;
+}
+
+.category:hover {
+    border-color: #af9673;
 }
 
 p {
@@ -160,5 +175,5 @@ h3 {
 }
 
 .bhead a {
-    color: white;
+    color: #E9E9E9;
 }
