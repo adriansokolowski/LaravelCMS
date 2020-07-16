@@ -12,4 +12,9 @@ class SeriesController extends Controller
         $series = Serie::latest()->paginate(20);
         return view('series.index', compact('series'));
     }
+    
+    public function show(Serie $serie)
+    {
+        return view('series.show', compact('serie'));
+    }
 }

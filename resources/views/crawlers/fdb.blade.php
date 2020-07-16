@@ -65,6 +65,8 @@
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
+                $serie_id = DB::getPdo()->lastInsertId();
+                copy($img, '../public/static/poster/'.DB::getPdo()->lastInsertId().'-s.jpg');
             } else {
                 DB::table('movies')->insert([
                     'title' => $name,

@@ -3,64 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
     <title>@yield('title')</title>
 
 </head>
 <body>
-    <div class="wrapper">
+    <div class="container">
         <div id="top">
             <a href="{{ url('/') }}">Logo</a>
         </div>
     </div>
-    <div class="wrapper">
-        <div id="left">
-            <div class="block">
-                <div class="head text-center white">
-                    <a href="{{ route('movies.index') }}">Filmy</a>
-                     | 
-                     <a href="{{ route('series.index') }}">
-                        Seriale
-                     </a>
-                </div>
-                <div class="body text-center">
-                    <input type="text" placeholder="Tytuł filmu lub serialu">
-                    <input type="submit" value="Szukaj">
-                </div>
-            </div>
-                @yield('content')
-        </div>
-        <div id="right">
-            <div class="block">
-                <div class="head text-center">
-                    Panel logowania
-                </div>
-                <div class="body text-center">
-                    <input class="field" type="text" placeholder="Login">
-                    <input class="field" type="password" placeholder="Hasło">
-                    Zarejestruj się | Zapomniałeś hasła?
-                    <input type="submit" value="Zaloguj">
-                </div>
-            </div>
-            <div class="block">
-                <div class="head text-center">
-                    ShoutBox
-                </div>
-                <div class="body">
-                    Dostęp tylko dla zalogowanych użytkowników
-                </div>
-            </div>
-            <div class="block">
-                <div class="head text-center">
-                    Filmy Online Seriale Online
-                </div>
-                <div class="body categories">
-                    @foreach ($categories as $category)
-                        <div class="category">
-                            <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }} ({{ $category->movies->count() }})</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 px-lg-1">
+                <div class="block text-center">
+                    <div class="bhead">
+                        <a href="{{ route('movies.index') }}">Filmy</a> | 
+                        <a href="{{ route('series.index') }}">Seriale</a>
+                    </div>
+                        <div class="bbody">
+                            <form action="">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="text" class="form-control" placeholder="Tytuł filmu lub serialu">
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-custom" type="submit">Szukaj</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    @endforeach
+                </div>
+                    @yield('content')
+            </div>
+            <div class="col-lg-5 px-lg-1">
+                <div class="block">
+                    <div class="bhead text-center">
+                        Panel logowania
+                    </div>
+                    <div class="bbody">
+                        <form action="">
+                            <div class="form-row">
+                                <div class="col px-lg-1">
+                                    <input class="form-control" type="text" placeholder="Login">
+                                </div>
+                                <div class="col px-lg-1">
+                                    <input class="form-control" type="password" placeholder="Hasło">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            Zarejestruj się | Zapomniałeś hasła?
+                            <button type="submit" class="btn btn-custom">Zaloguj</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="head text-center">
+                        ShoutBox
+                    </div>
+                    <div class="body">
+                        Dostęp tylko dla zalogowanych użytkowników
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="head text-center">
+                        Filmy Online Seriale Online
+                    </div>
+                    <div class="body categories">
+                        @foreach ($categories as $category)
+                            <div class="category">
+                                <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }} ({{ $category->movies->count() }})</a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
