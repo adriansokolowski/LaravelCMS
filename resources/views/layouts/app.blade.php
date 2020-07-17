@@ -55,10 +55,10 @@
                                 </div>
                             </div>
                         <div class="form-row align-items-center">
-                        <div class="col-lg-9">
-                            <a href="">Zarejestruj się</a> |
-                            <a href="">Zapomniałeś hasła?</a>
-                        </div>
+                            <div class="col-lg-9">
+                                <a href="">Zarejestruj się</a> |
+                                <a href="">Zapomniałeś hasła?</a>
+                            </div>
                         </form>
                             
                             <div class="col-lg-3">
@@ -68,10 +68,10 @@
                     </div>
                 </div>
                 <div class="block">
-                    <div class="head text-center">
+                    <div class="bhead text-center">
                         ShoutBox
                     </div>
-                    <div class="body">
+                    <div class="bbody">
                         Dostęp tylko dla zalogowanych użytkowników
                     </div>
                 </div>
@@ -89,7 +89,6 @@
                         @endforeach
                     </div>
                 </div>
- 
             </div>
         </div>
     </div>

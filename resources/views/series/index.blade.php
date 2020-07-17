@@ -2,7 +2,7 @@
 @section('title', 'Seriale')
 @section('content')
     <div class="block">
-    <div class="head text-center">
+    <div class="bhead text-center">
         Seriale
     </div>
     <div class="body"></div>

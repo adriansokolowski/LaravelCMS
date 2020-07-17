@@ -34,7 +34,7 @@ body {
 
 .item {
     display: flex;
-    margin: 5px 2px 5px 2px;
+    padding: 5px;
     border: 1px solid #494949;
 }
 
@@ -176,4 +176,13 @@ h3 {
 
 .bhead a {
     color: #E9E9E9;
+}
+
+.nav-link {
+    padding: 0.1rem 0.5rem;
+}
+
+.nav-pills .nav-link.active, .nav-link.hover, .nav-pills .show > .nav-link {
+    color: #453B31;
+    background-color: #e1d3c4;
 }
