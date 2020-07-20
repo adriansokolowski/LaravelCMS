@@ -10928,3 +10928,206 @@ a.text-dark:focus {
   }
 }
 
+body {
+  font-family: tahoma, verdana;
+  background-color: #F7EFE3;
+  background-image: url("/dist/images/back.gif");
+  background-repeat: repeat-x;
+  margin: 0;
+}
+
+.block {
+  background-color: #f0e3cf;
+  box-shadow: #999999 0 0 10px;
+  padding: 1px;
+}
+
+.head {
+  border-top: 2px solid #a49484;
+  color: #E9E9E9;
+  font-weight: bold;
+  padding: 7px;
+  background-image: linear-gradient(#705d4a, #9e886d);
+}
+
+.bhead {
+  border-top: 2px solid #a49484;
+  padding: 7px;
+  font-weight: bold;
+  color: #E9E9E9;
+  background-image: linear-gradient(#705d4a, #9e886d);
+}
+
+.bbody {
+  padding: 5px;
+}
+
+.item {
+  -webkit-transition: background-color 0.5s ease-out;
+  border: 1px solid #494949;
+}
+
+.info {
+  padding: 0 0 0 7px;
+  width: 100%;
+}
+
+.info a {
+  color: #453B31;
+  text-decoration: none;
+}
+
+.info a:hover {
+  color: #786654;
+  text-decoration: none;
+}
+
+.info a:visited {
+  color: #9c8773;
+}
+
+.thumb {
+  height: 153px;
+}
+
+.body {
+  padding: 5px 10px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2px;
+  padding: 2px 1px;
+  font-weight: bold;
+}
+
+.category {
+  padding: 5px 0 5px 15px;
+  font-size: 12px;
+  border: 1px solid #888;
+}
+
+.category a {
+  color: black;
+  text-decoration: none;
+}
+
+.category a:hover {
+  font-size: 13px;
+}
+
+.category:hover {
+  border-color: #af9673;
+}
+
+.desc {
+  font-size: 0.8rem;
+  height: 80px;
+}
+
+.bar {
+  font-size: 0.8rem;
+  background-color: #af9673;
+  color: #f9f9f9 !important;
+  border: 1px solid #494949;
+  padding: 2px;
+  text-align: center;
+}
+
+#top {
+  font-size: 24px;
+  padding: 15px 0;
+}
+
+.about_movie {
+  display: flex;
+}
+
+.about_movie_title {
+  font-size: 13px;
+  background-color: #af9673;
+  color: #f9f9f9 !important;
+  border: 1px solid #494949;
+  padding: 2px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.field {
+  width: 45%;
+}
+
+.form-control {
+  background-color: #F3E7E0;
+  color: #453B31;
+  border: 1px #888 solid;
+  transition: background 0.5s ease;
+  -webkit-transition: background 0.5s ease;
+  -moz-transition: background 0.5s ease;
+  -o-transition: background 0.5s ease;
+}
+
+.form-control:hover {
+  background-color: #f8f1ed;
+}
+
+.form-control:focus {
+  background-color: #F3E7E0;
+  border-color: #666;
+  box-shadow: none;
+  border-color: none;
+}
+
+.btn-custom {
+  font-weight: bold;
+  background-color: #a49484;
+  color: white;
+  border: 1px #888888 solid;
+}
+
+.btn-custom:hover {
+  color: white;
+  background-color: #8d7a68;
+}
+
+.btn-custom:focus {
+  box-shadow: none;
+  background-color: #8d7a68;
+}
+
+.bhead a {
+  color: #E9E9E9;
+}
+
+.nav-link {
+  padding: 0.1rem 0.5rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-link:hover,
+.nav-pills .show > .nav-link {
+  color: #453B31;
+  background-color: #e1d3c4;
+  transition: background 0.4s ease, color 0.4s ease;
+  -webkit-transition: background 0.4s ease, color 0.4s ease;
+  -moz-transition: background 0.4s ease, color 0.4s ease;
+  -o-transition: background 0.4s ease, color 0.4s ease;
+}
+
+.gen {
+  color: #786654;
+  font-size: 0.8rem;
+}
+
+.gen * {
+  color: #786654;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.item:hover {
+  background-color: #F7EFE3;
+}
+
