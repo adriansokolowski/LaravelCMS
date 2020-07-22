@@ -59,7 +59,7 @@
                             </div>
                         <div class="form-row align-items-center">
                             <div class="col-lg-9">
-                                <a href="">Zarejestruj się</a> |
+                                <a href="/register">Zarejestruj się</a> |
                                 <a href="">Zapomniałeś hasła?</a>
                             </div>
                         </form>

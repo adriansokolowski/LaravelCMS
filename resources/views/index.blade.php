@@ -34,7 +34,7 @@
                             | USA
                             <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/de.png" alt=""> 
                         </div>
-                        <div class="desc">{{ Str::limit($movie->desc, 255) }}</div>
+                        <div class="desc">{{ Str::limit($movie->desc, 250) }}</div>
                         <p class="bar mb-0">
                             1111 odsłon Lektor Napisy
                         </p>
@@ -64,7 +64,7 @@
                             | USA 
                             <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/pl.png" alt=""> 
                             </div>
-                        <div class="desc">{{ Str::limit($movie->desc, 255) }}</div>
+                        <div class="desc">{{ Str::limit($movie->desc, 250) }}</div>
                         <p class="bar mb-0">
                             1111 odsłon Lektor Napisy
                         </p>
