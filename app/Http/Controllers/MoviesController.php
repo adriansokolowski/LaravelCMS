@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
+
+use App\Http\Requests\CreateMovie;
 
 use App\Movie;
 use App\Category;
@@ -35,9 +38,15 @@ class MoviesController extends Controller
         return view('movies.create');
     }
 
-    public function store()
+    public function store(CreateMovie $request)
     {
-        Movie::create($this->validateMovie());
+        $validated = $request->validated();
+        dd($validated);
+        //$output = $this->validateMovie();
+        //$output['view'] = $output['view'] ?? 0;
+        Movie::create(
+            
+        );
         
         return redirect(route('movies.index'));
     }
@@ -54,16 +63,16 @@ class MoviesController extends Controller
         return redirect($movie->path());
     }
 
-    protected function validateMovie()
-    {
-        return request()->validate([
-            'title' => ['required', 'min:3'],
-            'desc' => 'required',
-            'year' => 'required',
-            'fdb' => 'required',
-            'rate' => 'required',
-            'view' => 'required'
-        ]);
-    }
+    // protected function validateMovie()
+    // {      
+    //     return request()->validate([
+    //         'title' => ['required', 'between:3,255'],
+    //         'desc' => 'required',
+    //         'year' => ['required', 'integer'],
+    //         'fdb' => ['required', 'integer'],
+    //         'rate' => ['required', 'numeric'],
+    //         'view' => ['nullable', 'integer']
+    //     ]);
+    // }
     
 }

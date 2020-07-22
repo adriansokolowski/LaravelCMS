@@ -19,8 +19,8 @@ class CreateMoviesTable extends Migration
             $table->integer('year');
             $table->text('desc');
             $table->integer('fdb');
-            $table->float('rate');
-            $table->integer('view');
+            $table->float('rate')->default('0');
+            $table->integer('view')->default('0');
             $table->timestamps();
         });
     }
