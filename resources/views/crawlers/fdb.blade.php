@@ -11,7 +11,7 @@
     //error_reporting(0);
     //$allcategories = DB::table('categories')->get();
 
-    for ($i=1; $i<100;$i++){
+    for ($i=100; $i<1000;$i++){
         $url = 'https://fdb.pl/film/'.$i;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -23,8 +23,9 @@
         curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.125 Safari/533.4");
         $str = curl_exec($curl);
         curl_close($curl);
-        if (HtmlDomParser::str_get_html( $str )){
-            $html = HtmlDomParser::str_get_html( $str );
+        $html = HtmlDomParser::str_get_html( $str );
+        if (!$html->find('.well', 0)){
+            
             $img = $html->find('.adaptive-image-item', 0)->{'data-srcset'};
             $img = explode('80w,', $img);
             $img = explode('.jpg', $img[1]);

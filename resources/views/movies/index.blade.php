@@ -74,8 +74,9 @@
                 <p>Brak wyników</p>
             @endforelse
                 </div>
+                {{ $movies->withQueryString()->links() }}
             </div>
-            {{ $movies->withQueryString()->links() }}
+            
         </div>
     </div>
 @endsection

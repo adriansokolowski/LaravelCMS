@@ -41,7 +41,11 @@ class MoviesController extends Controller
 
     public function store(CreateMovie $request)
     {
-        $movie = new Movie($request->validated());
+        $request->validated();
+        //dd(request()->all());
+        $movie = new Movie(request([
+            'title', 'desc', 'year', 'fdb', 'rate', 'view'
+        ]));
         $movie->save();
         $movie->categories()->attach(request('categories'));
         

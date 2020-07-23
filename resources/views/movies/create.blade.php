@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="categories">Gatunek filmu</label>
-                    <select multiple class="form-control" name="categories[]" id="categories">
+                    <select multiple class="form-control @error('categories') is-invalid @enderror" name="categories[]" id="categories">
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
