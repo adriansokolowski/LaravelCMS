@@ -36,13 +36,15 @@ class MoviesController extends Controller
 
     public function create()
     {
-        return view('movies.create');
+        return view('movies.create', ['categories' => Category::get()]);
     }
 
     public function store(CreateMovie $request)
     {
-        $movie = Movie::create($request->validated());
-
+        $movie = new Movie($request->validated());
+        $movie->save();
+        $movie->categories()->attach(request('categories'));
+        
         return redirect($movie->path());
     }
 
