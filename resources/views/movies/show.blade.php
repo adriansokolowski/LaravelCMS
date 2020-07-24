@@ -17,7 +17,7 @@
                     <img src="{{ asset('static/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr;" class="info">
-                    <a href="{{ url('/film') }}/{{ $movie->id }}/edit">Edytuj</a>
+                    <a href="{{ $movie->path() }}/edit">Edytuj</a>
                     <div class="key">
                         <p>Gatunek: </p>
                         <p>Odsłon: </p>

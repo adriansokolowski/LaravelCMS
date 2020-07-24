@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Movie extends Model
 {
@@ -10,7 +11,7 @@ class Movie extends Model
     
     public function path()
     {
-        return route('movies.show', $this);
+        return route('movies.show', [$this, Str::slug($this->title. '-' .$this->year)]);
     }
 
     public function categories()

@@ -17,13 +17,17 @@ class MoviesController extends Controller
 {
     public function index()
     {
+        
         if (request('gatunek')){
             $movies = Category::where('name', request('gatunek'))
             ->firstOrFail()
             ->movies()
             ->paginate(20);
-        } else {
-            $movies = Movie::latest()->paginate(20);
+         } elseif (request('rok')){
+             $movies = Movie::where('year', request('rok'))
+          ->paginate(20);
+         } else {
+             $movies = Movie::latest()->paginate(20);
         }
 
         return view('movies.index', compact('movies'));
@@ -42,7 +46,7 @@ class MoviesController extends Controller
     public function store(CreateMovie $request)
     {
         $request->validated();
-        //dd(request()->all());
+        dd($request->validated());
         $movie = new Movie(request([
             'title', 'desc', 'year', 'fdb', 'rate', 'view'
         ]));

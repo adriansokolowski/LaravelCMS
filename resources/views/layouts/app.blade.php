@@ -48,6 +48,7 @@
                         Panel logowania
                     </div>
                     <div class="bbody">
+                        @guest
                         <form action="">
                             <div class="form-row mb-2">
                                 <div class="col px-lg-1">
@@ -62,12 +63,14 @@
                                 <a href="/register">Zarejestruj się</a> |
                                 <a href="">Zapomniałeś hasła?</a>
                             </div>
-                        </form>
-                            
                             <div class="col-lg-3">
                                 <button type="submit" class="btn btn-custom">Zaloguj</button>
                             </div>
+                        </form>
+                            
+                            
                         </div>
+                        @endguest
                     </div>
                 </div>
                 <div class="block mb-1">

@@ -21,9 +21,9 @@ Route::get('/', 'IndexController@index');
 
 // Movies
 Route::get('/filmy', 'MoviesController@index')->name('movies.index');
-Route::get('/film/{movie}', 'MoviesController@show')->name('movies.show');
+Route::get('/film/{movie}/{slug?}', 'MoviesController@show')->name('movies.show');
 Route::get('/filmy/create', 'MoviesController@create')->name('movies.create');
-Route::get('/film/{movie}/edit', 'MoviesController@edit');
+Route::get('/film/{movie}/{slug?}/edit', 'MoviesController@edit');
 Route::post('/filmy', 'MoviesController@store')->name('movies.store');
 Route::put('/film/{movie}', 'MoviesController@update');
 

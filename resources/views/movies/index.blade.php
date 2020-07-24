@@ -26,7 +26,7 @@
                     <div class="info">
                     <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 100) }}</a>
                         <div class="gen">
-                            {{ $movie->year }} | 
+                            <a href="{{ route('movies.index', ['rok' => $movie->year]) }}">{{ $movie->year }}</a> | 
    
                             @foreach ($movie->categories as $category)
                                 <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }}</a>@if (!$loop->last),@endif
@@ -56,7 +56,7 @@
                     <div class="info">
                         <a href="{{ $movie->path() }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
                         <p>
-                            {{ $movie->year }} | 
+                        <a href="{{ route('movies.index') }}">{{ $movie->year }}</a> | 
    
                             @foreach ($movie->categories as $category)
                                 <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">{{ $category->name }}</a>@if (!$loop->last),@endif
