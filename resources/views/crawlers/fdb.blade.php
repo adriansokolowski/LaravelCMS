@@ -6,12 +6,16 @@
     use Illuminate\Support\Str;
     use KubAT\PhpSimple\HtmlDomParser;
 
+    use Illuminate\Support\Facades\Storage;
+    use Illuminate\Http\File;
+
+
     set_time_limit(5000);
 
     //error_reporting(0);
     //$allcategories = DB::table('categories')->get();
 
-    for ($i=70; $i<100;$i++){
+    for ($i=1; $i<33;$i++){
         $url = 'https://fdb.pl/film/'.$i;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -67,7 +71,8 @@
                     'updated_at' => now()
                 ]);
                 $serie_id = DB::getPdo()->lastInsertId();
-                copy($img, '../public/static/poster/'.DB::getPdo()->lastInsertId().'-s.jpg');
+                $contents = file_get_contents($img);
+                Storage::disk("public")->put('/poster/'.$serie_id.'-s.jpg', $contents);
             } else {
                 DB::table('movies')->insert([
                     'title' => $name,
@@ -79,8 +84,11 @@
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+
                 $movie_id = DB::getPdo()->lastInsertId();
-                copy($img, '../public/static/poster/'.DB::getPdo()->lastInsertId().'.jpg');
+                $contents = file_get_contents($img);
+                Storage::disk("public")->put('/poster/'.$movie_id.'.jpg', $contents);
+
                     foreach ($categories as $category){
                         $cat = DB::table('categories')->where('name', $category)->first();
                         DB::table('category_movie')->insert([

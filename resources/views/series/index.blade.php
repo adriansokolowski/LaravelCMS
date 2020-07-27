@@ -9,7 +9,7 @@
     @forelse ($series as $serie)
     <div class="item">
         <div class="poster">
-            <img src="{{ asset('static/poster/'.$serie->id.'-s.jpg') }}" class="thumb" alt="">
+            <img src="{{ asset('storage/poster/'.$serie->id.'-s.jpg') }}" class="thumb" alt="">
         </div>
         <div class="info">
             <h3><a href="{{ $serie->path() }}">{{ Str::limit($serie->title, 55) }}</a></h3>
