@@ -46,11 +46,15 @@ class MoviesController extends Controller
     public function store(CreateMovie $request)
     {
         $request->validated();
-        dd($request->validated());
+        $extension = $request->thumb->extension();
+        //dd($request->validated());
+
         $movie = new Movie(request([
             'title', 'desc', 'year', 'fdb', 'rate', 'view'
         ]));
         $movie->save();
+        $path = request()->thumb->storeAs('poster', $movie->id.'.jpg', 'public');
+
         $movie->categories()->attach(request('categories'));
         
         return redirect($movie->path());

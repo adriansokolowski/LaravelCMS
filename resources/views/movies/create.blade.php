@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="desc" class="col-md-4 col-form-label text-md-right">Opis filmu: *</label>
+                <label for="desc" class="col-md-4 col-form-label text-md-right">Opis filmu:</label>
 
                 <div class="col-md-6">
                     <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" value="{{ old('desc') }}" placeholder="Opis filmu..." rows="3"></textarea>
@@ -67,7 +67,7 @@
                 <label for="year" class="col-md-4 col-form-label text-md-right">Rok produkcji: *</label>
 
                 <div class="col-md-6">
-                <input id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}" required autocomplete="year" autofocus>
+                <input id="year" type="number" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}" required autocomplete="year" autofocus>
 
                     @error('year')
                         <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@
                 <label for="fdb" class="col-md-4 col-form-label text-md-right">Fdb: *</label>
 
                 <div class="col-md-6">
-                <input id="fdb" type="text" class="form-control @error('fdb') is-invalid @enderror" name="fdb" value="{{ old('fdb') }}" required autocomplete="fdb" autofocus>
+                <input id="fdb" type="number" class="form-control @error('fdb') is-invalid @enderror" name="fdb" value="{{ old('fdb') }}" required autocomplete="fdb" autofocus>
 
                     @error('fdb')
                         <span class="invalid-feedback" role="alert">
@@ -93,7 +93,7 @@
                 <label for="rate" class="col-md-4 col-form-label text-md-right">rate: *</label>
 
                 <div class="col-md-6">
-                <input id="rate" type="text" class="form-control @error('rate') is-invalid @enderror" name="rate" value="{{ old('rate') }}" required autocomplete="rate" autofocus>
+                <input id="rate" type="number" class="form-control @error('rate') is-invalid @enderror" name="rate" value="{{ old('rate') }}" required autocomplete="rate" autofocus>
 
                     @error('rate')
                         <span class="invalid-feedback" role="alert">
@@ -106,7 +106,7 @@
                 <label for="view" class="col-md-4 col-form-label text-md-right">view: *</label>
 
                 <div class="col-md-6">
-                <input id="view" type="text" class="form-control @error('view') is-invalid @enderror" name="view" value="{{ old('view') }}" required autocomplete="view" autofocus>
+                <input id="view" type="number" class="form-control @error('view') is-invalid @enderror" name="view" value="{{ old('view') }}" required autocomplete="view" autofocus>
 
                     @error('view')
                         <span class="invalid-feedback" role="alert">

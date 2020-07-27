@@ -19,6 +19,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'IndexController@index');
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 // Movies
 Route::get('/filmy', 'MoviesController@index')->name('movies.index');
 Route::get('/film/{movie}/{slug?}', 'MoviesController@show')->name('movies.show');

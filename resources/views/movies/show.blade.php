@@ -14,7 +14,7 @@
             </div>
             <div class="about_movie">
                 <div class="poster">
-                    <img src="{{ asset('static/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
+                    <img src="{{ asset('storage/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr;" class="info">
                     <a href="{{ $movie->path() }}/edit">Edytuj</a>

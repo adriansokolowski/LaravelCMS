@@ -11,7 +11,7 @@
     //error_reporting(0);
     //$allcategories = DB::table('categories')->get();
 
-    for ($i=100; $i<1000;$i++){
+    for ($i=70; $i<100;$i++){
         $url = 'https://fdb.pl/film/'.$i;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);

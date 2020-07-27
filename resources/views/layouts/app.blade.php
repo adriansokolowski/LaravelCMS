@@ -43,20 +43,31 @@
                     @yield('content')
             </div>
             <div class="col-lg-5 px-lg-1">
+                @guest
                 <div class="block mb-1">
                     <div class="bhead text-center">
                         Panel logowania
                     </div>
                     <div class="bbody">
-                        @guest
-                        <form action="">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
                             <div class="form-row mb-2">
                                 <div class="col px-lg-1">
-                                    <input class="form-control" type="text" placeholder="Login">
+                                    <input class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" type="text" placeholder="Login">
                                 </div>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 <div class="col px-lg-1">
-                                    <input class="form-control" type="password" placeholder="Hasło">
+                                    <input class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" type="password" placeholder="Hasło">
                                 </div>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         <div class="form-row align-items-center">
                             <div class="col-lg-9">
@@ -69,10 +80,22 @@
                         </form>
                             
                             
-                        </div>
-                        @endguest
                     </div>
+                    
+                    
                 </div>
+                @else
+                    <div class="block mb-1">
+                        <div class="bhead text-center">
+                            {{ auth()->user()->email }} {{ auth()->user()->name }} <a href="{{ url('/logout') }}"> Wyloguj </a>
+                        </div>
+                        <div class="bbody">
+                            Panel uzytkownika
+                        </div>
+                    </div> 
+                @endguest
+
+            
                 <div class="block mb-1">
                     <div class="bhead text-center">
                         ShoutBox

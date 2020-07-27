@@ -21,7 +21,7 @@
                 @forelse ($movies as $movie)
                 <div class="item d-flex m-2">
                     <div class="poster">
-                        <img src="{{ asset('static/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
+                        <img src="{{ asset('storage/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
                     </div>
                     <div class="info">
                     <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 100) }}</a>
@@ -51,7 +51,7 @@
                 @forelse ($movies_popular as $movie)
                 <div class="item d-flex m-2">
                     <div class="poster">
-                        <img src="{{ asset('static/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
+                        <img src="{{ asset('storage/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
                     </div>
                     <div class="info">
                         <a href="{{ $movie->path() }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
