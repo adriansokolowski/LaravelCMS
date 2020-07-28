@@ -24,7 +24,7 @@
                         <img src="{{ asset('storage/poster/'.$movie->id.'.jpg') }}" class="thumb" alt="">
                     </div>
                     <div class="info">
-                    <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 100) }}</a>
+                    <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
                         <div class="gen">
                             {{ $movie->year }} | 
    
