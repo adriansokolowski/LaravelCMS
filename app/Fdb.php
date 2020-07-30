@@ -2,7 +2,7 @@
 
 namespace App;
 
-use KubAT\PhpSimple\HtmlDomParser;
+use App\Parser;
 
 class Fdb
 {
@@ -23,7 +23,8 @@ class Fdb
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        return HtmlDomParser::str_get_html(curl_exec($ch));
+
+        return Parser::str_get_html(curl_exec($ch));
     }
 
     private function url($url)
@@ -50,10 +51,10 @@ class Fdb
 
     public function title()
     {
-        $title = trim($this->website->find('[itemprop="name"]', 0)->plaintext);
-        if ($this->website->find('[itemprop="alternateName"]')) {
-            $otitle = trim($this->website->find('[itemprop="alternateName"]', 0)->plaintext);
-            $title = $title . ' / ' . $otitle;
+        $title = Parser::getElement($this->website, '[itemprop="name"]', 0, 'plaintext');
+        $eTitle = Parser::getElement($this->website, '[itemprop="alternateName"]', 0, 'plaintext');
+        if (isset($eTitle)) {
+            $title = $title . ' / ' . $eTitle;
         }
 
         return (isset($title) ? html_entity_decode($title) : null);
@@ -61,8 +62,7 @@ class Fdb
 
     public function year()
     {
-        $url = HtmlDomParser::str_get_html($this->website);
-        $year = trim($url->find('.nowrap.text-muted a', 0)->plaintext);
+        $year = Parser::getElement($this->website, '.nowrap.text-muted a', 0, 'plaintext');
 
         return (isset($year) ? filter_var($year, FILTER_SANITIZE_NUMBER_INT) : null);
     }
@@ -72,6 +72,7 @@ class Fdb
         $poster = explode('80w,', $poster);
         $poster = explode('.jpg', $poster[1]);
         $poster = trim($poster[0] . '.jpg');
+
         return (isset($poster) ? $poster : null);
     }
 
@@ -84,20 +85,20 @@ class Fdb
                 $category[] = trim(strip_tags($value));
             }
         }
-        
+
         return (isset($category) ? $category : null);
     }
 
     public function country()
     {
-        $country = $this->website->find('.list-inline-item.mt-2 a', -1)->plaintext;
+        $country = Parser::getElement($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
 
         return (isset($country) ? $country : null);
     }
 
     public function id()
     {
-        $id = $this->website->find('[name="movie-id"]', 0)->content;
+        $id = Parser::getElement($this->website, '[name="movie-id"]', 0, 'content');
 
         return (isset($id) ? $this->fdb = $id : null);
     }
@@ -105,9 +106,9 @@ class Fdb
     public function description()
     {
         $website = $this->website($this->url . '/opisy');
-        $description = trim($website->find('.container .col-md-8 p', 0)->innertext);
+        $description = Parser::getElement($website, '.container .col-md-8 p', 0, 'plaintext');
 
-        return (isset($description) ? strip_tags(preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description)))) : 'Ten film nie ma jeszcze zarysu fabuły.');
+        return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
     public function json()

@@ -24,7 +24,8 @@ class CrawlersController extends Controller
 
     public function add()
     {
-        $fdb = new Fdb('gra o tron');
+        $fdb = new Fdb('https://fdb.pl/film/955436-w-poszukiwaniu-zlotego-zamku');
+        // https://fdb.pl/film/955436-w-poszukiwaniu-zlotego-zamku
         dd($fdb->results());
     }
 
