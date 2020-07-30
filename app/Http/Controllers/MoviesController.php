@@ -17,17 +17,17 @@ class MoviesController extends Controller
 {
     public function index()
     {
-        
-        if (request('gatunek')){
+
+        if (request('gatunek')) {
             $movies = Category::where('name', request('gatunek'))
-            ->firstOrFail()
-            ->movies()
-            ->paginate(20);
-         } elseif (request('rok')){
-             $movies = Movie::where('year', request('rok'))
-          ->paginate(20);
-         } else {
-             $movies = Movie::latest()->paginate(20);
+                ->firstOrFail()
+                ->movies()
+                ->paginate(20);
+        } elseif (request('rok')) {
+            $movies = Movie::where('year', request('rok'))
+                ->paginate(20);
+        } else {
+            $movies = Movie::latest()->paginate(20);
         }
 
         return view('movies.index', compact('movies'));
@@ -48,9 +48,9 @@ class MoviesController extends Controller
         $request->validated();
         $movie = new Movie(request(['title', 'desc', 'year', 'fdb', 'rate', 'view']));
         $movie->save();
-        request()->thumb->storeAs('poster', $movie->id.'.jpg', 'public');
+        request()->thumb->storeAs('poster', $movie->id . '.jpg', 'public');
         $movie->categories()->attach(request('categories'));
-        
+
         return redirect($movie->path());
     }
 

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    public function movies(){
+    public function movies()
+    {
         return $this->belongsToMany('App\Movie');
     }
 }

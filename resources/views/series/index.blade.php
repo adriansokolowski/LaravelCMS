@@ -1,7 +1,7 @@
 @extends('main.app')
 @section('title', 'Seriale')
 @section('content')
-    <div class="block">
+<div class="block">
     <div class="bhead text-center">
         Seriale
     </div>
@@ -13,8 +13,8 @@
         </div>
         <div class="info">
             <h3><a href="{{ $serie->path() }}">{{ Str::limit($serie->title, 55) }}</a></h3>
-            <p>{{ $serie->year }} | 
-                
+            <p>{{ $serie->year }} |
+
 
             </p>
             <p class="desc">{{ Str::limit($serie->desc, 255) }}</p>
@@ -25,5 +25,5 @@
     @empty
     <p>Brak wyników</p>
     @endforelse
-    </div>
+</div>
 @endsection
