@@ -34,6 +34,5 @@ Route::get('/seriale', 'SeriesController@index')->name('series.index');
 Route::get('/serial/{serie}', 'SeriesController@show')->name('series.show');
 
 // Crawlers
-Route::get('/fdb', function () {
-    return view('crawlers/fdb');
-});
+Route::get('/crawlers', 'CrawlersController@index')->name('crawlers.index');
+Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
