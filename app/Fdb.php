@@ -84,8 +84,7 @@ class Fdb
                 $category[] = trim(strip_tags($value));
             }
         }
-        return $category;
-
+        
         return (isset($category) ? $category : null);
     }
 
