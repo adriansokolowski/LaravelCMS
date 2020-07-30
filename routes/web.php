@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'IndexController@index');
 
-Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/wyloguj', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 // Movies
 Route::get('/filmy', 'MoviesController@index')->name('movies.index');

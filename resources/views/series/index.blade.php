@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('main.app')
 @section('title', 'Seriale')
 @section('content')
     <div class="block">
