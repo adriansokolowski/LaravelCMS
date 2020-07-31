@@ -6,11 +6,13 @@ use KubAT\PhpSimple\HtmlDomParser;
 
 class Parser extends HtmlDomParser
 {
-    public static function getElement(object $DOM, string $theElement, int $position, string $attribute)
+    public static function get(object $DOM, string $selector, int $index = 0, string $property = 'innertext')
     {   
-        if ($DOM->find($theElement, $position)){
-            return trim(strip_tags($DOM->find($theElement, $position)->{$attribute}));
-        }
-        return null;
+        return $DOM->find($selector, $index)->{$property} ?? null;
+    }
+
+    public static function getAll(object $DOM, string $selector)
+    {
+        return $DOM->find($selector) ?? null;
     }
 }

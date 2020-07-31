@@ -40,7 +40,7 @@ class Fdb
     private function search($title)
     {
         $url = $this->website('https://fdb.pl/szukaj?query=' . urlencode($title));
-        $url = ($url->find('.media a')) ? $url->find('.media a', 0)->href : null;
+        $url = Parser::get($url, '.media a', 0, 'href');
         if (!empty($url)) {
             $this->url = $url;
             $this->website = $this->website($this->url);
@@ -51,18 +51,16 @@ class Fdb
 
     public function title()
     {
-        $title = Parser::getElement($this->website, '[itemprop="name"]', 0, 'plaintext');
-        $eTitle = Parser::getElement($this->website, '[itemprop="alternateName"]', 0, 'plaintext');
-        if (isset($eTitle)) {
-            $title = $title . ' / ' . $eTitle;
-        }
+        $title = Parser::get($this->website, '[itemprop="name"]');
+        $eTitle = Parser::get($this->website, '[itemprop="alternateName"]');
+        $title = $eTitle ? $title . ' / ' . $eTitle : $title;
 
         return (isset($title) ? html_entity_decode($title) : null);
     }
 
     public function year()
     {
-        $year = Parser::getElement($this->website, '.nowrap.text-muted a', 0, 'plaintext');
+        $year = Parser::get($this->website, '.nowrap.text-muted a');
 
         return (isset($year) ? filter_var($year, FILTER_SANITIZE_NUMBER_INT) : null);
     }
@@ -72,18 +70,17 @@ class Fdb
         $poster = explode('80w,', $poster);
         $poster = explode('.jpg', $poster[1]);
         $poster = trim($poster[0] . '.jpg');
-
+        
         return (isset($poster) ? $poster : null);
     }
 
     public function category()
     {
-        $numItems = count($this->website->find('.list-inline-item.mt-2 a'));
         $category = [];
-        foreach ($this->website->find('.list-inline-item.mt-2 a') as $key => $value) {
-            if (($key + 1) != $numItems) {
-                $category[] = trim(strip_tags($value));
-            }
+        $elements = Parser::getAll($this->website, '.list-inline-item.mt-2 a');
+        foreach ($elements as $key => $value){
+            if ($key !== array_key_last($elements))
+                $category[] = $value->plaintext;
         }
 
         return (isset($category) ? $category : null);
@@ -91,22 +88,22 @@ class Fdb
 
     public function country()
     {
-        $country = Parser::getElement($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
+        $country = Parser::get($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
 
         return (isset($country) ? $country : null);
     }
 
     public function id()
     {
-        $id = Parser::getElement($this->website, '[name="movie-id"]', 0, 'content');
+        $id = Parser::get($this->website, '[name="movie-id"]', 0, 'content');
 
         return (isset($id) ? $this->fdb = $id : null);
     }
 
     public function description()
     {
-        $website = $this->website($this->url . '/opisy');
-        $description = Parser::getElement($website, '.container .col-md-8 p', 0, 'plaintext');
+        $url = $this->website($this->url . '/opisy');
+        $description = Parser::get($url, '.container .col-md-8 p', 0, 'plaintext');
 
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }

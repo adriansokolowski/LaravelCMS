@@ -24,7 +24,7 @@ class CrawlersController extends Controller
 
     public function add()
     {
-        $fdb = new Fdb('https://fdb.pl/film/955436-w-poszukiwaniu-zlotego-zamku');
+        $fdb = new Fdb('https://fdb.pl/film/954993-the-kissing-booth-2');
         // https://fdb.pl/film/955436-w-poszukiwaniu-zlotego-zamku
         dd($fdb->results());
     }
