@@ -1,6 +1,8 @@
 @extends('main.app')
 @section('title', 'Dodaj film')
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     <div class="block">
         <div class="bhead text-center">
             Dodaj film
@@ -9,9 +11,9 @@
             <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
-                <label for="title" class="col-md-4 col-form-label text-md-right">Tytuł: *</label>
+                <label for="title" class="col-md-3 col-form-label text-md-right">Tytuł: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus>
 
                     @error('title')
@@ -20,11 +22,17 @@
                         </span>
                     @enderror
                 </div>
+                <div class="col-md-2">
+                    <button class="btn btn-custom test">
+                        Import
+                    </button>
+
+                </div>
             </div>
             <div class="form-group row">
-                <label for="desc" class="col-md-4 col-form-label text-md-right">Opis filmu:</label>
+                <label for="desc" class="col-md-3 col-form-label text-md-right">Opis filmu:</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" value="{{ old('desc') }}" placeholder="Opis filmu..." rows="3"></textarea>
 
                     @error('desc')
@@ -35,9 +43,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="thumb" class="col-md-4 col-form-label text-md-right">Okładka filmu: *</label>
+                <label for="thumb" class="col-md-3 col-form-label text-md-right">Okładka filmu: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <input type="file" class="form-control-file @error('thumb') is-invalid @enderror" name="thumb" id="thumb">
 
                     @error('thumb')
@@ -48,9 +56,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="categories" class="col-md-4 col-form-label text-md-right">Gatunek filmu: *</label>
+                <label for="categories" class="col-md-3 col-form-label text-md-right">Gatunek filmu: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <select multiple class="form-control @error('categories') is-invalid @enderror" name="categories[]" id="categories">
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -64,9 +72,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="year" class="col-md-4 col-form-label text-md-right">Rok produkcji: *</label>
+                <label for="year" class="col-md-3 col-form-label text-md-right">Rok produkcji: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                 <input id="year" type="number" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}" required autocomplete="year" autofocus>
 
                     @error('year')
@@ -77,9 +85,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="fdb" class="col-md-4 col-form-label text-md-right">Fdb: *</label>
+                <label for="fdb" class="col-md-3 col-form-label text-md-right">Fdb: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                 <input id="fdb" type="number" class="form-control @error('fdb') is-invalid @enderror" name="fdb" value="{{ old('fdb') }}" required autocomplete="fdb" autofocus>
 
                     @error('fdb')
@@ -90,9 +98,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="rate" class="col-md-4 col-form-label text-md-right">rate: *</label>
+                <label for="rate" class="col-md-3 col-form-label text-md-right">rate: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                 <input id="rate" type="number" class="form-control @error('rate') is-invalid @enderror" name="rate" value="{{ old('rate') }}" required autocomplete="rate" autofocus>
 
                     @error('rate')
@@ -103,9 +111,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="view" class="col-md-4 col-form-label text-md-right">view: *</label>
+                <label for="view" class="col-md-3 col-form-label text-md-right">view: *</label>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
                 <input id="view" type="number" class="form-control @error('view') is-invalid @enderror" name="view" value="{{ old('view') }}" required autocomplete="view" autofocus>
 
                     @error('view')
@@ -125,4 +133,35 @@
             </form>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(function() { 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            $(".test").click(function(e){
+            
+                e.preventDefault();
+            
+                var title = $("input[name=title]").val();
+            
+                $.ajax({
+                    method: "post",
+                    dataType: "json",
+                    url: "{{ route('ajax.test') }}",
+                    data:{title:title},
+                    success:function(data){
+                        $("input[name=title]").val(data['title']);
+                        $("input[name=year]").val(data['year']);
+                        $("textarea[name=desc]").val(data['description']);
+                    }
+                });
+            
+            });
+        });
+
+    </script>
 @endsection

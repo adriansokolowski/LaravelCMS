@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Parser;
+use App\Crawler;
 
 class Fdb
 {
@@ -29,8 +30,14 @@ class Fdb
 
     private function url($url)
     {
-        $this->url = $url;
-        $this->website = $this->website($url);
+        if (stristr($this->website($url), '<html><body>You are being')){
+            $url = Parser::get($this->website($url), 'a', 0, 'href');
+            $this->url = $url;
+            $this->website = $this->website($url);
+        } else {
+            $this->url = $url;
+            $this->website = $this->website($url);
+        }
 
         // if (empty($this->id())) {
         //     throw new Exception('ERROR');
@@ -52,7 +59,7 @@ class Fdb
     public function title()
     {
         $title = Parser::get($this->website, '[itemprop="name"]');
-        $eTitle = Parser::get($this->website, '[itemprop="alternateName"]');
+        $eTitle = trim(Parser::get($this->website, '[itemprop="alternateName"]'));
         $title = $eTitle ? $title . ' / ' . $eTitle : $title;
 
         return (isset($title) ? html_entity_decode($title) : null);
@@ -64,8 +71,9 @@ class Fdb
 
         return (isset($year) ? filter_var($year, FILTER_SANITIZE_NUMBER_INT) : null);
     }
+    
     public function poster()
-    {
+    { 
         $poster = $this->website->find('.adaptive-image-item', 0)->{'data-srcset'};
         $poster = explode('80w,', $poster);
         $poster = explode('.jpg', $poster[1]);
@@ -103,7 +111,7 @@ class Fdb
     public function description()
     {
         $url = $this->website($this->url . '/opisy');
-        $description = Parser::get($url, '.container .col-md-8 p', 0, 'plaintext');
+        $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
 
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
@@ -115,18 +123,19 @@ class Fdb
         }
     }
 
-    public function results()
+    public function results(): array
     {
-        if (!empty($this->title())) {
-            return array(
-                'id' => $this->id(),
-                'title' => $this->title(),
-                'year' => $this->year(),
-                'poster' => $this->poster(),
-                'category' => $this->category(),
-                'description' => $this->description(),
-                'country' => $this->country()
-            );
+        if (empty($this->title())) {
+            return [];
         }
+        return array(
+            'id' => $this->id(),
+            'title' => $this->title(),
+            'year' => $this->year(),
+            'poster' => $this->poster(),
+            'category' => $this->category(),
+            'description' => $this->description(),
+            'country' => $this->country()
+        );
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CreateMovie;
 use App\Http\Requests\EditMovie;
 
+use App\Fdb;
 use App\Movie;
 use App\Category;
 use App\Serie;
@@ -15,9 +16,15 @@ use App\Link;
 
 class MoviesController extends Controller
 {
+
+    public function ajax(Request $request)
+    {   
+        $fdb = (new Fdb($request->post('title')))->results();
+        return response()->json($fdb);
+    }
+
     public function index()
     {
-
         if (request('gatunek')) {
             $movies = Category::where('name', request('gatunek'))
                 ->firstOrFail()
