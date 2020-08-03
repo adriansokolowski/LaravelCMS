@@ -1,8 +1,6 @@
 @extends('main.app')
 @section('title', 'Dodaj film')
 @section('content')
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
     <div class="block">
         <div class="bhead text-center">
             Dodaj film
@@ -10,7 +8,10 @@
         <div class="bbody">
             <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group row">
+            <div id="app">
+                <create-movie-form></create-movie-form>
+            </div>
+            <!-- <div class="form-group row">
                 <label for="title" class="col-md-3 col-form-label text-md-right">Tytuł: *</label>
 
                 <div class="col-md-5">
@@ -28,7 +29,7 @@
                     </button>
 
                 </div>
-            </div>
+            </div> -->
             <div class="form-group row">
                 <label for="desc" class="col-md-3 col-form-label text-md-right">Opis filmu:</label>
 
@@ -133,35 +134,4 @@
             </form>
         </div>
     </div>
-
-    <script type="text/javascript">
-        $(function() { 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            
-            $(".test").click(function(e){
-            
-                e.preventDefault();
-            
-                var title = $("input[name=title]").val();
-            
-                $.ajax({
-                    method: "post",
-                    dataType: "json",
-                    url: "{{ route('ajax.test') }}",
-                    data:{title:title},
-                    success:function(data){
-                        $("input[name=title]").val(data['title']);
-                        $("input[name=year]").val(data['year']);
-                        $("textarea[name=desc]").val(data['description']);
-                    }
-                });
-            
-            });
-        });
-
-    </script>
 @endsection
