@@ -30,7 +30,7 @@
 
                 </div>
             </div> -->
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label for="desc" class="col-md-3 col-form-label text-md-right">Opis filmu:</label>
 
                 <div class="col-md-7">
@@ -42,8 +42,8 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="form-group row">
+            </div> -->
+            <!-- <div class="form-group row">
                 <label for="thumb" class="col-md-3 col-form-label text-md-right">Okładka filmu: *</label>
 
                 <div class="col-md-7">
@@ -55,8 +55,8 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="form-group row">
+            </div> -->
+            <!-- <div class="form-group row">
                 <label for="categories" class="col-md-3 col-form-label text-md-right">Gatunek filmu: *</label>
 
                 <div class="col-md-7">
@@ -71,8 +71,8 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="form-group row">
+            </div> -->
+            <!-- <div class="form-group row">
                 <label for="year" class="col-md-3 col-form-label text-md-right">Rok produkcji: *</label>
 
                 <div class="col-md-7">
@@ -123,11 +123,11 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+            </div> -->
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4 text-right">
                         <button type="submit" class="btn btn-custom">
-                            Wyślij
+                            Zapisz
                         </button>
                     </div>
                 </div>

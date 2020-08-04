@@ -1924,24 +1924,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      zmienna: 'Importuj',
       title: '',
-      output: ''
+      description: '',
+      year: '',
+      results: ''
     };
   },
   methods: {
-    get: function get(e) {
+    importData: function importData(e) {
       e.preventDefault();
       var currentObj = this;
+      currentObj.zmienna = 'Trwa importowanie...';
       axios.post('/ajaxtest', {
         title: this.title
       }).then(function (response) {
-        console.log(response);
-        currentObj.output = response.data;
+        console.log(response.data);
+        currentObj.zmienna = 'Importuj';
+        currentObj.results = response.data;
+        currentObj.title = currentObj.results.title;
+        currentObj.description = currentObj.results.description;
+        currentObj.year = currentObj.results.year;
+        currentObj.fdb = currentObj.results.id;
       })["catch"](function (error) {
-        currentObj.output = error;
+        console.log(error);
+        currentObj.results = error;
       });
     }
   }
@@ -37492,58 +37554,300 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "form-group row" }, [
-    _vm._v("\n        " + _vm._s(_vm.output) + "\n    "),
-    _c(
-      "label",
-      {
-        staticClass: "col-md-3 col-form-label text-md-right",
-        attrs: { for: "title" }
-      },
-      [_vm._v("Tytuł: *")]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-5" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.title,
-            expression: "title"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: {
-          id: "title",
-          type: "text",
-          name: "title",
-          required: "",
-          autocomplete: "title",
-          autofocus: ""
+  return _c("div", [
+    _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "title" }
         },
-        domProps: { value: _vm.title },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+        [_vm._v("Tytuł:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "input-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.title,
+                expression: "title"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "title",
+              type: "text",
+              name: "title",
+              required: "",
+              autocomplete: "title",
+              autofocus: ""
+            },
+            domProps: { value: _vm.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.title = $event.target.value
+              }
             }
-            _vm.title = $event.target.value
-          }
-        }
-      })
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-custom test",
+                on: { click: _vm.importData }
+              },
+              [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.zmienna) +
+                    "\n                    "
+                )
+              ]
+            )
+          ])
+        ])
+      ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-2" }, [
+    _c("div", { staticClass: "form-group row" }, [
       _c(
-        "button",
-        { staticClass: "btn btn-custom test", on: { click: _vm.get } },
-        [_vm._v("\n            Import\n        ")]
-      )
-    ])
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "year" }
+        },
+        [_vm._v("Rok:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.year,
+              expression: "year"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            id: "year",
+            type: "number",
+            name: "year",
+            required: "",
+            autocomplete: "year",
+            autofocus: ""
+          },
+          domProps: { value: _vm.year },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.year = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "desc" }
+        },
+        [_vm._v("Opis filmu:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.description,
+              expression: "description"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "desc",
+            id: "desc",
+            placeholder: "Opis filmu...",
+            rows: "6"
+          },
+          domProps: { value: _vm.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.description = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "fdb" }
+        },
+        [_vm._v("Fdb.pl ID:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fdb,
+              expression: "fdb"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            id: "fdb",
+            type: "number",
+            name: "fdb",
+            required: "",
+            autocomplete: "fdb",
+            autofocus: ""
+          },
+          domProps: { value: _vm.fdb },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fdb = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "thumb" }
+        },
+        [_vm._v("Plakat:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("input", {
+          staticClass: "form-control-file @error('thumb') is-invalid @enderror",
+          attrs: { type: "file", name: "thumb", id: "thumb" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "categories" }
+        },
+        [_vm._v("Kategoria:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "rate" }
+        },
+        [_vm._v("rate:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            id: "rate",
+            type: "number",
+            name: "rate",
+            required: "",
+            autocomplete: "rate",
+            autofocus: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
+          attrs: { for: "view" }
+        },
+        [_vm._v("view:")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            id: "view",
+            type: "number",
+            name: "view",
+            required: "",
+            autocomplete: "view",
+            autofocus: ""
+          }
+        })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
