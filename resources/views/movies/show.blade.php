@@ -1,4 +1,4 @@
-@extends('main.app')
+@extends('layouts.app')
 @section('title', $movie->title.' ('.$movie->year.')')
 @section ('content')
     <div class="block">

@@ -1899,10 +1899,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MovieCreate.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MovieCreate.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1976,10 +1976,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      zmienna: 'Importuj',
+      status: 'Importuj',
       title: '',
       description: '',
       year: '',
@@ -1990,12 +1997,12 @@ __webpack_require__.r(__webpack_exports__);
     importData: function importData(e) {
       e.preventDefault();
       var currentObj = this;
-      currentObj.zmienna = 'Trwa importowanie...';
+      currentObj.status = 'Trwa importowanie...';
       axios.post('/ajaxtest', {
         title: this.title
       }).then(function (response) {
         console.log(response.data);
-        currentObj.zmienna = 'Importuj';
+        currentObj.status = 'Importuj';
         currentObj.results = response.data;
         currentObj.title = currentObj.results.title;
         currentObj.description = currentObj.results.description;
@@ -37539,10 +37546,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd& ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e& ***!
+  \**************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37554,200 +37561,216 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "title" }
-        },
-        [_vm._v("Tytuł:")]
-      ),
+  return _c(
+    "form",
+    {
+      attrs: {
+        method: "POST",
+        action: "/filmy",
+        enctype: "multipart/form-data"
+      }
+    },
+    [
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "title" }
+          },
+          [_vm._v("Tytuł:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.title,
+                  expression: "title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "title",
+                type: "text",
+                name: "title",
+                required: "",
+                autocomplete: "title",
+                autofocus: ""
+              },
+              domProps: { value: _vm.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.title = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-custom test",
+                  on: { click: _vm.importData }
+                },
+                [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.status) +
+                      "\n                    "
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("div", { staticClass: "input-group" }, [
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "year" }
+          },
+          [_vm._v("Rok:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.title,
-                expression: "title"
+                value: _vm.year,
+                expression: "year"
               }
             ],
             staticClass: "form-control",
             attrs: {
-              id: "title",
-              type: "text",
-              name: "title",
+              id: "year",
+              type: "number",
+              name: "year",
               required: "",
-              autocomplete: "title",
+              autocomplete: "year",
               autofocus: ""
             },
-            domProps: { value: _vm.title },
+            domProps: { value: _vm.year },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.title = $event.target.value
+                _vm.year = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-custom test",
-                on: { click: _vm.importData }
-              },
-              [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.zmienna) +
-                    "\n                    "
-                )
-              ]
-            )
-          ])
+          })
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "year" }
-        },
-        [_vm._v("Rok:")]
-      ),
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.year,
-              expression: "year"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            id: "year",
-            type: "number",
-            name: "year",
-            required: "",
-            autocomplete: "year",
-            autofocus: ""
-          },
-          domProps: { value: _vm.year },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.year = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "desc" }
-        },
-        [_vm._v("Opis filmu:")]
-      ),
+      _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.description,
-              expression: "description"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            name: "desc",
-            id: "desc",
-            placeholder: "Opis filmu...",
-            rows: "6"
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "desc" }
           },
-          domProps: { value: _vm.description },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+          [_vm._v("Opis filmu:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.description,
+                expression: "description"
               }
-              _vm.description = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: {
+              name: "desc",
+              id: "desc",
+              placeholder: "Opis filmu...",
+              rows: "6"
+            },
+            domProps: { value: _vm.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.description = $event.target.value
+              }
             }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "fdb" }
-        },
-        [_vm._v("Fdb.pl ID:")]
-      ),
+          })
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.fdb,
-              expression: "fdb"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            id: "fdb",
-            type: "number",
-            name: "fdb",
-            required: "",
-            autocomplete: "fdb",
-            autofocus: ""
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "fdb" }
           },
-          domProps: { value: _vm.fdb },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+          [_vm._v("Fdb.pl ID:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fdb,
+                expression: "fdb"
               }
-              _vm.fdb = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "fdb",
+              type: "number",
+              name: "fdb",
+              required: "",
+              autocomplete: "fdb",
+              autofocus: ""
+            },
+            domProps: { value: _vm.fdb },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.fdb = $event.target.value
+              }
             }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _vm._m(3)
-  ])
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -37844,6 +37867,20 @@ var staticRenderFns = [
             autofocus: ""
           }
         })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row mb-0" }, [
+      _c("div", { staticClass: "col-md-6 offset-md-4 text-right" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-custom", attrs: { type: "submit" } },
+          [_vm._v("\n                    Zapisz\n                ")]
+        )
       ])
     ])
   }
@@ -50041,7 +50078,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('create-movie-form', __webpack_require__(/*! ./components/CreateMovieForm.vue */ "./resources/js/components/CreateMovieForm.vue")["default"]);
+Vue.component('movie-create', __webpack_require__(/*! ./components/MovieCreate.vue */ "./resources/js/components/MovieCreate.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50099,17 +50136,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateMovieForm.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/CreateMovieForm.vue ***!
-  \*****************************************************/
+/***/ "./resources/js/components/MovieCreate.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/MovieCreate.vue ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateMovieForm.vue?vue&type=template&id=669492dd& */ "./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd&");
-/* harmony import */ var _CreateMovieForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateMovieForm.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js&");
+/* harmony import */ var _MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MovieCreate.vue?vue&type=template&id=89c6c59e& */ "./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e&");
+/* harmony import */ var _MovieCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MovieCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/MovieCreate.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -50119,9 +50156,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateMovieForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _MovieCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -50131,38 +50168,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/CreateMovieForm.vue"
+component.options.__file = "resources/js/components/MovieCreate.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
+/***/ "./resources/js/components/MovieCreate.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/MovieCreate.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMovieForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateMovieForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateMovieForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMovieForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MovieCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./MovieCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MovieCreate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MovieCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e& ***!
+  \********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateMovieForm.vue?vue&type=template&id=669492dd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateMovieForm.vue?vue&type=template&id=669492dd&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./MovieCreate.vue?vue&type=template&id=89c6c59e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MovieCreate.vue?vue&type=template&id=89c6c59e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMovieForm_vue_vue_type_template_id_669492dd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MovieCreate_vue_vue_type_template_id_89c6c59e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

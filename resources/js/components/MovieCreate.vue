@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <form method="POST" action="/filmy" enctype="multipart/form-data">
         <div class="form-group row">
             <label for="title" class="col-md-3 col-form-label text-md-right font-weight-bold">Tytuł:</label>
 
@@ -8,7 +8,7 @@
                     <input id="title" type="text" v-model="title" class="form-control" name="title" required autocomplete="title" autofocus>
                     <div class="input-group-append">
                         <button v-on:click="importData" class="btn btn-custom test">
-                            {{ zmienna }}
+                            {{ status }}
                         </button>
                     </div>
                 </div>
@@ -63,14 +63,21 @@
                     <input id="view" type="number" class="form-control" name="view" required autocomplete="view" autofocus>
                 </div>
             </div>
-    </div>
+            <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4 text-right">
+                    <button type="submit" class="btn btn-custom">
+                        Zapisz
+                    </button>
+                </div>
+            </div>
+    </form>
 </template>
 
 <script>
     export default {
         data() {
             return {
-                zmienna: 'Importuj',
+                status: 'Importuj',
                 title: '',
                 description: '',
                 year: '',
@@ -81,13 +88,13 @@
             importData: function (e) {
                 e.preventDefault();
                 let currentObj = this;
-                currentObj.zmienna = 'Trwa importowanie...';
+                currentObj.status = 'Trwa importowanie...';
                 axios.post('/ajaxtest', {
                     title: this.title
                 })
                 .then(function (response) {
                     console.log(response.data);
-                    currentObj.zmienna = 'Importuj';
+                    currentObj.status = 'Importuj';
                     currentObj.results = response.data;
                     currentObj.title = currentObj.results.title;
                     currentObj.description = currentObj.results.description;

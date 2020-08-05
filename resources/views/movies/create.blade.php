@@ -1,4 +1,4 @@
-@extends('main.app')
+@extends('layouts.app')
 @section('title', 'Dodaj film')
 @section('content')
     <div class="block">
@@ -6,10 +6,10 @@
             Dodaj film
         </div>
         <div class="bbody">
-            <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data">
-            @csrf
+            <!-- <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data"> -->
+            <!-- @csrf -->
             <div id="app">
-                <create-movie-form></create-movie-form>
+                <movie-create></movie-create>
             </div>
             <!-- <div class="form-group row">
                 <label for="title" class="col-md-3 col-form-label text-md-right">Tytuł: *</label>
@@ -124,14 +124,14 @@
                     @enderror
                 </div>
             </div> -->
-                <div class="form-group row mb-0">
+                <!-- <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4 text-right">
                         <button type="submit" class="btn btn-custom">
                             Zapisz
                         </button>
                     </div>
-                </div>
-            </form>
+                </div> -->
+            <!-- </form> -->
         </div>
     </div>
 @endsection

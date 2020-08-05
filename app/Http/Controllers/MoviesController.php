@@ -46,7 +46,9 @@ class MoviesController extends Controller
 
     public function create()
     {
-        return view('movies.create', ['categories' => Category::get()]);
+        $categories = Category::all();
+        
+        return view('movies.create', compact('categories'));
     }
 
     public function store(CreateMovie $request)
