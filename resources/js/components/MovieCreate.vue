@@ -40,7 +40,7 @@
 
             <div class="col-md-7">
                 <select class="form-control" name="category_id" id="category_id">
-                    <option v-for="category in categories"
+                    <option v-for="category in categories" :key="category.id"
                         :value="category.id">{{ category.name }}
                     </option>
                 </select>
