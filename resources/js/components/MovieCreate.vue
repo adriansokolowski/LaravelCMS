@@ -39,7 +39,11 @@
             <label for="categories" class="col-md-3 col-form-label text-md-right font-weight-bold">Kategoria:</label>
 
             <div class="col-md-7">
-  
+                <select class="form-control" name="category_id" id="category_id">
+                    <option v-for="category in categories"
+                        :value="category.id">{{ category.name }}
+                    </option>
+                </select>
             </div>
         </div>
             <div class="form-group row">
@@ -77,12 +81,18 @@
     export default {
         data() {
             return {
+                categories: null,
                 status: 'Importuj',
                 title: '',
                 description: '',
                 year: '',
                 results: ''
             };
+        },
+        mounted() {
+            axios.get('/api/categories').then(response => {
+                this.categories = response.data.data;
+            })
         },
         methods: {
             importData: function (e) {

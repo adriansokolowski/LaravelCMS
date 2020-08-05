@@ -1983,15 +1983,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      categories: null,
       status: 'Importuj',
       title: '',
       description: '',
       year: '',
       results: ''
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/categories').then(function (response) {
+      _this.categories = response.data.data;
+    });
   },
   methods: {
     importData: function importData(e) {
@@ -37719,7 +37731,33 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "categories" }
+          },
+          [_vm._v("Kategoria:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control",
+              attrs: { name: "category_id", id: "category_id" }
+            },
+            _vm._l(_vm.categories, function(category) {
+              return _c("option", { domProps: { value: category.id } }, [
+                _vm._v(_vm._s(category.name) + "\n                ")
+              ])
+            }),
+            0
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group row" }, [
         _c(
@@ -37764,11 +37802,11 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _vm._m(3),
-      _vm._v(" "),
-      _vm._m(4)
+      _vm._m(3)
     ]
   )
 }
@@ -37793,23 +37831,6 @@ var staticRenderFns = [
           attrs: { type: "file", name: "thumb", id: "thumb" }
         })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "categories" }
-        },
-        [_vm._v("Kategoria:")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" })
     ])
   },
   function() {
