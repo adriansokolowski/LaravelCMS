@@ -39,7 +39,7 @@
             <label for="categories" class="col-md-3 col-form-label text-md-right font-weight-bold">Kategoria:</label>
 
             <div class="col-md-7">
-                <select class="form-control" name="category_id" id="category_id">
+                <select multiple class="form-control" name="category_id" id="category_id">
                     <option v-for="category in categories" :key="category.id"
                         :value="category.id">{{ category.name }}
                     </option>

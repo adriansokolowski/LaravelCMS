@@ -37747,12 +37747,14 @@ var render = function() {
             "select",
             {
               staticClass: "form-control",
-              attrs: { name: "category_id", id: "category_id" }
+              attrs: { multiple: "", name: "category_id", id: "category_id" }
             },
             _vm._l(_vm.categories, function(category) {
-              return _c("option", { domProps: { value: category.id } }, [
-                _vm._v(_vm._s(category.name) + "\n                ")
-              ])
+              return _c(
+                "option",
+                { key: category.id, domProps: { value: category.id } },
+                [_vm._v(_vm._s(category.name) + "\n                ")]
+              )
             }),
             0
           )
