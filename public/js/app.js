@@ -1987,6 +1987,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1994,8 +2010,9 @@ __webpack_require__.r(__webpack_exports__);
       fields: {
         category: []
       },
-      errors: {},
-      status: 'Importuj'
+      status: 'Importuj',
+      success: false,
+      errors: {}
     };
   },
   mounted: function mounted() {
@@ -2007,10 +2024,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      axios.post('/api/movies', this.fields).then(response);
+      var _this2 = this;
+
+      axios.post('/api/movies', this.fields).then(function (response) {
+        _this2.fields = {};
+        _this2.success = true;
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          _this2.errors = error.response.data.errors;
+          console.log(_this2.errors);
+        }
+      });
     },
     importData: function importData(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
       this.status = 'Trwa importowanie...';
@@ -2018,17 +2045,17 @@ __webpack_require__.r(__webpack_exports__);
         title: this.fields.title
       }).then(function (response) {
         console.log(response.data);
-        _this2.status = 'Importuj';
-        _this2.fields = response.data;
-        var category = _this2.fields.category;
-        _this2.fields.category = _this2.categories.filter(function (x) {
-          return _this2.fields.category.includes(x.name);
+        _this3.status = 'Importuj';
+        _this3.fields = response.data;
+        var category = _this3.fields.category;
+        _this3.fields.category = _this3.categories.filter(function (x) {
+          return _this3.fields.category.includes(x.name);
         }).map(function (category) {
           return category.id;
         });
       })["catch"](function (error) {
         console.log(error);
-        _this2.fields = error;
+        _this3.fields = error;
       });
     }
   }
@@ -37582,13 +37609,31 @@ var render = function() {
   return _c(
     "form",
     {
-      attrs: {
-        method: "POST",
-        action: "/filmy",
-        enctype: "multipart/form-data"
+      attrs: { enctype: "multipart/form-data" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submit($event)
+        }
       }
     },
     [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.success,
+              expression: "success"
+            }
+          ],
+          staticClass: "aler aler-success"
+        },
+        [_vm._v("Film został dodany.")]
+      ),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group row" }, [
         _c(
           "label",
@@ -37646,7 +37691,17 @@ var render = function() {
                   )
                 ]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.title
+              ? _c("div", { staticClass: "alert alert-danger" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.title[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
           ])
         ])
       ]),
@@ -37690,11 +37745,49 @@ var render = function() {
                 _vm.$set(_vm.fields, "year", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.year
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.errors.year[0]) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "thumb" }
+          },
+          [_vm._v("Plakat:")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("input", {
+            staticClass:
+              "form-control-file @error('thumb') is-invalid @enderror",
+            attrs: { type: "file", name: "thumb", id: "thumb" }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.thumb
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.errors.thumb[0]) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group row" }, [
         _c(
@@ -37814,8 +37907,8 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.fields.id,
-                expression: "fields.id"
+                value: _vm.fields.fdb,
+                expression: "fields.fdb"
               }
             ],
             staticClass: "form-control",
@@ -37827,13 +37920,13 @@ var render = function() {
               autocomplete: "fdb",
               autofocus: ""
             },
-            domProps: { value: _vm.fields.id },
+            domProps: { value: _vm.fields.fdb },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.fields, "id", $event.target.value)
+                _vm.$set(_vm.fields, "fdb", $event.target.value)
               }
             }
           })
@@ -37880,7 +37973,17 @@ var render = function() {
                 _vm.$set(_vm.fields, "rate", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.rate
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.errors.rate[0]) +
+                    "\n                "
+                )
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -37923,37 +38026,25 @@ var render = function() {
                 _vm.$set(_vm.fields, "view", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.view
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.errors.view[0]) +
+                    "\n                "
+                )
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _vm._m(0)
     ]
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-3 col-form-label text-md-right font-weight-bold",
-          attrs: { for: "thumb" }
-        },
-        [_vm._v("Plakat:")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("input", {
-          staticClass: "form-control-file @error('thumb') is-invalid @enderror",
-          attrs: { type: "file", name: "thumb", id: "thumb" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

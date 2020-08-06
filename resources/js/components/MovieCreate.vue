@@ -1,5 +1,6 @@
 <template>
-    <form method="POST" action="/filmy" enctype="multipart/form-data">
+    <form @submit.prevent="submit" enctype="multipart/form-data">
+    <div class="aler aler-success" v-show="success">Film został dodany.</div>
         <div class="form-group row">
             <label for="title" class="col-md-3 col-form-label text-md-right font-weight-bold">Tytuł:</label>
 
@@ -11,6 +12,9 @@
                             {{ status }}
                         </button>
                     </div>
+                    <div class="alert alert-danger" v-if="errors && errors.title">
+                        {{ errors.title[0] }}
+                    </div>
                 </div>
             </div>  
         </div>
@@ -19,6 +23,9 @@
 
             <div class="col-md-7">
                 <input id="year" type="number" v-model="fields.year" class="form-control" name="year" required autocomplete="year" autofocus>
+                <div class="alert alert-danger" v-if="errors && errors.year">
+                    {{ errors.year[0] }}
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -26,6 +33,9 @@
 
             <div class="col-md-7">
                 <input type="file" class="form-control-file @error('thumb') is-invalid @enderror" name="thumb" id="thumb">
+                <div class="alert alert-danger" v-if="errors && errors.thumb">
+                    {{ errors.thumb[0] }}
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -50,7 +60,7 @@
                 <label for="fdb" class="col-md-3 col-form-label text-md-right font-weight-bold">Fdb.pl ID:</label>
 
                 <div class="col-md-7">
-                    <input id="fdb" type="number" v-model="fields.id" class="form-control" name="fdb" required autocomplete="fdb" autofocus>
+                    <input id="fdb" type="number" v-model="fields.fdb" class="form-control" name="fdb" required autocomplete="fdb" autofocus>
                 </div>
             </div>
             <div class="form-group row">
@@ -58,6 +68,9 @@
 
                 <div class="col-md-7">
                     <input id="rate" type="number" step="0.1" v-model="fields.rate" class="form-control" name="rate" required autocomplete="rate" autofocus>
+                    <div class="alert alert-danger" v-if="errors && errors.rate">
+                        {{ errors.rate[0] }}
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
@@ -65,6 +78,9 @@
 
                 <div class="col-md-7">
                     <input id="view" type="number" v-model="fields.view" class="form-control" name="view" required autocomplete="view" autofocus>
+                    <div class="alert alert-danger" v-if="errors && errors.view">
+                        {{ errors.view[0] }}
+                    </div>
                 </div>
             </div>
             <div class="form-group row mb-0">
@@ -83,8 +99,9 @@
             return {
                 categories: null,
                 fields: {category: []},
-                errors: {},
-                status: 'Importuj'
+                status: 'Importuj',
+                success: false,
+                errors: {}
             };
         },
         mounted() {
@@ -94,7 +111,15 @@
         },
         methods: {
             submit() {
-                axios.post('/api/movies', this.fields).then(response);
+                axios.post('/api/movies', this.fields).then(response => {
+                    this.fields = {};
+                    this.success = true;
+                }).catch(error => {
+                    if (error.response.status == 422){
+                        this.errors = error.response.data.errors;
+                        console.log(this.errors);
+                    }
+                });
             },
             importData (e) {
                 e.preventDefault();
@@ -107,15 +132,7 @@
                     this.status = 'Importuj';
                     this.fields = response.data;
                     let category = this.fields.category;
-                    this.fields.category = this.categories
-                        .filter(
-                            x=> this.fields.category
-                        .includes(
-                            x.name
-                        ))
-                        .map(
-                            category => category.id
-                        )
+                    this.fields.category = this.categories.filter(x=> this.fields.category.includes(x.name)).map(category => category.id)
                 })
                 .catch((error) => {
                     console.log(error);

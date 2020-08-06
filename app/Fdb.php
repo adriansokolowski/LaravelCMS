@@ -102,7 +102,7 @@ class Fdb
         return (isset($country) ? $country : null);
     }
 
-    public function id()
+    public function fdb()
     {
         $id = Parser::get($this->website, '[name="movie-id"]', 0, 'content');
 
@@ -131,7 +131,7 @@ class Fdb
             return [];
         }
         return array(
-            'id' => $this->id(),
+            'fdb' => $this->fdb(),
             'title' => $this->title(),
             'year' => $this->year(),
             'rate' => $this->rate(),
