@@ -37806,8 +37806,8 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.fields.fdb,
-                expression: "fields.fdb"
+                value: _vm.fields.id,
+                expression: "fields.id"
               }
             ],
             staticClass: "form-control",
@@ -37819,13 +37819,13 @@ var render = function() {
               autocomplete: "fdb",
               autofocus: ""
             },
-            domProps: { value: _vm.fields.fdb },
+            domProps: { value: _vm.fields.id },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.fields, "fdb", $event.target.value)
+                _vm.$set(_vm.fields, "id", $event.target.value)
               }
             }
           })

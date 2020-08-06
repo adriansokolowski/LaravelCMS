@@ -50,7 +50,7 @@
                 <label for="fdb" class="col-md-3 col-form-label text-md-right font-weight-bold">Fdb.pl ID:</label>
 
                 <div class="col-md-7">
-                    <input id="fdb" type="number" v-model="fields.fdb" class="form-control" name="fdb" required autocomplete="fdb" autofocus>
+                    <input id="fdb" type="number" v-model="fields.id" class="form-control" name="fdb" required autocomplete="fdb" autofocus>
                 </div>
             </div>
             <div class="form-group row">

@@ -108,11 +108,19 @@ class Fdb
         return (isset($id) ? $this->fdb = $id : null);
     }
 
+    public function rate()
+    {
+        $url = trim(Parser::get($this->website, '#imdb a', 0, 'href') . '/');
+        $url = str_replace('http', 'https', $url);
+        $rate = Parser::get($this->website($url), '[itemprop="ratingValue"]', 0, 'innertext');
+        
+        return (isset($rate) ? $rate : null);
+    }
+
     public function description()
     {
         $url = $this->website($this->url . '/opisy');
         $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
-
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
@@ -132,6 +140,7 @@ class Fdb
             'id' => $this->id(),
             'title' => $this->title(),
             'year' => $this->year(),
+            'rate' => $this->rate(),
             'poster' => $this->poster(),
             'category' => $this->category(),
             'description' => $this->description(),

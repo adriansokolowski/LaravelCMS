@@ -24,8 +24,9 @@ class CrawlersController extends Controller
 
     public function add()
     {
-        dd($fdb = (new Fdb('Truman Show / The Truman Show'))->json());
-        $this->fdb();
+        $fdb = (new Fdb('Truman Show / The Truman Show'))->results();
+        dd($fdb);
+        //$this->fdb();
     }
 
     private function fdb()
