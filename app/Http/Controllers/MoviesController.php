@@ -16,9 +16,10 @@ use App\Link;
 
 class MoviesController extends Controller
 {
-    public function ajax(Request $request)
+    public function import(Request $request)
     {   
         $fdb = (new Fdb($request->post('title')))->results();
+        //dd($fdb);
         return response()->json($fdb);
     }
 

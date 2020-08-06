@@ -41,7 +41,7 @@
             <div class="col-md-7">
                 <select multiple size="10" v-model="fields.category" class="form-control" name="categories[]" id="categories">
                     <option v-for="category in categories" :key="category.id"
-                        :value="category.name">{{ category.name }}
+                        :value="category.id">{{ category.name }}
                     </option>
                 </select>
             </div>
@@ -57,7 +57,7 @@
                 <label for="rate" class="col-md-3 col-form-label text-md-right font-weight-bold">rate:</label>
 
                 <div class="col-md-7">
-                    <input id="rate" type="number" v-model="fields.rate" class="form-control" name="rate" required autocomplete="rate" autofocus>
+                    <input id="rate" type="number" step="0.1" v-model="fields.rate" class="form-control" name="rate" required autocomplete="rate" autofocus>
                 </div>
             </div>
             <div class="form-group row">
@@ -81,7 +81,6 @@
     export default {
         data() {
             return {
-                selected: 'bar',
                 categories: null,
                 fields: {category: []},
                 errors: {},
@@ -95,23 +94,32 @@
         },
         methods: {
             submit() {
-
+                axios.post('/api/movies', this.fields).then(response);
             },
             importData (e) {
                 e.preventDefault();
-                let currentObj = this;
                 this.status = 'Trwa importowanie...';
-                axios.post('/ajaxtest', {
+                axios.post('/import', {
                     title: this.fields.title
                 })
-                .then(function (response) {
+                .then((response) => {
                     console.log(response.data);
-                    currentObj.status = 'Importuj';
-                    currentObj.fields = response.data;
+                    this.status = 'Importuj';
+                    this.fields = response.data;
+                    let category = this.fields.category;
+                    this.fields.category = this.categories
+                        .filter(
+                            x=> this.fields.category
+                        .includes(
+                            x.name
+                        ))
+                        .map(
+                            category => category.id
+                        )
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
-                    currentObj.fields = error;
+                    this.fields = error;
                 });
             }
         }

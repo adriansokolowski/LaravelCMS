@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
 use App\Fdb;
+use App\Category;
 
 
 class CrawlersController extends Controller
@@ -24,8 +25,8 @@ class CrawlersController extends Controller
 
     public function add()
     {
-        $fdb = (new Fdb('Truman Show / The Truman Show'))->results();
-        dd($fdb);
+        $fdb = (new Fdb('Truman Show / The Truman Show'));
+        dd($fdb->category());
         //$this->fdb();
     }
 

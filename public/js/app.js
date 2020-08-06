@@ -1990,7 +1990,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      selected: 'bar',
       categories: null,
       fields: {
         category: []
@@ -2007,20 +2006,29 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    submit: function submit() {},
+    submit: function submit() {
+      axios.post('/api/movies', this.fields).then(response);
+    },
     importData: function importData(e) {
+      var _this2 = this;
+
       e.preventDefault();
-      var currentObj = this;
       this.status = 'Trwa importowanie...';
-      axios.post('/ajaxtest', {
+      axios.post('/import', {
         title: this.fields.title
       }).then(function (response) {
         console.log(response.data);
-        currentObj.status = 'Importuj';
-        currentObj.fields = response.data;
+        _this2.status = 'Importuj';
+        _this2.fields = response.data;
+        var category = _this2.fields.category;
+        _this2.fields.category = _this2.categories.filter(function (x) {
+          return _this2.fields.category.includes(x.name);
+        }).map(function (category) {
+          return category.id;
+        });
       })["catch"](function (error) {
         console.log(error);
-        currentObj.fields = error;
+        _this2.fields = error;
       });
     }
   }
@@ -37780,7 +37788,7 @@ var render = function() {
             _vm._l(_vm.categories, function(category) {
               return _c(
                 "option",
-                { key: category.id, domProps: { value: category.name } },
+                { key: category.id, domProps: { value: category.id } },
                 [_vm._v(_vm._s(category.name) + "\n                ")]
               )
             }),
@@ -37857,6 +37865,7 @@ var render = function() {
             attrs: {
               id: "rate",
               type: "number",
+              step: "0.1",
               name: "rate",
               required: "",
               autocomplete: "rate",

@@ -37,4 +37,4 @@ Route::get('/serial/{serie}', 'SeriesController@show')->name('series.show');
 Route::get('/crawlers', 'CrawlersController@index')->name('crawlers.index');
 Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
 
-Route::post('/ajaxtest', 'MoviesController@ajax')->name('ajax.test');
+Route::post('/import', 'MoviesController@import')->name('import');

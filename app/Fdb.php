@@ -4,6 +4,7 @@ namespace App;
 
 use App\Parser;
 use App\Crawler;
+use App\Category;
 
 class Fdb
 {
@@ -122,13 +123,6 @@ class Fdb
         $url = $this->website($this->url . '/opisy');
         $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
-    }
-
-    public function json()
-    {
-        if (!empty($this->title())) {
-            return json_encode($this->results());
-        }
     }
 
     public function results(): array
