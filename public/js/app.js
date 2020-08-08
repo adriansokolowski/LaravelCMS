@@ -37765,23 +37765,46 @@ var render = function() {
           {
             staticClass:
               "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "thumb" }
+            attrs: { for: "poster" }
           },
           [_vm._v("Plakat:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
           _c("input", {
-            staticClass:
-              "form-control-file @error('thumb') is-invalid @enderror",
-            attrs: { type: "file", name: "thumb", id: "thumb" }
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fields.poster,
+                expression: "fields.poster"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "poster",
+              type: "text",
+              name: "poster",
+              required: "",
+              autocomplete: "poster",
+              autofocus: ""
+            },
+            domProps: { value: _vm.fields.poster },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.fields, "poster", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
-          _vm.errors && _vm.errors.thumb
+          _vm.errors && _vm.errors.poster
             ? _c("div", { staticClass: "alert alert-danger" }, [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.errors.thumb[0]) +
+                    _vm._s(_vm.errors.poster[0]) +
                     "\n            "
                 )
               ])

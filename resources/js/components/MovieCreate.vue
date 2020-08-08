@@ -29,12 +29,12 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="thumb" class="col-md-3 col-form-label text-md-right font-weight-bold">Plakat:</label>
+            <label for="poster" class="col-md-3 col-form-label text-md-right font-weight-bold">Plakat:</label>
 
             <div class="col-md-7">
-                <input type="file" class="form-control-file @error('thumb') is-invalid @enderror" name="thumb" id="thumb">
-                <div class="alert alert-danger" v-if="errors && errors.thumb">
-                    {{ errors.thumb[0] }}
+                <input id="poster" type="text" v-model="fields.poster" class="form-control" name="poster" required autocomplete="poster" autofocus>
+                <div class="alert alert-danger" v-if="errors && errors.poster">
+                    {{ errors.poster[0] }}
                 </div>
             </div>
         </div>
