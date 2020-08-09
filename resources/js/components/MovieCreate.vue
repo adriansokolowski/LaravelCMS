@@ -1,6 +1,8 @@
 <template>
-    <form @submit.prevent="submit" enctype="multipart/form-data">
-    <div class="aler aler-success" v-show="success">Film został dodany.</div>
+    <form @submit.prevent="submit">
+    <div class="alert alert-success" v-show="success" role="alert">Film został dodany.
+        <a href="" class="href"></a>
+    </div>
         <div class="form-group row">
             <label for="title" class="col-md-3 col-form-label text-md-right font-weight-bold">Tytuł:</label>
 
@@ -16,7 +18,7 @@
                         {{ errors.title[0] }}
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
         <div class="form-group row">
             <label for="year" class="col-md-3 col-form-label text-md-right font-weight-bold">Rok:</label>
@@ -39,17 +41,20 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="desc" class="col-md-3 col-form-label text-md-right font-weight-bold">Opis filmu:</label>
+            <label for="description" class="col-md-3 col-form-label text-md-right font-weight-bold">Opis filmu:</label>
 
             <div class="col-md-7">
-                <textarea class="form-control" v-model="fields.description" name="desc" id="desc" placeholder="Opis filmu..." rows="6"></textarea>
+                <textarea class="form-control" v-model="fields.description" name="description" placeholder="Opis filmu..." rows="6"></textarea>
+                <div class="alert alert-danger" v-if="errors && errors.poster">
+                    {{ errors.description[0] }}
+                </div>
             </div>
         </div>
         <div class="form-group row">
             <label for="categories" class="col-md-3 col-form-label text-md-right font-weight-bold">Kategoria:</label>
 
             <div class="col-md-7">
-                <select multiple size="10" v-model="fields.category" class="form-control" name="categories[]" id="categories">
+                <select multiple size="10" v-model="fields.categories" class="form-control" name="categories[]" id="categories">
                     <option v-for="category in categories" :key="category.id"
                         :value="category.id">{{ category.name }}
                     </option>
@@ -97,8 +102,9 @@
     export default {
         data() {
             return {
+                movie: {},
                 categories: null,
-                fields: {category: []},
+                fields: {categories: []},
                 status: 'Importuj',
                 success: false,
                 errors: {}
@@ -110,10 +116,13 @@
             })
         },
         methods: {
+            // Submitting the form to server
             submit() {
                 axios.post('/api/movies', this.fields).then(response => {
-                    this.fields = {};
+                    console.log('Serwer zwrocil: ' +response.data);
+                    this.movie = response.data;
                     this.success = true;
+                    this.fields = {categories: []};
                 }).catch(error => {
                     if (error.response.status == 422){
                         this.errors = error.response.data.errors;
@@ -121,6 +130,7 @@
                     }
                 });
             },
+            // Importing data on btn click
             importData (e) {
                 e.preventDefault();
                 this.status = 'Trwa importowanie...';
@@ -128,11 +138,10 @@
                     title: this.fields.title
                 })
                 .then((response) => {
-                    console.log(response.data);
                     this.status = 'Importuj';
                     this.fields = response.data;
-                    let category = this.fields.category;
-                    this.fields.category = this.categories.filter(x=> this.fields.category.includes(x.name)).map(category => category.id)
+                    let categories = this.fields.categories;
+                    this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name)).map(categories => categories.id)
                 })
                 .catch((error) => {
                     console.log(error);

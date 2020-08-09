@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class CreateMoviesTable extends Migration
 {
@@ -17,7 +18,7 @@ class CreateMoviesTable extends Migration
             $table->id();
             $table->string('title');
             $table->integer('year');
-            $table->text('desc');
+            $table->text('description');
             $table->integer('fdb');
             $table->float('rate')->default('0');
             $table->integer('view')->default('0');
@@ -33,5 +34,6 @@ class CreateMoviesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('movies');
+        Storage::deleteDirectory('/poster');
     }
 }

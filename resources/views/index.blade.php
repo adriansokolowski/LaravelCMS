@@ -26,15 +26,15 @@
                     <div class="info">
                     <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
                         <div class="gen">
-                            {{ $movie->year }} | 
-   
+                            {{ $movie->year }} |
+
                             @foreach ($movie->categories as $category)
                                 <a href="#">{{ $category->name }}</a>@if (!$loop->last),@endif
                             @endforeach
                             | USA
-                            <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/de.png" alt=""> 
+                            <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/de.png" alt="">
                         </div>
-                        <div class="desc">{{ Str::limit($movie->desc, 250) }}</div>
+                        <div class="description">{{ Str::limit($movie->description, 250) }}</div>
                         <p class="bar mb-0">
                             1111 odsłon Lektor Napisy
                         </p>
@@ -56,15 +56,15 @@
                     <div class="info">
                         <a href="{{ $movie->path() }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
                         <div class="gen">
-                            {{ $movie->year }} | 
-   
+                            {{ $movie->year }} |
+
                             @foreach ($movie->categories as $category)
                                 <a href="#">{{ $category->name }}</a>@if (!$loop->last),@endif
                             @endforeach
-                            | USA 
-                            <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/pl.png" alt=""> 
+                            | USA
+                            <img src="https://raw.githubusercontent.com/multitheftauto/mtasa-resources/master/%5Badmin%5D/admin/client/images/flags/pl.png" alt="">
                             </div>
-                        <div class="desc">{{ Str::limit($movie->desc, 250) }}</div>
+                        <div class="description">{{ Str::limit($movie->description, 250) }}</div>
                         <p class="bar mb-0">
                             1111 odsłon Lektor Napisy
                         </p>

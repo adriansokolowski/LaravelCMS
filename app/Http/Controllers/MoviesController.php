@@ -17,9 +17,8 @@ use App\Link;
 class MoviesController extends Controller
 {
     public function import(Request $request)
-    {   
+    {
         $fdb = (new Fdb($request->post('title')))->results();
-        //dd($fdb);
         return response()->json($fdb);
     }
 
@@ -46,7 +45,7 @@ class MoviesController extends Controller
     }
 
     public function create()
-    {        
+    {
         return view('movies.create');
     }
 
@@ -55,7 +54,7 @@ class MoviesController extends Controller
         $request->validated();
         $movie = new Movie(request(['title', 'desc', 'year', 'fdb', 'rate', 'view']));
         $movie->save();
-        request()->thumb->storeAs('poster', $movie->id . '.jpg', 'public');
+        request()->poster->storeAs('poster', $movie->id . '.jpg', 'public');
         $movie->categories()->attach(request('categories'));
 
         return redirect($movie->path());

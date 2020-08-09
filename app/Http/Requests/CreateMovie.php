@@ -25,11 +25,11 @@ class CreateMovie extends FormRequest
     {
         return [
             'title' => ['required', 'between:3,255'],
-            'desc' => 'required',
-            //'thumb' => 'required|image',
+            'description' => 'required',
+            'poster' => 'required',
             'categories' => 'exists:categories,id',
             'year' => ['required', 'integer'],
-            //'fdb' => ['required', 'integer'],
+            'fdb' => ['required', 'integer'],
             'rate' => ['nullable', 'numeric'],
             'view' => ['nullable', 'integer']
         ];
@@ -38,7 +38,7 @@ class CreateMovie extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'desc' => $this->desc ?? 'Ten film nie ma jeszcze zarysu fabuły.',
+            'description' => $this->description ?? 'Ten film nie ma jeszcze zarysu fabuły.',
             'rate' => $this->rate ?? 0,
             'view' => $this->view ?? 0
         ]);

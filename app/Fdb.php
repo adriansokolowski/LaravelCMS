@@ -83,16 +83,16 @@ class Fdb
         return (isset($poster) ? $poster : null);
     }
 
-    public function category()
+    public function categories()
     {
-        $category = [];
+        $categories = [];
         $elements = Parser::getAll($this->website, '.list-inline-item.mt-2 a');
         foreach ($elements as $key => $value){
             if ($key !== array_key_last($elements))
-                $category[] = $value->plaintext;
+                $categories[] = $value->plaintext;
         }
 
-        return (isset($category) ? $category : null);
+        return (isset($categories) ? $categories : null);
     }
 
     public function country()
@@ -136,7 +136,7 @@ class Fdb
             'year' => $this->year(),
             'rate' => $this->rate(),
             'poster' => $this->poster(),
-            'category' => $this->category(),
+            'categories' => $this->categories(),
             'description' => $this->description(),
             'country' => $this->country()
         );

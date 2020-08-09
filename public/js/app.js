@@ -2003,12 +2003,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      movie: {},
       categories: null,
       fields: {
-        category: []
+        categories: []
       },
       status: 'Importuj',
       success: false,
@@ -2023,12 +2029,17 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    // Submitting the form to server
     submit: function submit() {
       var _this2 = this;
 
       axios.post('/api/movies', this.fields).then(function (response) {
-        _this2.fields = {};
+        console.log('Serwer zwrocil: ' + response.data);
+        _this2.movie = response.data;
         _this2.success = true;
+        _this2.fields = {
+          categories: []
+        };
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
@@ -2036,6 +2047,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    // Importing data on btn click
     importData: function importData(e) {
       var _this3 = this;
 
@@ -2044,14 +2056,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/import', {
         title: this.fields.title
       }).then(function (response) {
-        console.log(response.data);
         _this3.status = 'Importuj';
         _this3.fields = response.data;
-        var category = _this3.fields.category;
-        _this3.fields.category = _this3.categories.filter(function (x) {
-          return _this3.fields.category.includes(x.name);
-        }).map(function (category) {
-          return category.id;
+        var categories = _this3.fields.categories;
+        _this3.fields.categories = _this3.categories.filter(function (x) {
+          return _this3.fields.categories.includes(x.name);
+        }).map(function (categories) {
+          return categories.id;
         });
       })["catch"](function (error) {
         console.log(error);
@@ -37609,7 +37620,6 @@ var render = function() {
   return _c(
     "form",
     {
-      attrs: { enctype: "multipart/form-data" },
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -37629,9 +37639,13 @@ var render = function() {
               expression: "success"
             }
           ],
-          staticClass: "aler aler-success"
+          staticClass: "alert alert-success",
+          attrs: { role: "alert" }
         },
-        [_vm._v("Film został dodany.")]
+        [
+          _vm._v("Film został dodany.\n    "),
+          _c("a", { staticClass: "href", attrs: { href: "" } })
+        ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "form-group row" }, [
@@ -37818,7 +37832,7 @@ var render = function() {
           {
             staticClass:
               "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "desc" }
+            attrs: { for: "description" }
           },
           [_vm._v("Opis filmu:")]
         ),
@@ -37835,8 +37849,7 @@ var render = function() {
             ],
             staticClass: "form-control",
             attrs: {
-              name: "desc",
-              id: "desc",
+              name: "description",
               placeholder: "Opis filmu...",
               rows: "6"
             },
@@ -37849,7 +37862,17 @@ var render = function() {
                 _vm.$set(_vm.fields, "description", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.poster
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.errors.description[0]) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -37872,8 +37895,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.fields.category,
-                  expression: "fields.category"
+                  value: _vm.fields.categories,
+                  expression: "fields.categories"
                 }
               ],
               staticClass: "form-control",
@@ -37895,7 +37918,7 @@ var render = function() {
                     })
                   _vm.$set(
                     _vm.fields,
-                    "category",
+                    "categories",
                     $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                   )
                 }
