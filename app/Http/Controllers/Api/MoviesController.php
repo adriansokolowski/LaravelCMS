@@ -18,6 +18,6 @@ class MoviesController extends Controller
         //$request->poster->storeAs('poster', $movie->id . '.jpg', 'public');
         $movie->categories()->attach(request('categories'));
 
-        return $movie;
+        return $movie->path();
     }
 }

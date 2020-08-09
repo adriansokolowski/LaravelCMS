@@ -1,22 +1,25 @@
 <template>
     <form @submit.prevent="submit">
-    <div class="alert alert-success" v-show="success" role="alert">Film został dodany.
-        <a href="" class="href"></a>
+    <div class="alert alert-success text-center" v-show="success" role="alert">
+        Film został dodany. <a :href="movie">Przejdź</a>
+    </div>
+    <div class="alert alert-danger text-center" v-show="error" role="alert">
+        Nie znaleziono filmu o podanym tytule.
     </div>
         <div class="form-group row">
             <label for="title" class="col-md-3 col-form-label text-md-right font-weight-bold">Tytuł:</label>
 
             <div class="col-md-7">
                 <div class="input-group">
-                    <input id="title" type="text" v-model="fields.title" class="form-control" name="title" required autocomplete="title" autofocus>
+                    <input id="title" type="text" v-model="fields.title" :class="{ 'is-invalid' : errors && errors.title}" class="form-control" name="title" required autocomplete="title" autofocus>
                     <div class="input-group-append">
                         <button v-on:click="importData" class="btn btn-custom test">
                             {{ status }}
                         </button>
                     </div>
-                    <div class="alert alert-danger" v-if="errors && errors.title">
-                        {{ errors.title[0] }}
-                    </div>
+                    <span class="invalid-feedback" v-if="errors && errors.title" role="alert">
+                        <strong>{{ errors.title[0] }}</strong>
+                    </span>
                 </div>
             </div>
         </div>
@@ -69,20 +72,20 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="rate" class="col-md-3 col-form-label text-md-right font-weight-bold">rate:</label>
+                <label for="rate" class="col-md-3 col-form-label text-md-right font-weight-bold">Ocena:</label>
 
                 <div class="col-md-7">
-                    <input id="rate" type="number" step="0.1" v-model="fields.rate" class="form-control" name="rate" required autocomplete="rate" autofocus>
+                    <input id="rate" type="number" step="0.1" v-model="fields.rate" class="form-control" name="rate" autocomplete="rate" autofocus>
                     <div class="alert alert-danger" v-if="errors && errors.rate">
                         {{ errors.rate[0] }}
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="view" class="col-md-3 col-form-label text-md-right font-weight-bold">view:</label>
+                <label for="view" class="col-md-3 col-form-label text-md-right font-weight-bold">Wyświetlenia:</label>
 
                 <div class="col-md-7">
-                    <input id="view" type="number" v-model="fields.view" class="form-control" name="view" required autocomplete="view" autofocus>
+                    <input id="view" type="number" v-model="fields.view" class="form-control" name="view" autocomplete="view" autofocus>
                     <div class="alert alert-danger" v-if="errors && errors.view">
                         {{ errors.view[0] }}
                     </div>
@@ -102,11 +105,12 @@
     export default {
         data() {
             return {
-                movie: {},
+                movie: null,
                 categories: null,
                 fields: {categories: []},
                 status: 'Importuj',
                 success: false,
+                error: false,
                 errors: {}
             };
         },
@@ -116,21 +120,18 @@
             })
         },
         methods: {
-            // Submitting the form to server
             submit() {
                 axios.post('/api/movies', this.fields).then(response => {
-                    console.log('Serwer zwrocil: ' +response.data);
                     this.movie = response.data;
                     this.success = true;
                     this.fields = {categories: []};
+                    this.errors = {};
                 }).catch(error => {
                     if (error.response.status == 422){
                         this.errors = error.response.data.errors;
-                        console.log(this.errors);
                     }
                 });
             },
-            // Importing data on btn click
             importData (e) {
                 e.preventDefault();
                 this.status = 'Trwa importowanie...';
@@ -138,14 +139,14 @@
                     title: this.fields.title
                 })
                 .then((response) => {
+                    this.error = false;
                     this.status = 'Importuj';
                     this.fields = response.data;
-                    let categories = this.fields.categories;
                     this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name)).map(categories => categories.id)
                 })
                 .catch((error) => {
-                    console.log(error);
-                    this.fields = error;
+                    this.status = 'Importuj';
+                    this.error = true;
                 });
             }
         }

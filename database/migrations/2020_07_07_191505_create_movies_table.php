@@ -19,9 +19,17 @@ class CreateMoviesTable extends Migration
             $table->string('title');
             $table->integer('year');
             $table->text('description');
+            $table->string('trailer');
             $table->integer('fdb');
-            $table->float('rate')->default('0');
+            $table->smallInteger('up');
+            $table->smallInteger('down');
             $table->integer('view')->default('0');
+            $table->integer('slider');
+            $table->string('report');
+            $table->text('html');
+            $table->timestamp('last_view', 0);
+            $table->float('rate')->default('0');
+            $table->smallInteger('visible')->default(1);
             $table->timestamps();
         });
     }

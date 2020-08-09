@@ -26,7 +26,7 @@ class CreateMovie extends FormRequest
         return [
             'title' => ['required', 'between:3,255'],
             'description' => 'required',
-            'poster' => 'required',
+            'poster' => ['required'], ['url'],
             'categories' => 'exists:categories,id',
             'year' => ['required', 'integer'],
             'fdb' => ['required', 'integer'],

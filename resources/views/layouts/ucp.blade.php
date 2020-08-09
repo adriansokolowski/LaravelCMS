@@ -26,11 +26,11 @@
             </div>
             <div class="form-row align-items-center">
                 <div class="col-lg-9">
-                    <a href="/register">Zarejestruj się</a> |
-                    <a href="">Zapomniałeś hasła?</a>
+                    <a href="/register">Rejestracja</a> |
+                    <a href="">przypomnienie hasła</a>
                 </div>
                 <div class="col-lg-3">
-                    <button type="submit" class="btn btn-custom">Zaloguj</button>
+                    <button type="submit" class="btn btn-custom">Zaloguj się</button>
                 </div>
         </form>
     </div>

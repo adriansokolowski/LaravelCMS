@@ -2008,16 +2008,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      movie: {},
+      movie: null,
       categories: null,
       fields: {
         categories: []
       },
       status: 'Importuj',
       success: false,
+      error: false,
       errors: {}
     };
   },
@@ -2029,25 +2033,22 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    // Submitting the form to server
     submit: function submit() {
       var _this2 = this;
 
       axios.post('/api/movies', this.fields).then(function (response) {
-        console.log('Serwer zwrocil: ' + response.data);
         _this2.movie = response.data;
         _this2.success = true;
         _this2.fields = {
           categories: []
         };
+        _this2.errors = {};
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
-          console.log(_this2.errors);
         }
       });
     },
-    // Importing data on btn click
     importData: function importData(e) {
       var _this3 = this;
 
@@ -2056,17 +2057,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/import', {
         title: this.fields.title
       }).then(function (response) {
+        _this3.error = false;
         _this3.status = 'Importuj';
         _this3.fields = response.data;
-        var categories = _this3.fields.categories;
         _this3.fields.categories = _this3.categories.filter(function (x) {
           return _this3.fields.categories.includes(x.name);
         }).map(function (categories) {
           return categories.id;
         });
       })["catch"](function (error) {
-        console.log(error);
-        _this3.fields = error;
+        _this3.status = 'Importuj';
+        _this3.error = true;
       });
     }
   }
@@ -37639,13 +37640,30 @@ var render = function() {
               expression: "success"
             }
           ],
-          staticClass: "alert alert-success",
+          staticClass: "alert alert-success text-center",
           attrs: { role: "alert" }
         },
         [
-          _vm._v("Film został dodany.\n    "),
-          _c("a", { staticClass: "href", attrs: { href: "" } })
+          _vm._v("\n    Film został dodany. "),
+          _c("a", { attrs: { href: _vm.movie } }, [_vm._v("Przejdź")])
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.error,
+              expression: "error"
+            }
+          ],
+          staticClass: "alert alert-danger text-center",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n    Nie znaleziono filmu o podanym tytule.\n")]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "form-group row" }, [
@@ -37671,6 +37689,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
+              class: { "is-invalid": _vm.errors && _vm.errors.title },
               attrs: {
                 id: "title",
                 type: "text",
@@ -37708,13 +37727,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm.errors && _vm.errors.title
-              ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.errors.title[0]) +
-                      "\n                "
-                  )
-                ])
+              ? _c(
+                  "span",
+                  { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+                  [_c("strong", [_vm._v(_vm._s(_vm.errors.title[0]))])]
+                )
               : _vm._e()
           ])
         ])
@@ -37987,7 +38004,7 @@ var render = function() {
               "col-md-3 col-form-label text-md-right font-weight-bold",
             attrs: { for: "rate" }
           },
-          [_vm._v("rate:")]
+          [_vm._v("Ocena:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
@@ -38006,7 +38023,6 @@ var render = function() {
               type: "number",
               step: "0.1",
               name: "rate",
-              required: "",
               autocomplete: "rate",
               autofocus: ""
             },
@@ -38041,7 +38057,7 @@ var render = function() {
               "col-md-3 col-form-label text-md-right font-weight-bold",
             attrs: { for: "view" }
           },
-          [_vm._v("view:")]
+          [_vm._v("Wyświetlenia:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
@@ -38059,7 +38075,6 @@ var render = function() {
               id: "view",
               type: "number",
               name: "view",
-              required: "",
               autocomplete: "view",
               autofocus: ""
             },

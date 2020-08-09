@@ -1,4 +1,4 @@
-@extends('main.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="block">
