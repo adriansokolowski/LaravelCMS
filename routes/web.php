@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,18 @@ Route::get('/crawlers', 'CrawlersController@index')->name('crawlers.index');
 Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
 
 Route::post('/import', 'MoviesController@import')->name('import');
+
+Route::get('/test', function(){
+    //dd(storage_path('app\public\poster'));
+    //$size = Storage::size('app/public/storage/poster/2.jpg', 'public');
+
+    $files = Storage::disk('public')->files('poster');
+    Storage::disk('public')->delete($files);
+
+    dd($files);
+    //dd($size);
+    //$files = Storage::allFiles(storage_path('app\public\poster'));
+    //Storage::delete($files);
+    //Storage::disk("public");
+    //dd($files);
+});

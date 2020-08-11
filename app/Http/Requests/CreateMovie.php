@@ -25,12 +25,13 @@ class CreateMovie extends FormRequest
     {
         return [
             'title' => ['required', 'between:3,255'],
+            'user_id' => ['integer'],
             'description' => 'required',
             'poster' => ['required'], ['url'],
             'categories' => 'exists:categories,id',
-            'year' => ['required', 'integer'],
+            'release_date' => ['required'],
             'fdb' => ['required', 'integer'],
-            'rate' => ['nullable', 'numeric'],
+            'imdb_rate' => ['nullable', 'numeric'],
             'view' => ['nullable', 'integer']
         ];
     }
@@ -39,7 +40,7 @@ class CreateMovie extends FormRequest
     {
         $this->merge([
             'description' => $this->description ?? 'Ten film nie ma jeszcze zarysu fabuły.',
-            'rate' => $this->rate ?? 0,
+            'imdb_rate' => $this->imdb_rate ?? 0,
             'view' => $this->view ?? 0
         ]);
     }

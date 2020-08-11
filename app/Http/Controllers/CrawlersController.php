@@ -26,7 +26,7 @@ class CrawlersController extends Controller
     public function add()
     {
         $fdb = (new Fdb('Truman Show / The Truman Show'));
-        dd($fdb->category());
+        dd($fdb->results());
         //$this->fdb();
     }
 
@@ -53,7 +53,7 @@ class CrawlersController extends Controller
             $contents = file_get_contents($fdb->poster());
             Storage::disk("public")->put('/poster/' . $movie_id . '.jpg', $contents);
 
-            foreach ($fdb->category() as $category) {
+            foreach ($fdb->categories() as $category) {
                 $cat = DB::table('categories')->where('name', $category)->first();
                 DB::table('category_movie')->insert([
                     'movie_id' => $movie_id,

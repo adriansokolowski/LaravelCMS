@@ -9,6 +9,10 @@ class Movie extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'release_date' => 'datetime:Y-m-d',
+    ];
+
     public function path()
     {
         return route('movies.show', [$this, Str::slug($this->title . '-' . $this->year)]);

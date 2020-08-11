@@ -66,11 +66,12 @@ class Fdb
         return (isset($title) ? html_entity_decode($title) : null);
     }
 
-    public function year()
+    public function release_date()
     {
-        $year = Parser::get($this->website, '.nowrap.text-muted a');
+        $release_date = Parser::get($this->website, '[itemprop="datePublished"]');
 
-        return (isset($year) ? filter_var($year, FILTER_SANITIZE_NUMBER_INT) : null);
+        return $release_date;
+        //return (isset($release_date) ? filter_var($release_date, FILTER_SANITIZE_NUMBER_INT) : null);
     }
     
     public function poster()
@@ -109,13 +110,13 @@ class Fdb
         return (isset($id) ? $this->fdb = $id : null);
     }
 
-    public function rate()
+    public function imdb_rate()
     {
         $url = trim(Parser::get($this->website, '#imdb a', 0, 'href') . '/');
         $url = str_replace('http', 'https', $url);
-        $rate = Parser::get($this->website($url), '[itemprop="ratingValue"]', 0, 'innertext');
+        $imdb_rate = Parser::get($this->website($url), '[itemprop="ratingValue"]', 0, 'innertext');
         
-        return (isset($rate) ? $rate : null);
+        return (isset($imdb_rate) ? $imdb_rate : null);
     }
 
     public function description()
@@ -133,8 +134,8 @@ class Fdb
         return array(
             'fdb' => $this->fdb(),
             'title' => $this->title(),
-            'year' => $this->year(),
-            'rate' => $this->rate(),
+            'release_date' => $this->release_date(),
+            'imdb_rate' => $this->imdb_rate(),
             'poster' => $this->poster(),
             'categories' => $this->categories(),
             'description' => $this->description(),

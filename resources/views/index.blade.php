@@ -26,7 +26,7 @@
                     <div class="info">
                     <a href="{{ $movie->path() }}" title="{{ $movie->title }}" class="font-weight-bold">{{ Str::limit($movie->title, 65) }}</a>
                         <div class="gen">
-                            {{ $movie->year }} |
+                            {{ $movie->release_date->year }} |
 
                             @foreach ($movie->categories as $category)
                                 <a href="#">{{ $category->name }}</a>@if (!$loop->last),@endif

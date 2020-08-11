@@ -10,7 +10,7 @@
         </div>
         <div class="body">
             <div class="about_movie_title">
-                {{ $movie->title }} ({{ $movie->year }})
+                {{ $movie->title }} ({{ $movie->release_date->year }})
             </div>
             <div class="about_movie">
                 <div class="poster">

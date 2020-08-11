@@ -2011,9 +2011,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
   data: function data() {
     return {
+      advanced: false,
       movie: null,
       categories: null,
       fields: {
@@ -2028,6 +2034,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.fields.user_id = this.user.id;
     axios.get('/api/categories').then(function (response) {
       _this.categories = response.data.data;
     });
@@ -2036,7 +2043,9 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
+      this.fields.user_id = this.user.id;
       axios.post('/api/movies', this.fields).then(function (response) {
+        console.log(_this2.fields);
         _this2.movie = response.data;
         _this2.success = true;
         _this2.fields = {
@@ -2048,6 +2057,10 @@ __webpack_require__.r(__webpack_exports__);
           _this2.errors = error.response.data.errors;
         }
       });
+    },
+    expand: function expand(e) {
+      e.preventDefault();
+      this.advanced ? this.advanced = false : this.advanced = true;
     },
     importData: function importData(e) {
       var _this3 = this;
@@ -17410,7 +17423,7 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.19';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -21117,8 +21130,21 @@ return jQuery;
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
+      if (iteratees.length) {
+        iteratees = arrayMap(iteratees, function(iteratee) {
+          if (isArray(iteratee)) {
+            return function(value) {
+              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+            }
+          }
+          return iteratee;
+        });
+      } else {
+        iteratees = [identity];
+      }
+
       var index = -1;
-      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -21375,6 +21401,10 @@ return jQuery;
         var key = toKey(path[index]),
             newValue = value;
 
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+          return object;
+        }
+
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -21527,11 +21557,14 @@ return jQuery;
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      value = iteratee(value);
-
       var low = 0,
-          high = array == null ? 0 : array.length,
-          valIsNaN = value !== value,
+          high = array == null ? 0 : array.length;
+      if (high === 0) {
+        return 0;
+      }
+
+      value = iteratee(value);
+      var valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -23016,10 +23049,11 @@ return jQuery;
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(array);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var arrStacked = stack.get(array);
+      var othStacked = stack.get(other);
+      if (arrStacked && othStacked) {
+        return arrStacked == other && othStacked == array;
       }
       var index = -1,
           result = true,
@@ -23181,10 +23215,11 @@ return jQuery;
           return false;
         }
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(object);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var objStacked = stack.get(object);
+      var othStacked = stack.get(other);
+      if (objStacked && othStacked) {
+        return objStacked == other && othStacked == object;
       }
       var result = true;
       stack.set(object, other);
@@ -26565,6 +26600,10 @@ return jQuery;
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
+     *
+     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -27314,15 +27353,15 @@ return jQuery;
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 },
+     *   { 'user': 'fred',   'age': 30 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -32197,11 +32236,11 @@ return jQuery;
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
-      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
+      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
+      // and escape the comment, thus injecting code that gets evaled.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
+          ? (options.sourceURL + '').replace(/\s/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -32234,8 +32273,6 @@ return jQuery;
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      // Like with sourceURL, we take care to not check the option's prototype,
-      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -32942,6 +32979,9 @@ return jQuery;
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
+     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -32957,6 +32997,10 @@ return jQuery;
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -32970,6 +33014,9 @@ return jQuery;
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
+     *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -32987,6 +33034,10 @@ return jQuery;
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -33210,6 +33261,10 @@ return jQuery;
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -33236,6 +33291,10 @@ return jQuery;
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -33255,6 +33314,9 @@ return jQuery;
      *
      * func(NaN);
      * // => false
+     *
+     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
+     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -37743,9 +37805,9 @@ var render = function() {
           {
             staticClass:
               "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "year" }
+            attrs: { for: "release_date" }
           },
-          [_vm._v("Rok:")]
+          [_vm._v("Premiera:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
@@ -37754,35 +37816,35 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.fields.year,
-                expression: "fields.year"
+                value: _vm.fields.release_date,
+                expression: "fields.release_date"
               }
             ],
             staticClass: "form-control",
             attrs: {
-              id: "year",
-              type: "number",
-              name: "year",
+              id: "release_date",
+              type: "date",
+              name: "release_date",
               required: "",
-              autocomplete: "year",
+              autocomplete: "release_date",
               autofocus: ""
             },
-            domProps: { value: _vm.fields.year },
+            domProps: { value: _vm.fields.release_date },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.fields, "year", $event.target.value)
+                _vm.$set(_vm.fields, "release_date", $event.target.value)
               }
             }
           }),
           _vm._v(" "),
-          _vm.errors && _vm.errors.year
+          _vm.errors && _vm.errors.release_date
             ? _c("div", { staticClass: "alert alert-danger" }, [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.errors.year[0]) +
+                    _vm._s(_vm.errors.release_date[0]) +
                     "\n            "
                 )
               ])
@@ -37851,7 +37913,7 @@ var render = function() {
               "col-md-3 col-form-label text-md-right font-weight-bold",
             attrs: { for: "description" }
           },
-          [_vm._v("Opis filmu:")]
+          [_vm._v("Opis:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
@@ -37901,7 +37963,7 @@ var render = function() {
               "col-md-3 col-form-label text-md-right font-weight-bold",
             attrs: { for: "categories" }
           },
-          [_vm._v("Kategoria:")]
+          [_vm._v("Kategorie:")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-7" }, [
@@ -37953,153 +38015,205 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "fdb" }
-          },
-          [_vm._v("Fdb.pl ID:")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-7" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.fields.fdb,
-                expression: "fields.fdb"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "fdb",
-              type: "number",
-              name: "fdb",
-              required: "",
-              autocomplete: "fdb",
-              autofocus: ""
-            },
-            domProps: { value: _vm.fields.fdb },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.fields, "fdb", $event.target.value)
-              }
-            }
-          })
-        ])
+      _c("h5", { staticClass: "font-weight-bold", on: { click: _vm.expand } }, [
+        _vm._v("Opcje zaawansowane:")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "rate" }
-          },
-          [_vm._v("Ocena:")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-7" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.fields.rate,
-                expression: "fields.rate"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "rate",
-              type: "number",
-              step: "0.1",
-              name: "rate",
-              autocomplete: "rate",
-              autofocus: ""
-            },
-            domProps: { value: _vm.fields.rate },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.fields, "rate", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.rate
-            ? _c("div", { staticClass: "alert alert-danger" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.rate[0]) +
-                    "\n                "
-                )
-              ])
-            : _vm._e()
-        ])
-      ]),
+      _c("i", {
+        class: [_vm.advanced ? "fa-chevron-up" : "fa-chevron-down", "fa"]
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass:
-              "col-md-3 col-form-label text-md-right font-weight-bold",
-            attrs: { for: "view" }
-          },
-          [_vm._v("Wyświetlenia:")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-7" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.fields.view,
-                expression: "fields.view"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "view",
-              type: "number",
-              name: "view",
-              autocomplete: "view",
-              autofocus: ""
-            },
-            domProps: { value: _vm.fields.view },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.fields, "view", $event.target.value)
-              }
+      _c("i", { staticClass: "fa fa-chevron-down" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.advanced,
+              expression: "advanced"
             }
-          }),
+          ],
+          staticClass: "form-group row"
+        },
+        [
+          _c(
+            "label",
+            {
+              staticClass:
+                "col-md-3 col-form-label text-md-right font-weight-bold",
+              attrs: { for: "fdb" }
+            },
+            [_vm._v("Fdb.pl ID:")]
+          ),
           _vm._v(" "),
-          _vm.errors && _vm.errors.view
-            ? _c("div", { staticClass: "alert alert-danger" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.errors.view[0]) +
-                    "\n                "
-                )
-              ])
-            : _vm._e()
-        ])
-      ]),
+          _c("div", { staticClass: "col-md-7" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fields.fdb,
+                  expression: "fields.fdb"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "fdb",
+                type: "number",
+                name: "fdb",
+                required: "",
+                autocomplete: "fdb",
+                autofocus: ""
+              },
+              domProps: { value: _vm.fields.fdb },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.fields, "fdb", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.advanced,
+              expression: "advanced"
+            }
+          ],
+          staticClass: "form-group row"
+        },
+        [
+          _c(
+            "label",
+            {
+              staticClass:
+                "col-md-3 col-form-label text-md-right font-weight-bold",
+              attrs: { for: "imdb_rate" }
+            },
+            [_vm._v("Ocena:")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-7" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fields.imdb_rate,
+                  expression: "fields.imdb_rate"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "imdb_rate",
+                type: "number",
+                step: "0.1",
+                name: "imdb_rate",
+                autocomplete: "imdb_rate",
+                autofocus: ""
+              },
+              domProps: { value: _vm.fields.imdb_rate },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.fields, "imdb_rate", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.imdb_rate
+              ? _c("div", { staticClass: "alert alert-danger" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.imdb_rate[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.advanced,
+              expression: "advanced"
+            }
+          ],
+          staticClass: "form-group row"
+        },
+        [
+          _c(
+            "label",
+            {
+              staticClass:
+                "col-md-3 col-form-label text-md-right font-weight-bold",
+              attrs: { for: "view" }
+            },
+            [_vm._v("Wyświetlenia:")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-7" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fields.view,
+                  expression: "fields.view"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "view",
+                type: "number",
+                name: "view",
+                autocomplete: "view",
+                autofocus: ""
+              },
+              domProps: { value: _vm.fields.view },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.fields, "view", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.view
+              ? _c("div", { staticClass: "alert alert-danger" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.errors.view[0]) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]
+      ),
       _vm._v(" "),
       _vm._m(0)
     ]

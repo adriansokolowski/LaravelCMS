@@ -9,7 +9,7 @@
             <!-- <form method="POST" action="{{ route('movies.store') }}" enctype="multipart/form-data"> -->
             <!-- @csrf -->
             <div id="app">
-                <movie-create></movie-create>
+                <movie-create :user="{{ auth()->user() }}"></movie-create>
             </div>
             <!-- <div class="form-group row">
                 <label for="title" class="col-md-3 col-form-label text-md-right">Tytuł: *</label>

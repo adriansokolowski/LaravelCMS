@@ -24,12 +24,12 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="year" class="col-md-3 col-form-label text-md-right font-weight-bold">Rok:</label>
+            <label for="release_date" class="col-md-3 col-form-label text-md-right font-weight-bold">Premiera:</label>
 
             <div class="col-md-7">
-                <input id="year" type="number" v-model="fields.year" class="form-control" name="year" required autocomplete="year" autofocus>
-                <div class="alert alert-danger" v-if="errors && errors.year">
-                    {{ errors.year[0] }}
+                <input id="release_date" type="date" v-model="fields.release_date" class="form-control" name="release_date" required autocomplete="release_date" autofocus>
+                <div class="alert alert-danger" v-if="errors && errors.release_date">
+                    {{ errors.release_date[0] }}
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="description" class="col-md-3 col-form-label text-md-right font-weight-bold">Opis filmu:</label>
+            <label for="description" class="col-md-3 col-form-label text-md-right font-weight-bold">Opis:</label>
 
             <div class="col-md-7">
                 <textarea class="form-control" v-model="fields.description" name="description" placeholder="Opis filmu..." rows="6"></textarea>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="categories" class="col-md-3 col-form-label text-md-right font-weight-bold">Kategoria:</label>
+            <label for="categories" class="col-md-3 col-form-label text-md-right font-weight-bold">Kategorie:</label>
 
             <div class="col-md-7">
                 <select multiple size="10" v-model="fields.categories" class="form-control" name="categories[]" id="categories">
@@ -64,24 +64,28 @@
                 </select>
             </div>
         </div>
-            <div class="form-group row">
+            <h5 v-on:click="expand" class="font-weight-bold">Opcje zaawansowane:</h5>
+            <i :class="[advanced ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']"></i>
+            <i class="fa fa-chevron-down"></i>
+
+            <div class="form-group row" v-show="advanced">
                 <label for="fdb" class="col-md-3 col-form-label text-md-right font-weight-bold">Fdb.pl ID:</label>
 
                 <div class="col-md-7">
                     <input id="fdb" type="number" v-model="fields.fdb" class="form-control" name="fdb" required autocomplete="fdb" autofocus>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="rate" class="col-md-3 col-form-label text-md-right font-weight-bold">Ocena:</label>
+            <div class="form-group row" v-show="advanced">
+                <label for="imdb_rate" class="col-md-3 col-form-label text-md-right font-weight-bold">Ocena:</label>
 
                 <div class="col-md-7">
-                    <input id="rate" type="number" step="0.1" v-model="fields.rate" class="form-control" name="rate" autocomplete="rate" autofocus>
-                    <div class="alert alert-danger" v-if="errors && errors.rate">
-                        {{ errors.rate[0] }}
+                    <input id="imdb_rate" type="number" step="0.1" v-model="fields.imdb_rate" class="form-control" name="imdb_rate" autocomplete="imdb_rate" autofocus>
+                    <div class="alert alert-danger" v-if="errors && errors.imdb_rate">
+                        {{ errors.imdb_rate[0] }}
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" v-show="advanced">
                 <label for="view" class="col-md-3 col-form-label text-md-right font-weight-bold">Wyświetlenia:</label>
 
                 <div class="col-md-7">
@@ -103,8 +107,10 @@
 
 <script>
     export default {
+        props: ['user'],
         data() {
             return {
+                advanced: false,
                 movie: null,
                 categories: null,
                 fields: {categories: []},
@@ -115,13 +121,16 @@
             };
         },
         mounted() {
+            this.fields.user_id = this.user.id;
             axios.get('/api/categories').then(response => {
                 this.categories = response.data.data;
             })
         },
         methods: {
             submit() {
+                this.fields.user_id = this.user.id;
                 axios.post('/api/movies', this.fields).then(response => {
+                    console.log(this.fields);
                     this.movie = response.data;
                     this.success = true;
                     this.fields = {categories: []};
@@ -131,6 +140,10 @@
                         this.errors = error.response.data.errors;
                     }
                 });
+            },
+            expand (e) {
+                e.preventDefault();
+                this.advanced ? this.advanced = false : this.advanced = true;
             },
             importData (e) {
                 e.preventDefault();
