@@ -68,10 +68,11 @@ class Fdb
 
     public function release_date()
     {
-        $release_date = Parser::get($this->website, '[itemprop="datePublished"]');
-
-        return $release_date;
-        //return (isset($release_date) ? filter_var($release_date, FILTER_SANITIZE_NUMBER_INT) : null);
+        if ($this->type() == 'movie'){
+            return  Parser::get($this->website, '[itemprop="datePublished"]');
+        } else {
+            return '2011-04-17';
+        }
     }
     
     public function poster()
@@ -110,6 +111,16 @@ class Fdb
         return (isset($id) ? $this->fdb = $id : null);
     }
 
+    public function type()
+    {
+        if (preg_match('/episodes/', $this->website, $matches)){
+            $type = 'serie';
+        } else {
+            $type = 'movie';
+        }
+        return $type;
+    }
+
     public function imdb_rate()
     {
         $url = trim(Parser::get($this->website, '#imdb a', 0, 'href') . '/');
@@ -139,7 +150,8 @@ class Fdb
             'poster' => $this->poster(),
             'categories' => $this->categories(),
             'description' => $this->description(),
-            'country' => $this->country()
+            'country' => $this->country(),
+            'type' => $this->type()
         );
     }
 }

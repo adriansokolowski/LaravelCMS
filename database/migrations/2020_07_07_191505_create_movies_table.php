@@ -24,9 +24,9 @@ class CreateMoviesTable extends Migration
             $table->unsignedInteger('fdb');
             $table->unsignedInteger('up')->default('0');
             $table->unsignedInteger('down')->default('0');
-            $table->unsignedInteger('view')->default('0');
+            $table->unsignedInteger('views')->default('0');
             $table->unsignedInteger('slider')->nullable();
-            $table->string('report')->nullable();
+            $table->string('report')->default(0)->nullable();
             $table->text('html')->nullable();
             $table->dateTime('last_view');
             $table->float('imdb_rate')->default('0');

@@ -18,11 +18,8 @@ class MoviesController extends Controller
         $movie->down = 0;
         $movie->last_view = now();
         $movie->save();
-        //$request->poster->storeAs('poster', $movie->id . '.jpg', 'public');
-
-        $contents = file_get_contents($request['poster']);
+        $contents = file_get_contents($request->poster);
         Storage::disk("public")->put('/poster/' . $movie->id . '.jpg', $contents);
-
         $movie->categories()->attach(request('categories'));
 
         return $movie->path();
