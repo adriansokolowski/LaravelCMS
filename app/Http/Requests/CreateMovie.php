@@ -27,7 +27,7 @@ class CreateMovie extends FormRequest
             'title' => 'required|between:3,255',
             'user_id' => 'integer',
             'release_date' => 'required|date',
-            'description' => 'required',
+            'description' => '',
             'poster' => 'required|url',
             'categories' => 'exists:categories,id',
             'fdb' => 'integer',

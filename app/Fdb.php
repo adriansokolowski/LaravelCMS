@@ -13,8 +13,8 @@ class Fdb
     public function __construct($string)
     {
         (filter_var($string, FILTER_VALIDATE_URL) === FALSE)
-        ? $this->search($string)
-        : $this->url($string);
+            ? $this->search($string)
+            : $this->url($string);
     }
 
     private function website($url)
@@ -29,14 +29,12 @@ class Fdb
 
     private function url($url)
     {
-        if (stristr($this->website($url), '<html><body>You are being')){
+        if (stristr($this->website($url), '<html><body>You are being')) {
             $url = Parser::get($this->website($url), 'a', 0, 'href');
-            $this->url = $url;
-            $this->website = $this->website($url);
-        } else {
-            $this->url = $url;
-            $this->website = $this->website($url);
         }
+
+        $this->url = $url;
+        $this->website = $this->website($url);
 
         // if (empty($this->id())) {
         //     throw new Exception('ERROR');
@@ -55,7 +53,7 @@ class Fdb
         }
     }
 
-    public function title()
+    public function title(): string
     {
         $title = Parser::get($this->website, '[itemprop="name"]');
         $eTitle = trim(Parser::get($this->website, '[itemprop="alternateName"]'));
@@ -64,30 +62,30 @@ class Fdb
         return (isset($title) ? html_entity_decode($title) : null);
     }
 
-    public function release_date()
+    public function release_date(): string
     {
-        if ($this->type() == 'movie'){
+        if ($this->type() == 'movie') {
             return  Parser::get($this->website, '[itemprop="datePublished"]');
         } else {
             return '2011-04-17';
         }
     }
-    
-    public function poster()
-    { 
+
+    public function poster(): string
+    {
         $poster = $this->website->find('.adaptive-image-item', 0)->{'data-srcset'};
         $poster = explode('80w,', $poster);
         $poster = explode('.jpg', $poster[1]);
         $poster = trim($poster[0] . '.jpg');
-        
+
         return (isset($poster) ? $poster : null);
     }
 
-    public function categories()
+    public function categories(): array
     {
         $categories = [];
         $elements = Parser::getAll($this->website, '.list-inline-item.mt-2 a');
-        foreach ($elements as $key => $value){
+        foreach ($elements as $key => $value) {
             if ($key !== array_key_last($elements))
                 $categories[] = $value->plaintext;
         }
@@ -95,7 +93,7 @@ class Fdb
         return (isset($categories) ? $categories : null);
     }
 
-    public function countries()
+    public function countries(): array
     {
         $country = Parser::get($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
 
@@ -105,16 +103,16 @@ class Fdb
         return (isset($countries) ? $countries : null);
     }
 
-    public function fdb()
+    public function fdb(): int
     {
         $id = Parser::get($this->website, '[name="movie-id"]', 0, 'content');
 
         return (isset($id) ? $this->fdb = $id : null);
     }
 
-    public function type()
+    public function type(): int
     {
-        if (preg_match('/episodes/', $this->website, $matches)){
+        if (preg_match('/episodes/', $this->website, $matches)) {
             $type = 'serie';
         } else {
             $type = 'movie';
@@ -122,53 +120,53 @@ class Fdb
         return $type;
     }
 
-    public function imdb_rate()
+    public function imdb_rate(): float
     {
         $url = trim(Parser::get($this->website, '#imdb a', 0, 'href') . '/');
         $url = str_replace('http', 'https', $url);
         $imdb_rate = Parser::get($this->website($url), '[itemprop="ratingValue"]', 0, 'innertext');
-        
+
         return (isset($imdb_rate) ? $imdb_rate : null);
     }
 
-    public function description()
+    public function description(): string
     {
         $url = $this->website($this->url . '/opisy');
         $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
-        
+
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
-    public function direction()
+    public function direction(): array
     {
         $elements = Parser::getAll($this->website, '[itemprop="director"] span');
         $direction = [];
-        foreach ($elements as $key => $value):
+        foreach ($elements as $key => $value) :
             $direction[] = $value->plaintext;
         endforeach;
-        
+
         return $direction;
     }
 
-    public function screenplay()
+    public function screenplay(): array
     {
         $elements = Parser::getAll($this->website, '[itemprop="author"] span');
         $screenplay = [];
-        foreach ($elements as $key=>$value):
+        foreach ($elements as $key => $value) :
             $screenplay[] = $value->plaintext;
         endforeach;
-        
+
         return $screenplay;
     }
 
-    public function cast()
+    public function cast(): array
     {
         $elements = Parser::getAll($this->website, '[itemprop="actor"] span');
         $cast = [];
-        foreach ($elements as $key => $value):
+        foreach ($elements as $key => $value) :
             $cast[] = $value->plaintext;
         endforeach;
-        
+
         return $cast;
     }
 
