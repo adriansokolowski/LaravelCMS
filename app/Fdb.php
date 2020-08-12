@@ -110,7 +110,7 @@ class Fdb
         return (isset($id) ? $this->fdb = $id : null);
     }
 
-    public function type(): int
+    public function type(): string
     {
         if (preg_match('/episodes/', $this->website, $matches)) {
             $type = 'serie';
