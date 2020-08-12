@@ -219,6 +219,7 @@
         props: ['user'],
         data() {
             return {
+                value: [{'id': 6, 'name':'Dramat'}],
                 advanced: false,
                 movie: null,
                 categories: [],
@@ -241,6 +242,8 @@
         methods: {
             submit() {
                 this.fields.user_id = this.user.id;
+                this.fields.categories = this.fields.categories.map(a => a.id);
+                console.log(this.fields.categories);
                 axios.post('/api/movies', this.fields).then(response => {
                     console.log(this.fields);
                     this.movie = response.data;
@@ -268,7 +271,8 @@
                     this.error = false;
                     this.status = 'Importuj';
                     this.fields = response.data;
-                    //this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name)).map(categories => categories.id)
+                    this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name));
+                    console.log(this.fields.categories);
                 })
                 .catch((error) => {
                     this.status = 'Importuj';

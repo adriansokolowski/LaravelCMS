@@ -6,7 +6,6 @@
             <a href="#wm1" onclick="openCity(event, 'London')">Opis filmu </a> 
             <a href="#wm2" onclick="openCity(event, 'Paris')">Oglądaj online</a>
             
-            
         </div>
         <div class="body">
             <div class="about_movie_title">

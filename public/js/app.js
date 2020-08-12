@@ -2128,6 +2128,10 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user'],
   data: function data() {
     return {
+      value: [{
+        'id': 6,
+        'name': 'Dramat'
+      }],
       advanced: false,
       movie: null,
       categories: [],
@@ -2155,6 +2159,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.fields.user_id = this.user.id;
+      this.fields.categories = this.fields.categories.map(function (a) {
+        return a.id;
+      });
+      console.log(this.fields.categories);
       axios.post('/api/movies', this.fields).then(function (response) {
         console.log(_this2.fields);
         _this2.movie = response.data;
@@ -2184,7 +2192,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.error = false;
         _this3.status = 'Importuj';
-        _this3.fields = response.data; //this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name)).map(categories => categories.id)
+        _this3.fields = response.data;
+        _this3.fields.categories = _this3.categories.filter(function (x) {
+          return _this3.fields.categories.includes(x.name);
+        });
+        console.log(_this3.fields.categories);
       })["catch"](function (error) {
         _this3.status = 'Importuj';
         _this3.error = true;
