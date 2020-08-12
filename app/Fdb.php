@@ -137,6 +137,7 @@ class Fdb
     {
         $url = $this->website($this->url . '/opisy');
         $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
+        
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
@@ -144,9 +145,9 @@ class Fdb
     {
         $elements = Parser::getAll($this->website, '[itemprop="director"] span');
         $direction = [];
-        foreach ($elements as $key => $value){
+        foreach ($elements as $key => $value):
             $direction[] = $value->plaintext;
-        }
+        endforeach;
         
         return $direction;
     }
@@ -155,9 +156,9 @@ class Fdb
     {
         $elements = Parser::getAll($this->website, '[itemprop="author"] span');
         $screenplay = [];
-        foreach ($elements as $key => $value){
+        foreach ($elements as $key=>$value):
             $screenplay[] = $value->plaintext;
-        }
+        endforeach;
         
         return $screenplay;
     }
@@ -166,9 +167,9 @@ class Fdb
     {
         $elements = Parser::getAll($this->website, '[itemprop="actor"] span');
         $cast = [];
-        foreach ($elements as $key => $value){
+        foreach ($elements as $key => $value):
             $cast[] = $value->plaintext;
-        }
+        endforeach;
         
         return $cast;
     }
@@ -179,15 +180,15 @@ class Fdb
             return [];
         }
         return array(
-            'fdb' => $this->fdb(),
             'title' => $this->title(),
             'release_date' => $this->release_date(),
-            'imdb_rate' => $this->imdb_rate(),
             'poster' => $this->poster(),
             'categories' => $this->categories(),
             'description' => $this->description(),
-            'countries' => $this->countries(),
+            'fdb' => $this->fdb(),
+            'imdb_rate' => $this->imdb_rate(),
             'direction' => $this->direction(),
+            'countries' => $this->countries(),
             'screenplay' => $this->screenplay(),
             'cast' => $this->cast(),
             'type' => $this->type()
