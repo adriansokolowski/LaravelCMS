@@ -9,6 +9,9 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import Multiselect from 'vue-multiselect';
+import VueButtonSpinner from 'vue-button-spinner';
+import InputTag from 'vue-input-tag'
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +25,8 @@ import Multiselect from 'vue-multiselect';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('multi-select', Multiselect);
+Vue.component('button-spinner', VueButtonSpinner);
+Vue.component('input-tag', InputTag)
 
 Vue.component('movie-create', require('./components/MovieCreate.vue').default);
 
