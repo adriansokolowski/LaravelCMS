@@ -2064,20 +2064,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
     return {
       a: false,
       c: '',
-      isLoading: false,
-      advanced: false,
       movie: null,
       categories: [],
+      categories2: [],
       fields: {
         categories: []
       },
-      status: 'Importuj',
       success: false,
       error: false,
       errors: {}
@@ -2097,6 +2105,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.fields.user_id = this.user.id;
+      this.categories2 = this.fields.categories;
       this.fields.categories = this.fields.categories.map(function (x) {
         return x.id;
       });
@@ -2108,14 +2117,12 @@ __webpack_require__.r(__webpack_exports__);
         };
         _this2.errors = {};
       })["catch"](function (error) {
+        _this2.fields.categories = _this2.categories2;
+
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
         }
       });
-    },
-    expand: function expand(e) {
-      e.preventDefault();
-      this.advanced ? this.advanced = false : this.advanced = true;
     },
     importData: function importData(e) {
       var _this3 = this;
@@ -2123,21 +2130,17 @@ __webpack_require__.r(__webpack_exports__);
       e.preventDefault();
       this.a = true;
       this.errors = {};
-      this.status = 'Trwa importowanie...';
       axios.post('/import', {
         title: this.fields.title
       }).then(function (response) {
         _this3.a = false;
         _this3.c = '';
         _this3.error = false;
-        _this3.status = 'Importuj';
         _this3.fields = response.data;
         _this3.fields.categories = _this3.categories.filter(function (x) {
           return _this3.fields.categories.includes(x.name);
         });
-        console.log(_this3.fields.categories);
       })["catch"](function (error) {
-        _this3.status = 'Importuj';
         _this3.error = true;
         _this3.a = false;
         _this3.c = '';
@@ -44362,14 +44365,9 @@ var render = function() {
                     }
                   },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-custom",
-                        on: { click: _vm.importData }
-                      },
-                      [_vm._v("Importuj")]
-                    )
+                    _c("span", { on: { click: _vm.importData } }, [
+                      _vm._v("Importuj")
+                    ])
                   ]
                 )
               ],
@@ -44577,6 +44575,57 @@ var render = function() {
                 _vm._v(
                   "\n                " +
                     _vm._s(_vm.errors.description[0]) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass:
+              "col-md-3 col-form-label text-md-right font-weight-bold",
+            attrs: { for: "imdb_rate" }
+          },
+          [_vm._v("Ocena IMDB.com")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fields.imdb_rate,
+                expression: "fields.imdb_rate"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "imdb_rate",
+              type: "text",
+              autocomplete: "imdb_rate",
+              autofocus: ""
+            },
+            domProps: { value: _vm.fields.imdb_rate },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.fields, "imdb_rate", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.imdb_rate
+            ? _c("div", { staticClass: "alert alert-danger" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.errors.imdb_rate[0]) +
                     "\n            "
                 )
               ])

@@ -12,11 +12,9 @@ class Fdb
 
     public function __construct($string)
     {
-        if (filter_var($string, FILTER_VALIDATE_URL) === FALSE) {
-            $this->search($string);
-        } else {
-            $this->url($string);
-        }
+        (filter_var($string, FILTER_VALIDATE_URL) === FALSE)
+        ? $this->search($string)
+        : $this->url($string);
     }
 
     private function website($url)

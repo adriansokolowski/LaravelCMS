@@ -15,7 +15,7 @@
                             :is-loading="a" 
                             :disabled="a"
                             :status="c">
-                            <button class="btn btn-custom" v-on:click="importData">Importuj</button>
+                            <span v-on:click="importData">Importuj</span>
                         </button-spinner>
                     </div>
                     <span class="invalid-feedback" v-if="errors && errors.title" role="alert">
@@ -61,6 +61,16 @@
                 <textarea class="form-control" v-model="fields.description" placeholder="Opis filmu..." rows="6"></textarea>
                 <div class="alert alert-danger" v-if="errors && errors.poster">
                     {{ errors.description[0] }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="imdb_rate" class="col-md-3 col-form-label text-md-right font-weight-bold">Ocena IMDB.com</label>
+
+            <div class="col-md-7">
+                <input id="imdb_rate" type="text" v-model="fields.imdb_rate" class="form-control" autocomplete="imdb_rate" autofocus>
+                <div class="alert alert-danger" v-if="errors && errors.imdb_rate">
+                    {{ errors.imdb_rate[0] }}
                 </div>
             </div>
         </div>
@@ -161,12 +171,10 @@
             return {
                 a: false,
                 c: '',
-                isLoading: false,
-                advanced: false,
                 movie: null,
                 categories: [],
+                categories2: [],
                 fields: {categories: []},
-                status: 'Importuj',
                 success: false,
                 error: false,
                 errors: {}
@@ -182,6 +190,7 @@
         methods: {
             submit() {
                 this.fields.user_id = this.user.id;
+                this.categories2 = this.fields.categories;
                 this.fields.categories = this.fields.categories.map(x => x.id);
                 axios.post('/api/movies', this.fields).then(response => {
                     this.movie = response.data;
@@ -189,20 +198,16 @@
                     this.fields = {categories: []};
                     this.errors = {};
                 }).catch(error => {
+                    this.fields.categories = this.categories2;
                     if (error.response.status == 422){
                         this.errors = error.response.data.errors;
                     }
                 });
             },
-            expand (e) {
-                e.preventDefault();
-                this.advanced ? this.advanced = false : this.advanced = true;
-            },
             importData (e) {
                 e.preventDefault();
                 this.a = true;
                 this.errors = {};
-                this.status = 'Trwa importowanie...';
                 axios.post('/import', {
                     title: this.fields.title
                 })
@@ -210,13 +215,10 @@
                     this.a = false;
                     this.c = '';
                     this.error = false;
-                    this.status = 'Importuj';
                     this.fields = response.data;
                     this.fields.categories = this.categories.filter(x=> this.fields.categories.includes(x.name));
-                    console.log(this.fields.categories);
                 })
                 .catch((error) => {
-                    this.status = 'Importuj';
                     this.error = true;
                     this.a = false;
                     this.c = '';

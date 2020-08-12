@@ -7,7 +7,14 @@ use Illuminate\Support\Str;
 
 class Movie extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'user_id', 
+        'release_date',
+        'description',
+        'imdb_rate',
+        'fdb'
+    ];
 
     protected $casts = [
         'release_date' => 'datetime:Y-m-d',
@@ -15,7 +22,7 @@ class Movie extends Model
 
     public function path()
     {
-        return route('movies.show', [$this, Str::slug($this->title . '-' . $this->year)]);
+        return route('movies.show', [$this, Str::slug($this->title . '-' . $this->release_date->year)]);
     }
 
     public function categories()

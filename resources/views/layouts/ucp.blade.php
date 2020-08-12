@@ -42,6 +42,7 @@
     </div>
     <div class="bbody">
         Panel uzytkownika
+        <a href="{{ route('movies.create') }}">Dodaj film</a>
     </div>
 </div>
 @endguest
