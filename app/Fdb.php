@@ -97,11 +97,14 @@ class Fdb
         return (isset($categories) ? $categories : null);
     }
 
-    public function country()
+    public function countries()
     {
         $country = Parser::get($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
 
-        return (isset($country) ? $country : null);
+        $countries = [];
+        $countries[] = $country;
+
+        return (isset($countries) ? $countries : null);
     }
 
     public function fdb()
@@ -137,6 +140,39 @@ class Fdb
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
+    public function direction()
+    {
+        $elements = Parser::getAll($this->website, '[itemprop="director"] span');
+        $direction = [];
+        foreach ($elements as $key => $value){
+            $direction[] = $value->plaintext;
+        }
+        
+        return $direction;
+    }
+
+    public function screenplay()
+    {
+        $elements = Parser::getAll($this->website, '[itemprop="author"] span');
+        $screenplay = [];
+        foreach ($elements as $key => $value){
+            $screenplay[] = $value->plaintext;
+        }
+        
+        return $screenplay;
+    }
+
+    public function cast()
+    {
+        $elements = Parser::getAll($this->website, '[itemprop="actor"] span');
+        $cast = [];
+        foreach ($elements as $key => $value){
+            $cast[] = $value->plaintext;
+        }
+        
+        return $cast;
+    }
+
     public function results(): array
     {
         if (empty($this->title())) {
@@ -150,7 +186,10 @@ class Fdb
             'poster' => $this->poster(),
             'categories' => $this->categories(),
             'description' => $this->description(),
-            'country' => $this->country(),
+            'countries' => $this->countries(),
+            'direction' => $this->direction(),
+            'screenplay' => $this->screenplay(),
+            'cast' => $this->cast(),
             'type' => $this->type()
         );
     }
