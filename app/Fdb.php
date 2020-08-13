@@ -8,7 +8,7 @@ use App\Category;
 
 class Fdb
 {
-    public $website, $url;
+    public $fdb, $website, $url;
 
     public function __construct($string)
     {
@@ -53,7 +53,7 @@ class Fdb
         }
     }
 
-    public function title(): string
+    public function title()
     {
         $title = Parser::get($this->website, '[itemprop="name"]');
         $eTitle = trim(Parser::get($this->website, '[itemprop="alternateName"]'));
@@ -62,7 +62,7 @@ class Fdb
         return (isset($title) ? html_entity_decode($title) : null);
     }
 
-    public function release_date(): string
+    public function release_date()
     {
         if ($this->type() == 'movie') {
             return  Parser::get($this->website, '[itemprop="datePublished"]');
@@ -71,17 +71,17 @@ class Fdb
         }
     }
 
-    public function poster(): string
+    public function poster()
     {
         $poster = $this->website->find('.adaptive-image-item', 0)->{'data-srcset'};
         $poster = explode('80w,', $poster);
         $poster = explode('.jpg', $poster[1]);
         $poster = trim($poster[0] . '.jpg');
 
-        return (isset($poster) ? $poster : null);
+        return $poster ?? null;
     }
 
-    public function categories(): array
+    public function categories()
     {
         $categories = [];
         $elements = Parser::getAll($this->website, '.list-inline-item.mt-2 a');
@@ -90,20 +90,20 @@ class Fdb
                 $categories[] = $value->plaintext;
         }
 
-        return (isset($categories) ? $categories : null);
+        return $categories ?? null;
     }
 
-    public function countries(): array
+    public function countries()
     {
         $country = Parser::get($this->website, '.list-inline-item.mt-2 a', -1, 'plaintext');
 
         $countries = [];
         $countries[] = $country;
 
-        return (isset($countries) ? $countries : null);
+        return $countries ?? null;
     }
 
-    public function fdb(): int
+    public function fdb()
     {
         $id = Parser::get($this->website, '[name="movie-id"]', 0, 'content');
 
@@ -112,24 +112,21 @@ class Fdb
 
     public function type(): string
     {
-        if (preg_match('/episodes/', $this->website, $matches)) {
-            $type = 'serie';
-        } else {
-            $type = 'movie';
-        }
-        return $type;
+        return (preg_match('/episodes/', $this->website, $matches))
+        ? 'serie'
+        : 'movie';
     }
 
-    public function imdb_rate(): float
+    public function imdb_rate()
     {
         $url = trim(Parser::get($this->website, '#imdb a', 0, 'href') . '/');
         $url = str_replace('http', 'https', $url);
         $imdb_rate = Parser::get($this->website($url), '[itemprop="ratingValue"]', 0, 'innertext');
 
-        return (isset($imdb_rate) ? $imdb_rate : null);
+        return $imdb_rate ?? null;
     }
 
-    public function description(): string
+    public function description()
     {
         $url = $this->website($this->url . '/opisy');
         $description = trim(Parser::get($url, '.container .col-md-8 p', 0, 'plaintext'));
@@ -137,7 +134,7 @@ class Fdb
         return (isset($description) ? preg_replace('@\([^)]+\)@', '', html_entity_decode(htmlspecialchars_decode($description))) : 'Ten film nie ma jeszcze zarysu fabuły.');
     }
 
-    public function direction(): array
+    public function direction()
     {
         $elements = Parser::getAll($this->website, '[itemprop="director"] span');
         $direction = [];
@@ -145,10 +142,10 @@ class Fdb
             $direction[] = $value->plaintext;
         endforeach;
 
-        return $direction;
+        return $direction ?? null;
     }
 
-    public function screenplay(): array
+    public function screenplay()
     {
         $elements = Parser::getAll($this->website, '[itemprop="author"] span');
         $screenplay = [];
@@ -156,18 +153,24 @@ class Fdb
             $screenplay[] = $value->plaintext;
         endforeach;
 
-        return $screenplay;
+        return $screenplay ?? null;
     }
 
-    public function cast(): array
+    public function cast()
     {
-        $elements = Parser::getAll($this->website, '[itemprop="actor"] span');
+        $url = $this->website($this->url . '/obsada');
+        $elements = Parser::getAll($url, '.toggle-actors .adaptive-image.width-50');
         $cast = [];
         foreach ($elements as $key => $value) :
-            $cast[] = $value->plaintext;
+            $cast[] = $value
+                ->parent()
+                ->parent()
+                ->next_sibling()
+                ->first_child()
+                ->plaintext;
         endforeach;
 
-        return $cast;
+        return $cast ?? null;
     }
 
     public function results(): array

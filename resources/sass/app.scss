@@ -7,6 +7,34 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.vue-btn {
+    background-color: #a49484!important;
+    color: white!important;
+    border: 1px #888 solid!important;
+}
+
+.vue-input-tag-wrapper {
+    background-color: #F3E7E0!important;
+    color: #453B31!important;
+    border: 1px #888 solid!important;
+    transition: background 0.5s ease;
+    -webkit-transition: background 0.5s ease;
+    -moz-transition: background 0.5s ease;
+    -o-transition: background 0.5s ease;
+    border-radius: 0.25rem!important;
+}
+
+.vue-input-tag-wrapper .input-tag {
+    padding: 4px 26px 4px 10px!important;
+    background-color: #715e4b!important;
+    border: 1px #888888 solid!important;
+    color: white!important;
+}
+
+.vue-input-tag-wrapper .input-tag .remove {
+    color: black!important;
+}
+
 body {
     font-family: tahoma, verdana;
     background-color: #F7EFE3;

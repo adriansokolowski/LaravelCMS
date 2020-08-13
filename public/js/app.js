@@ -2179,105 +2179,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ["user"],
   data: function data() {
     return {
       a: false,
-      c: '',
+      c: "",
       movie: null,
       categories: [],
       categories2: [],
-      fields: {
-        categories: []
-      },
+      fields: {},
       success: false,
       error: false,
       errors: {}
@@ -2287,7 +2198,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.fields.user_id = this.user.id;
-    axios.get('/api/categories').then(function (response) {
+    axios.get("/api/categories").then(function (response) {
       _this.categories = response.data.data;
       _this.options = response.data.data;
     });
@@ -2301,7 +2212,7 @@ __webpack_require__.r(__webpack_exports__);
       this.fields.categories = this.fields.categories.map(function (x) {
         return x.id;
       });
-      axios.post('/api/movies', this.fields).then(function (response) {
+      axios.post("/api/movies", this.fields).then(function (response) {
         _this2.movie = response.data;
         _this2.success = true;
         _this2.fields = {
@@ -2316,17 +2227,22 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    clearAll: function clearAll(e) {
+      e.preventDefault();
+      this.fields = {};
+      this.errors = {};
+      this.error = false;
+    },
     importData: function importData(e) {
       var _this3 = this;
 
       e.preventDefault();
       this.a = true;
       this.errors = {};
-      axios.post('/import', {
+      axios.post("/import", {
         title: this.fields.title
       }).then(function (response) {
         _this3.a = false;
-        _this3.c = '';
         _this3.error = false;
         _this3.fields = response.data;
         _this3.fields.categories = _this3.categories.filter(function (x) {
@@ -2335,7 +2251,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this3.error = true;
         _this3.a = false;
-        _this3.c = '';
       });
     }
   }
@@ -6785,7 +6700,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#table[data-v-89c6c59e]{ \n    display: table; \n    width: 100%;\n}\n.tr[data-v-89c6c59e]{ \n    display: table-row;\n}\n.td[data-v-89c6c59e]{ \n    display: table-cell; \n    padding: 1rem;\n}\n.row1[data-v-89c6c59e] {\n    width: 25%;\n    background-color: #F0E3CF;\n}\n.row2[data-v-89c6c59e] {\n    background-color: #F7EFE3;\n}\n", ""]);
+exports.push([module.i, "\n#table[data-v-89c6c59e] {\n  display: table;\n  width: 100%;\n}\n.tr[data-v-89c6c59e] {\n  display: table-row;\n}\n.td[data-v-89c6c59e] {\n  display: table-cell;\n  padding: 1rem;\n}\n.row1[data-v-89c6c59e] {\n  width: 25%;\n  background-color: #f0e3cf;\n}\n.row2[data-v-89c6c59e] {\n  background-color: #f7efe3;\n}\n", ""]);
 
 // exports
 
@@ -44528,6 +44443,26 @@ var render = function() {
       }
     },
     [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.success,
+              expression: "success"
+            }
+          ],
+          staticClass: "alert alert-success text-center",
+          attrs: { role: "alert" }
+        },
+        [
+          _vm._v("\n    Film został dodany.\n    "),
+          _c("a", { attrs: { href: _vm.movie } }, [_vm._v("Przejdź")])
+        ]
+      ),
+      _vm._v(" "),
       _c("div", { attrs: { id: "table" } }, [
         _c("div", { staticClass: "tr" }, [
           _vm._m(0),
@@ -44651,11 +44586,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.release_date
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.release_date[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.release_date[0]))
                 ])
               : _vm._e()
           ])
@@ -44695,11 +44626,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.poster
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.poster[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.poster[0]))
                 ])
               : _vm._e()
           ])
@@ -44760,11 +44687,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.poster
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.description[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.description[0]))
                 ])
               : _vm._e()
           ])
@@ -44803,11 +44726,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.imdb_rate
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.imdb_rate[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.imdb_rate[0]))
                 ])
               : _vm._e()
           ])
@@ -44846,11 +44765,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.slider
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.slider[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.slider[0]))
                 ])
               : _vm._e()
           ])
@@ -44889,11 +44804,7 @@ var render = function() {
             _vm._v(" "),
             _vm.errors && _vm.errors.trailer
               ? _c("div", { staticClass: "alert alert-danger" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.trailer[0]) +
-                      "\n            "
-                  )
+                  _vm._v(_vm._s(_vm.errors.trailer[0]))
                 ])
               : _vm._e()
           ])
@@ -44952,11 +44863,7 @@ var render = function() {
               _vm._v(" "),
               _vm.errors && _vm.errors.trailer
                 ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.errors.trailer[0]) +
-                        "\n            "
-                    )
+                    _vm._v(_vm._s(_vm.errors.trailer[0]))
                   ])
                 : _vm._e()
             ],
@@ -44983,11 +44890,7 @@ var render = function() {
               _vm._v(" "),
               _vm.errors && _vm.errors.trailer
                 ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.errors.trailer[0]) +
-                        "\n            "
-                    )
+                    _vm._v(_vm._s(_vm.errors.trailer[0]))
                   ])
                 : _vm._e()
             ],
@@ -45014,11 +44917,7 @@ var render = function() {
               _vm._v(" "),
               _vm.errors && _vm.errors.trailer
                 ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.errors.trailer[0]) +
-                        "\n            "
-                    )
+                    _vm._v(_vm._s(_vm.errors.trailer[0]))
                   ])
                 : _vm._e()
             ],
@@ -45045,11 +44944,7 @@ var render = function() {
               _vm._v(" "),
               _vm.errors && _vm.errors.trailer
                 ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.errors.trailer[0]) +
-                        "\n            "
-                    )
+                    _vm._v(_vm._s(_vm.errors.trailer[0]))
                   ])
                 : _vm._e()
             ],
@@ -45076,24 +44971,48 @@ var render = function() {
               _vm._v(" "),
               _vm.errors && _vm.errors.trailer
                 ? _c("div", { staticClass: "alert alert-danger" }, [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.errors.trailer[0]) +
-                        "\n            "
-                    )
+                    _vm._v(_vm._s(_vm.errors.trailer[0]))
                   ])
                 : _vm._e()
             ],
             1
           )
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-custom", attrs: { type: "submit" } },
-          [_vm._v("\n        Zapisz\n    ")]
-        )
-      ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "d-flex justify-content-end",
+          staticStyle: { padding: "1rem" }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "btn-group",
+              attrs: { role: "group", "aria-label": "Basic example" }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-custom",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.clearAll }
+                },
+                [_vm._v("Wyczyść")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-custom", attrs: { type: "submit" } },
+                [_vm._v("Zapisz")]
+              )
+            ]
+          )
+        ]
+      )
     ]
   )
 }
