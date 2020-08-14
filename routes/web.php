@@ -40,6 +40,10 @@ Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
 
 Route::post('/import', 'MoviesController@import')->name('import');
 
+Route::get('/regulamin', function(){
+    return view('pages.rules');
+});
+
 Route::get('/test', function(){
 
 });

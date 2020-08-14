@@ -27,7 +27,11 @@
             <div class="form-row align-items-center">
                 <div class="col-lg-9">
                     <a href="/register">Rejestracja</a> |
-                    <a href="">przypomnienie hasła</a>
+                    @if (Route::has('password.request'))
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        przypomnienie hasła
+                    </a>
+                    @endif
                 </div>
                 <div class="col-lg-3">
                     <button type="submit" class="btn btn-custom">Zaloguj się</button>
