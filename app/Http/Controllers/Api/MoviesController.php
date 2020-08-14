@@ -13,7 +13,7 @@ class MoviesController extends Controller
 {
     public function index()
     {
-        return MovieResource::collection(Movie::all());
+        return MovieResource::collection(Movie::paginate(2));
     }
 
     public function store(StoreMovieRequest $request)

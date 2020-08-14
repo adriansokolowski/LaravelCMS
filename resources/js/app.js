@@ -29,6 +29,7 @@ import InputTag from 'vue-input-tag'
 Vue.component('multi-select', Multiselect);
 Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('input-tag', InputTag)
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 Vue.component('movie-create', require('./components/MovieCreate.vue').default);
 Vue.component('movie-all', require('./components/MovieAll.vue').default);
