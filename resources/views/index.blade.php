@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Strona Główna')
 @section('content')
+
+<div id="app">
+    <movie-all></movie-all>
+</div>
 <div class="block">
     <div class="bhead text-center">
         <ul class="nav nav-pills justify-content-around" id="pills-tab" role="tablist">

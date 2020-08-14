@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="block">
-    <div class="bhead text-center">Regulamin</div>
+    <div class="bhead text-center">Pomoc</div>
     <div class="bbody">
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, quasi? Provident recusandae repellendus hic odio consequuntur dolorem esse voluptate exercitationem expedita, sapiente aperiam deleniti doloribus velit? Placeat corporis nobis quibusdam architecto! Fugit, eveniet similique beatae accusamus cupiditate quaerat laboriosam vero est rerum ad, illum placeat veritatis. Laboriosam, possimus sit? Consectetur velit autem, facere nostrum aperiam veritatis aspernatur inventore voluptates praesentium quidem. Vel voluptatem reiciendis aliquid sit porro doloribus mollitia iure ipsam dolorum quo quidem pariatur sed consequatur ullam, ducimus commodi obcaecati eum eius repellat? Laboriosam in qui dignissimos impedit vitae illo placeat, et iure sapiente culpa quibusdam enim asperiores repellat!</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dicta exercitationem, ab sunt cumque asperiores, perferendis laboriosam dolorum alias doloribus blanditiis corporis vitae nisi recusandae eaque! Nulla magni perspiciatis quos?</p>

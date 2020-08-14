@@ -40,8 +40,16 @@ Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
 
 Route::post('/import', 'MoviesController@import')->name('import');
 
+
+// Custom pages
 Route::get('/regulamin', function(){
     return view('pages.rules');
+});
+Route::get('/pomoc', function(){
+    return view('pages.help');
+});
+Route::get('/kontakt', function(){
+    return view('pages.contact');
 });
 
 Route::get('/test', function(){
