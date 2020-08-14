@@ -1908,6 +1908,12 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2187,8 +2193,23 @@ __webpack_require__.r(__webpack_exports__);
       c: "",
       movie: null,
       categories: [],
-      categories2: [],
-      fields: {},
+      fields: {
+        title: '',
+        user_id: '',
+        release_date: '',
+        poster: '',
+        categories: [],
+        description: '',
+        imdb_rate: '',
+        slider: '',
+        trailer: '',
+        fdb: '',
+        direction: [],
+        screenplay: [],
+        countries: [],
+        cast: [],
+        tags: []
+      },
       success: false,
       error: false,
       errors: {}
@@ -2197,22 +2218,22 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    this.fields.user_id = this.user.id;
     axios.get("/api/categories").then(function (response) {
       _this.categories = response.data.data;
-      _this.options = response.data.data;
     });
   },
   methods: {
     submit: function submit() {
       var _this2 = this;
 
-      this.fields.user_id = this.user.id;
-      this.categories2 = this.fields.categories;
-      this.fields.categories = this.fields.categories.map(function (x) {
-        return x.id;
+      var data = _objectSpread(_objectSpread({}, this.fields), {}, {
+        user_id: this.user.id,
+        categories: this.fields.categories.map(function (x) {
+          return x.id;
+        })
       });
-      axios.post("/api/movies", this.fields).then(function (response) {
+
+      axios.post("/api/movies", data).then(function (response) {
         _this2.movie = response.data;
         _this2.success = true;
         _this2.fields = {
@@ -2220,8 +2241,6 @@ __webpack_require__.r(__webpack_exports__);
         };
         _this2.errors = {};
       })["catch"](function (error) {
-        _this2.fields.categories = _this2.categories2;
-
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
         }
@@ -44543,7 +44562,11 @@ var render = function() {
                     },
                     [
                       _c("strong", [
-                        _vm._v("Brak wyników dla " + _vm._s(this.fields.title))
+                        _vm._v(
+                          "Wystąpił problem podczas importowania '" +
+                            _vm._s(this.fields.title) +
+                            "'"
+                        )
                       ])
                     ]
                   )
@@ -44984,7 +45007,7 @@ var render = function() {
         "div",
         {
           staticClass: "d-flex justify-content-end",
-          staticStyle: { padding: "1rem" }
+          staticStyle: { padding: "1rem", "background-color": "#b39a76" }
         },
         [
           _c(
@@ -44997,7 +45020,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-custom",
+                  staticClass: "btn btn-custom2",
                   attrs: { type: "submit" },
                   on: { click: _vm.clearAll }
                 },
@@ -45006,7 +45029,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "button",
-                { staticClass: "btn btn-custom", attrs: { type: "submit" } },
+                { staticClass: "btn btn-custom2", attrs: { type: "submit" } },
                 [_vm._v("Zapisz")]
               )
             ]

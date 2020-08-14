@@ -53,7 +53,7 @@
               <strong>{{ errors.title[0] }}</strong>
             </span>
             <span class="invalid-feedback" v-if="error" role="alert">
-              <strong>Brak wyników dla {{ this.fields.title }}</strong>
+              <strong>Wystąpił problem podczas importowania '{{ this.fields.title }}'</strong>
             </span>
           </div>
         </div>
@@ -260,10 +260,10 @@
         </div>
       </div>
     </div>
-    <div style="padding: 1rem;" class="d-flex justify-content-end">
+    <div style="padding: 1rem; background-color: #b39a76;" class="d-flex justify-content-end">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="submit" v-on:click="clearAll" class="btn btn-custom">Wyczyść</button>
-            <button type="submit" class="btn btn-custom">Zapisz</button>
+            <button type="submit" v-on:click="clearAll" class="btn btn-custom2">Wyczyść</button>
+            <button type="submit" class="btn btn-custom2">Zapisz</button>
         </div>
     </div>
   </form>
@@ -278,27 +278,42 @@ export default {
       c: "",
       movie: null,
       categories: [],
-      categories2: [],
-      fields: {},
+      fields: {
+        title: '',
+        user_id: '',
+        release_date: '',
+        poster: '',
+        categories: [],
+        description: '',
+        imdb_rate: '',
+        slider: '',
+        trailer: '',
+        fdb: '',
+        direction: [],
+        screenplay: [],
+        countries: [],
+        cast: [],
+        tags: [],
+      },
       success: false,
       error: false,
       errors: {},
     };
   },
   mounted() {
-    this.fields.user_id = this.user.id;
     axios.get("/api/categories").then((response) => {
       this.categories = response.data.data;
-      this.options = response.data.data;
     });
   },
   methods: {
     submit() {
-      this.fields.user_id = this.user.id;
-      this.categories2 = this.fields.categories;
-      this.fields.categories = this.fields.categories.map((x) => x.id);
+      const data = {
+        ...this.fields,
+        user_id: this.user.id,
+        categories: this.fields.categories.map((x) => x.id),
+      };
       axios
-        .post("/api/movies", this.fields)
+        .post("/api/movies", data)
         .then((response) => {
           this.movie = response.data;
           this.success = true;
@@ -306,7 +321,6 @@ export default {
           this.errors = {};
         })
         .catch((error) => {
-          this.fields.categories = this.categories2;
           if (error.response.status == 422) {
             this.errors = error.response.data.errors;
           }
@@ -331,7 +345,7 @@ export default {
           this.error = false;
           this.fields = response.data;
           this.fields.categories = this.categories.filter((x) =>
-            this.fields.categories.includes(x.name)
+          this.fields.categories.includes(x.name)
           );
         })
         .catch((error) => {

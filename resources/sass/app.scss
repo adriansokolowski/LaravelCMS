@@ -187,6 +187,7 @@ body {
     border-color: none;
 }
 
+// button 1
 .btn-custom {
     font-weight: bold;
     background-color: #a49484;
@@ -200,6 +201,24 @@ body {
 }
 
 .btn-custom:focus {
+    box-shadow:none;
+    background-color: #8d7a68;
+}
+
+// button 2
+.btn-custom2 {
+    font-weight: bold;
+    background-color: #F7EFE3;
+    color:black;
+    border: 1px #888888 solid;
+}
+
+.btn-custom2:hover {
+    color: black;
+    background-color: #8d7a68;
+}
+
+.btn-custom2:focus {
     box-shadow:none;
     background-color: #8d7a68;
 }

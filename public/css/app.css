@@ -11125,6 +11125,23 @@ body {
   background-color: #8d7a68;
 }
 
+.btn-custom2 {
+  font-weight: bold;
+  background-color: #F7EFE3;
+  color: black;
+  border: 1px #888888 solid;
+}
+
+.btn-custom2:hover {
+  color: black;
+  background-color: #8d7a68;
+}
+
+.btn-custom2:focus {
+  box-shadow: none;
+  background-color: #8d7a68;
+}
+
 .bhead a {
   color: #E9E9E9;
 }

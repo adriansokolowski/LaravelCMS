@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateMovie;
+use App\Http\Requests\StoreMovieRequest;
 use App\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MoviesController extends Controller
 {
-    public function store(CreateMovie $request)
+    public function store(StoreMovieRequest $request)
     {
         $movie = new Movie($request->validated());
         $movie->html = '';
