@@ -13,7 +13,11 @@ class MoviesController extends Controller
 {
     public function index()
     {
-        return MovieResource::collection(Movie::paginate(2));
+        $sortBy = request('sortBy', 'created_at');
+        return MovieResource::collection(
+            Movie::take(20)->orderBy($sortBy, 'desc')->get()
+            // Movie::take(20)->orderBy('last_view')->get()
+        );
     }
 
     public function store(StoreMovieRequest $request)
