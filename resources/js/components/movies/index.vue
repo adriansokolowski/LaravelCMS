@@ -1,13 +1,24 @@
 <template>
   <div class="block">
-    <div>
-      <b-nav class="bhead justify-content-around" pills>
-        <b-nav-item :active="tab === 1" @click.prevent="change_sort('created_at'), activeTab = 1">Ostatnio dodane</b-nav-item>
-        <b-nav-item :active="tab === 2" @click.prevent="change_sort('last_view'), activeTab = 2">Ostatnio oglądane</b-nav-item>
-        <b-nav-item :active="tab === 3" @click.prevent="change_sort('views'), activeTab = 3">Najpopularniejsze</b-nav-item>
-      </b-nav>
-    </div>
+    <b-nav class="bhead justify-content-around" pills>
+      <b-nav-item
+        :active="activeTab === 1"
+        @click.prevent="change_sort('created_at'), activeTab = 1"
+      >Ostatnio dodane</b-nav-item>
+      <b-nav-item
+        :active="activeTab === 2"
+        @click.prevent="change_sort('last_view'), activeTab = 2"
+      >Ostatnio oglądane</b-nav-item>
+      <b-nav-item
+        :active="activeTab=== 3"
+        @click.prevent="change_sort('views'), activeTab = 3"
+      >Najpopularniejsze</b-nav-item>
+    </b-nav>
     <div class="bbody">
+      <p v-if="activeTab === 1" class="bar mb-0 text-center">Aktualnie przeglądasz <b>ostatnio dodane</b> filmy.</p>
+      <p v-if="activeTab === 2" class="bar mb-0 text-center">Aktualnie przeglądasz <b>ostatnio oglądane</b> filmy.</p>
+      <p v-if="activeTab === 3" class="bar mb-0 text-center">Aktualnie przeglądasz <b>najpopularniejsze</b> filmy.</p>
+
       <div v-for="movie in movies.data" :key="movie.id" class="item d-flex m-2">
         <div class="poster">
           <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
@@ -37,24 +48,23 @@ export default {
     return {
       activeTab: 1,
       movies: {},
-      sortBy: 'created_at'
+      sortBy: "created_at",
     };
   },
   mounted() {
     this.getResults();
   },
   methods: {
-    change_sort(field){
+    change_sort(field) {
       this.sortBy = field;
       this.getResults();
     },
     getResults(page = 1) {
-      axios.get("/api/movies?page=" + page
-      + '&sortBy=' + this.sortBy
-      )
-      .then((response) => {
-        this.movies = response.data;
-      });
+      axios
+        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
+        .then((response) => {
+          this.movies = response.data;
+        });
     },
   },
 };
