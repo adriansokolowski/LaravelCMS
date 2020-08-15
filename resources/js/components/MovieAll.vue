@@ -2,9 +2,9 @@
   <div class="block">
     <div>
       <b-nav class="bhead justify-content-around" pills>
-        <b-nav-item :active="tab === 1" @click.prevent="change_sort('created_at'), tab = 1">Ostatnio dodane</b-nav-item>
-        <b-nav-item :active="tab === 2" @click.prevent="change_sort('last_view'), tab = 2">Ostatnio oglądane</b-nav-item>
-        <b-nav-item :active="tab === 3" @click.prevent="change_sort('views'), tab = 3">Najpopularniejsze</b-nav-item>
+        <b-nav-item :active="tab === 1" @click.prevent="change_sort('created_at'), activeTab = 1">Ostatnio dodane</b-nav-item>
+        <b-nav-item :active="tab === 2" @click.prevent="change_sort('last_view'), activeTab = 2">Ostatnio oglądane</b-nav-item>
+        <b-nav-item :active="tab === 3" @click.prevent="change_sort('views'), activeTab = 3">Najpopularniejsze</b-nav-item>
       </b-nav>
     </div>
     <div class="bbody">
@@ -35,7 +35,7 @@
 export default {
   data() {
     return {
-      tab: 1,
+      activeTab: 1,
       movies: {},
       sortBy: 'created_at'
     };

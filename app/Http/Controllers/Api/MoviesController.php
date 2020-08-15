@@ -14,9 +14,12 @@ class MoviesController extends Controller
     public function index()
     {
         $sortBy = request('sortBy', 'created_at');
+        
+        if(!in_array($sortBy, ['created_at', 'last_view', 'views'])){
+            $sortBy = 'created_at';
+        }
         return MovieResource::collection(
             Movie::take(20)->orderBy($sortBy, 'desc')->get()
-            // Movie::take(20)->orderBy('last_view')->get()
         );
     }
 
