@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Resources\MovieResource;
 use App\Movie;
+use App\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,6 +33,11 @@ class MoviesController extends Controller
         $contents = file_get_contents($request->poster);
         Storage::disk("public")->put('/poster/' . $movie->id . '.jpg', $contents);
         $movie->categories()->attach($request->categories);
+
+        foreach($request->countries as $country) {
+            $country = Country::query()->firstOrCreate(['name' => $country]);
+            $movie->countries()->attach($country);
+        }
 
         return $movie->path();
     }

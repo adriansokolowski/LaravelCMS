@@ -13,7 +13,7 @@ class Movie extends Model
         'release_date',
         'description',
         'imdb_rate',
-        'fdb'
+        'fdb',
     ];
 
     protected $casts = [
@@ -27,7 +27,12 @@ class Movie extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Category')->withTimestamps();
+        return $this->belongsToMany(Category::class)->withTimestamps();
+    }
+
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class)->withTimestamps();
     }
 
     public function links()
