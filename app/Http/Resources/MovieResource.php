@@ -21,6 +21,7 @@ class MovieResource extends JsonResource
             'release_date' => $this->release_date->year,
             'description' => Str::limit($this->description, 250),
             'categories' => $this->categories,
+            'countries' => $this->countries,
             'path' => $this->path()
         ];
     }

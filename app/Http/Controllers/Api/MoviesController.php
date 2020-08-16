@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMovieRequest;
 use App\Http\Resources\MovieResource;
 use App\Movie;
 use App\Country;
+use App\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,6 +38,21 @@ class MoviesController extends Controller
         foreach($request->countries as $country) {
             $country = Country::query()->firstOrCreate(['name' => $country]);
             $movie->countries()->attach($country);
+        }
+
+        foreach($request->direction as $direction) {
+            $direction = Person::query()->firstOrCreate(['name' => $direction]);
+            $movie->persons()->attach($direction, ['type' => '1']);
+        }
+
+        foreach($request->screenplay as $screenplay) {
+            $screenplay = Person::query()->firstOrCreate(['name' => $screenplay]);
+            $movie->persons()->attach($screenplay, ['type' => '2']);
+        }
+
+        foreach($request->cast as $cast) {
+            $cast = Person::query()->firstOrCreate(['name' => $cast]);
+            $movie->persons()->attach($cast, ['type' => '3']);
         }
 
         return $movie->path();

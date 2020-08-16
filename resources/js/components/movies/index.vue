@@ -31,7 +31,12 @@
               v-for="category in movie.categories"
               :key="category.id"
               href="#"
-            >{{ category.name }}</a>
+            >{{ category.name }}</a> 
+            |  <a
+              v-for="country in movie.countries"
+              :key="country.id"
+              href="#"
+            >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
           <p class="bar mb-0">1111 odsłon Lektor Napisy</p>

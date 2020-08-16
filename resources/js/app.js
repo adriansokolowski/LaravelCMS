@@ -31,8 +31,8 @@ Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('input-tag', InputTag)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-Vue.component('movie-create', require('./components/movies/create.vue').default);
-Vue.component('movie-all', require('./components/movies/index.vue').default);
+Vue.component('movie-create', require('./components/movies/Create.vue').default);
+Vue.component('movie-all', require('./components/movies/Index.vue').default);
 
 
 /**

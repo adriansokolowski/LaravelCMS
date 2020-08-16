@@ -211,13 +211,13 @@
       <div class="tr">
         <div class="td row1">
           <label
-            for="trailer"
+            for="direction"
             class="col-md-3 col-form-label text-md-right font-weight-bold"
           >Reżyseria</label>
         </div>
         <div class="td row2">
           <input-tag v-model="fields.direction"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.trailer">{{ errors.trailer[0] }}</div>
+          <div class="alert alert-danger" v-if="errors && errors.direction">{{ errors.direction[0] }}</div>
         </div>
       </div>
       <div class="tr">
@@ -263,7 +263,9 @@
     <div style="padding: 1rem; background-color: #b39a76;" class="d-flex justify-content-end">
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="submit" v-on:click="clearAll" class="btn btn-custom2">Wyczyść</button>
-            <button type="submit" class="btn btn-custom2">Zapisz</button>
+            <button :disabled="form_submitting" type="submit" class="btn btn-custom2">
+              {{ form_submitting ? 'Sprawdzanie...' : 'Zapisz' }}
+            </button>
         </div>
     </div>
   </form>
@@ -274,6 +276,7 @@ export default {
   props: ["user"],
   data() {
     return {
+      form_submitting: false,
       a: false,
       c: "",
       movie: null,
@@ -307,6 +310,7 @@ export default {
   },
   methods: {
     submit() {
+      this.form_submitting = true;
       const data = {
         ...this.fields,
         user_id: this.user.id,
@@ -315,12 +319,14 @@ export default {
       axios
         .post("/api/movies", data)
         .then((response) => {
+          this.form_submitting = false;
           this.movie = response.data;
           this.success = true;
           this.fields = { categories: [] };
           this.errors = {};
         })
         .catch((error) => {
+          this.form_submitting = false;
           if (error.response.status == 422) {
             this.errors = error.response.data.errors;
           }

@@ -35,8 +35,13 @@ class Movie extends Model
         return $this->belongsToMany(Country::class)->withTimestamps();
     }
 
+    public function persons()
+    {
+        return $this->belongsToMany(Person::class)->withTimestamps();
+    }
+
     public function links()
     {
-        return $this->hasMany('App\Link');
+        return $this->hasMany(Link::class);
     }
 }
