@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Strona Główna')
 @section('content')
+    <movies-index></movies-index>
+<!--     
     <div class="block">
         <div class="bhead text-center">
             <ul class="nav nav-pills justify-content-around" id="pills-tab" role="tablist">
@@ -78,6 +80,6 @@
             </div>
             
         </div>
-    </div>
+    </div> -->
 @endsection
 

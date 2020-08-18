@@ -32,8 +32,9 @@ Vue.component('input-tag', InputTag)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 Vue.component('movie-create', require('./components/movies/Create.vue').default);
-Vue.component('movie-all', require('./components/movies/Index.vue').default);
-
+Vue.component('movie-all', require('./components/Index.vue').default);
+Vue.component('movies-index', require('./components/movies/Index.vue').default);
+Vue.component('categories', require('./components/Category.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

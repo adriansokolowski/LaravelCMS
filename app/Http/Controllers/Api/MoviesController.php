@@ -8,6 +8,7 @@ use App\Http\Resources\MovieResource;
 use App\Movie;
 use App\Country;
 use App\Person;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,9 +21,19 @@ class MoviesController extends Controller
             $sortBy = 'created_at';
         }
 
-        return MovieResource::collection(
-            Movie::take(40)->orderBy($sortBy, 'desc')->get()
-        );
+        if (request('category')) {
+            // return MovieResource::collection(
+            //     Movie::take(1)->orderBy($sortBy, 'desc')->get()
+            // );
+        } elseif (request('year')) {
+            // return MovieResource::collection(
+            //     Movie::take(2)->orderBy($sortBy, 'desc')->get()
+            // );
+        } else {
+            return MovieResource::collection(
+                Movie::take(40)->orderBy($sortBy, 'desc')->get()
+            );
+        }
     }
 
     public function store(StoreMovieRequest $request)

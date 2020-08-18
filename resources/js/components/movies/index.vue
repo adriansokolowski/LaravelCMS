@@ -15,9 +15,18 @@
       >Najpopularniejsze</b-nav-item>
     </b-nav>
     <div class="bbody">
-      <p v-if="activeTab === 1" class="bar mb-0 text-center">Aktualnie przeglądasz <b>ostatnio dodane</b> filmy.</p>
-      <p v-if="activeTab === 2" class="bar mb-0 text-center">Aktualnie przeglądasz <b>ostatnio oglądane</b> filmy.</p>
-      <p v-if="activeTab === 3" class="bar mb-0 text-center">Aktualnie przeglądasz <b>najpopularniejsze</b> filmy.</p>
+      <p v-if="activeTab === 1" class="bar mb-0 text-center">
+        Aktualnie przeglądasz
+        <b>ostatnio dodane</b> filmy.
+      </p>
+      <p v-if="activeTab === 2" class="bar mb-0 text-center">
+        Aktualnie przeglądasz
+        <b>ostatnio oglądane</b> filmy.
+      </p>
+      <p v-if="activeTab === 3" class="bar mb-0 text-center">
+        Aktualnie przeglądasz
+        <b>najpopularniejsze</b> filmy.
+      </p>
 
       <div v-for="movie in movies.data" :key="movie.id" class="item d-flex m-2">
         <div class="poster">
@@ -31,8 +40,9 @@
               v-for="category in movie.categories"
               :key="category.id"
               href="#"
-            >{{ category.name }}</a> 
-            |  <a
+            >{{ category.name }}</a>
+            |
+            <a
               v-for="country in movie.countries"
               :key="country.id"
               href="#"
@@ -53,7 +63,7 @@ export default {
     return {
       activeTab: 1,
       movies: {},
-      sortBy: "created_at",
+      sortBy: "created_at"
     };
   },
   mounted() {
@@ -65,8 +75,7 @@ export default {
       this.getResults();
     },
     getResults(page = 1) {
-      axios
-        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
+      axios.get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
         .then((response) => {
           this.movies = response.data;
         });

@@ -20,7 +20,7 @@ class CreateMoviePersonTable extends Migration
             $table->unsignedBigInteger('type');
             $table->timestamps();
 
-            //$table->unique(['person_id', 'movie_id']);
+            $table->unique(['person_id', 'movie_id', 'type']);
 
             $table->foreign('person_id')->references('id')->on('persons')->onDelete('cascade');
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
