@@ -59,11 +59,12 @@
 
 <script>
 export default {
+  props: ["category"],
   data() {
     return {
       activeTab: 1,
       movies: {},
-      sortBy: "created_at"
+      sortBy: "created_at",
     };
   },
   mounted() {
@@ -75,7 +76,9 @@ export default {
       this.getResults();
     },
     getResults(page = 1) {
-      axios.get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
+        console.log(this.category);
+      axios
+        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category)
         .then((response) => {
           this.movies = response.data;
         });

@@ -17,14 +17,23 @@ class MoviesController extends Controller
     public function index()
     {
         $sortBy = request('sortBy', 'created_at');
-        if(!in_array($sortBy, ['created_at', 'last_view', 'views'])){
+        if (!in_array($sortBy, ['created_at', 'last_view', 'views'])) {
             $sortBy = 'created_at';
+        }
+        $category = request('category', null);
+        $categories = Category::all()->pluck('name')->toArray();
+        if (!in_array($category, $categories)) {
+            $category = null;
         }
 
         if (request('category')) {
-            // return MovieResource::collection(
-            //     Movie::take(1)->orderBy($sortBy, 'desc')->get()
-            // );
+            return MovieResource::collection(
+                Category::where('name', $category)
+                    ->firstOrFail()
+                    ->movies()
+                    ->orderBy($sortBy, 'desc')
+                    ->get()
+            );
         } elseif (request('year')) {
             // return MovieResource::collection(
             //     Movie::take(2)->orderBy($sortBy, 'desc')->get()
@@ -46,22 +55,22 @@ class MoviesController extends Controller
         Storage::disk("public")->put('/poster/' . $movie->id . '.jpg', $contents);
         $movie->categories()->attach($request->categories);
 
-        foreach($request->countries as $country) {
+        foreach ($request->countries as $country) {
             $country = Country::query()->firstOrCreate(['name' => $country]);
             $movie->countries()->attach($country);
         }
 
-        foreach($request->direction as $direction) {
+        foreach ($request->direction as $direction) {
             $direction = Person::query()->firstOrCreate(['name' => $direction]);
             $movie->persons()->attach($direction, ['type' => '1']);
         }
 
-        foreach($request->screenplay as $screenplay) {
+        foreach ($request->screenplay as $screenplay) {
             $screenplay = Person::query()->firstOrCreate(['name' => $screenplay]);
             $movie->persons()->attach($screenplay, ['type' => '2']);
         }
 
-        foreach($request->cast as $cast) {
+        foreach ($request->cast as $cast) {
             $cast = Person::query()->firstOrCreate(['name' => $cast]);
             $movie->persons()->attach($cast, ['type' => '3']);
         }

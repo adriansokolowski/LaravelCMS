@@ -3,7 +3,7 @@
     <div class="bhead text-center">Filmy Online</div>
     <div class="bbody categories">
         <div v-for="category in categories" :key="category.id" class="category">
-            <a href="">{{ category.name }}</a>
+            <a :href="'/filmy?category=' + category.name">{{ category.name }}</a>
             <!-- <a href="{{ route('movies.index', ['gatunek' => $category->name]) }}">
                 {{ $category->name }} ({{ $category->movies->count() }})
             </a> -->

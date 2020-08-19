@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Strona Główna')
 @section('content')
-    <movies-index></movies-index>
+<div id="app">
+    <movies-index :category="'{{ request('category') }}'"></movies-index>
+    </div>
 <!--     
     <div class="block">
         <div class="bhead text-center">
