@@ -1,4 +1,5 @@
-DEMO: https://adriansokolowski.usermd.net/
+### DEMO: https://adriansokolowski.usermd.net/
+### Add with auto fill fields: http://filmyseriale.test/dodaj-film
 
 ## TODO:
 * user roles | Admin | Moderator | User
