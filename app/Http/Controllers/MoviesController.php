@@ -41,6 +41,7 @@ class MoviesController extends Controller
 
     public function show(Movie $movie)
     {
+        $movie->increment('views');
         return view('movies.show', compact('movie'));
     }
 
