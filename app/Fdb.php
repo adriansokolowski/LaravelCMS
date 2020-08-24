@@ -113,8 +113,8 @@ class Fdb
     public function type(): string
     {
         return (preg_match('/episodes/', $this->website, $matches))
-        ? 'serie'
-        : 'movie';
+            ? 'serie'
+            : 'movie';
     }
 
     public function imdb_rate()
@@ -138,9 +138,9 @@ class Fdb
     {
         $elements = Parser::getAll($this->website, '[itemprop="director"] span');
         $direction = [];
-        foreach ($elements as $key => $value) :
+        foreach ($elements as $key => $value) {
             $direction[] = $value->plaintext;
-        endforeach;
+        }
 
         return $direction ?? null;
     }
@@ -149,9 +149,9 @@ class Fdb
     {
         $elements = Parser::getAll($this->website, '[itemprop="author"] span');
         $screenplay = [];
-        foreach ($elements as $key => $value) :
+        foreach ($elements as $key => $value) {
             $screenplay[] = $value->plaintext;
-        endforeach;
+        }
 
         return $screenplay ?? null;
     }
@@ -161,14 +161,14 @@ class Fdb
         $url = $this->website($this->url . '/obsada');
         $elements = Parser::getAll($url, '.toggle-actors .adaptive-image.width-50');
         $cast = [];
-        foreach ($elements as $key => $value) :
+        foreach ($elements as $key => $value) {
             $cast[] = $value
                 ->parent()
                 ->parent()
                 ->next_sibling()
                 ->first_child()
                 ->plaintext;
-        endforeach;
+        }
 
         return $cast ?? null;
     }
