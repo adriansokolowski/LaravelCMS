@@ -21,7 +21,7 @@ use function PHPSTORM_META\map;
 
 $factory->define(Movie::class, function (Faker $faker) {
     return [
-        'user_id' => factory(\App\User::class)->create()->id,
+        //'user_id' => factory(\App\User::class)->create()->id,
         'title' => $faker->name,
         'release_date' => $faker->dateTime,
         'description' => $faker->text,
@@ -38,21 +38,3 @@ $factory->define(Movie::class, function (Faker $faker) {
         'visible' => 1
     ];
 });
-
-// $table->id();
-//             $table->foreignId('user_id')->constrained();
-//             $table->string('title');
-//             $table->dateTime('release_date');
-//             $table->text('description');
-//             $table->string('trailer', 15)->nullable();
-//             $table->unsignedInteger('fdb');
-//             $table->unsignedInteger('up')->default(0);
-//             $table->unsignedInteger('down')->default(0);
-//             $table->unsignedInteger('views')->default(0);
-//             $table->unsignedInteger('slider')->nullable();
-//             $table->string('report')->default(0);
-//             $table->text('html')->default('');
-//             $table->dateTime('last_view');
-//             $table->float('imdb_rate');
-//             $table->smallInteger('visible')->default(1);
-//             $table->timestamps();
