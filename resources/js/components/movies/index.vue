@@ -78,7 +78,8 @@ export default {
     getResults(page = 1) {
         console.log(this.category);
       axios
-        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category)
+        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category
+         + "&year=" + this.year)
         .then((response) => {
           this.movies = response.data;
         });

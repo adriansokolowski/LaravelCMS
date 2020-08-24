@@ -178,7 +178,7 @@ class Fdb
         if (empty($this->title())) {
             return [];
         }
-        return array(
+        return [
             'title' => $this->title(),
             'release_date' => $this->release_date(),
             'poster' => $this->poster(),
@@ -191,6 +191,6 @@ class Fdb
             'screenplay' => $this->screenplay(),
             'cast' => $this->cast(),
             'type' => $this->type()
-        );
+        ];
     }
 }
