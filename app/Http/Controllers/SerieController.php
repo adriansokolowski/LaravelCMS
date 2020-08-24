@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Serie;
 
-class SeriesController extends Controller
+class SerieController extends Controller
 {
     public function index()
     {

@@ -23,22 +23,22 @@ Route::get('/', 'IndexController@index');
 Route::get('/wyloguj', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 // Movies
-Route::get('/filmy', 'MoviesController@index')->name('movies.index');
-Route::get('/film/{movie}/{slug?}', 'MoviesController@show')->name('movies.show');
-Route::get('/dodaj-film', 'MoviesController@create')->name('movies.create')->middleware('auth');
-Route::get('/film/{movie}/{slug?}/edit', 'MoviesController@edit');
-Route::post('/filmy', 'MoviesController@store')->name('movies.store');
-Route::put('/film/{movie}', 'MoviesController@update');
+Route::get('/filmy', 'MovieController@index')->name('movies.index');
+Route::get('/film/{movie}/{slug?}', 'MovieController@show')->name('movies.show');
+Route::get('/dodaj-film', 'MovieController@create')->name('movies.create')->middleware('auth');
+Route::get('/film/{movie}/{slug?}/edit', 'MovieController@edit');
+Route::post('/filmy', 'MovieController@store')->name('movies.store');
+Route::put('/film/{movie}', 'MovieController@update');
 
 // Series
 Route::get('/seriale', 'SeriesController@index')->name('series.index');
 Route::get('/serial/{serie}', 'SeriesController@show')->name('series.show');
 
 // Crawlers
-Route::get('/crawlers', 'CrawlersController@index')->name('crawlers.index');
-Route::post('/crawlers', 'CrawlersController@add')->name('crawlers.add');
+Route::get('/crawlers', 'CrawlerController@index')->name('crawlers.index');
+Route::post('/crawlers', 'CrawlerController@add')->name('crawlers.add');
 
-Route::post('/import', 'MoviesController@import')->name('import');
+Route::post('/import', 'MovieController@import')->name('import');
 
 
 // Custom pages

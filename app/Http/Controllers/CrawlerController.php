@@ -16,7 +16,7 @@ use App\Fdb;
 use App\Category;
 
 
-class CrawlersController extends Controller
+class CrawlerController extends Controller
 {
     public function index()
     {

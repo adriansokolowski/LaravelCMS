@@ -14,7 +14,7 @@ use App\Category;
 use App\Serie;
 use App\Link;
 
-class MoviesController extends Controller
+class MovieController extends Controller
 {
     public function import(Request $request)
     {

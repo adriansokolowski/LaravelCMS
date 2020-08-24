@@ -12,7 +12,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class MoviesController extends Controller
+class MovieController extends Controller
 {
     public function index(Request $request)
     {
@@ -25,15 +25,14 @@ class MoviesController extends Controller
         if (!in_array($category, $categories)) {
             $category = null;
         }
+        //$release_date = request('year', null);
 
-        $year = request('year', null);
-
-        return MovieResource::collection(
-            Movie::take(40)
-            ->whereYear('release_date', $year)
-            ->orderBy($sortBy, 'desc')
-            ->get()
-        );
+        // return MovieResource::collection(
+        //     Movie::take(40)
+        //         ->whereYear('release_date', $release_date)
+        //         ->orderBy($sortBy, 'desc')
+        //         ->get()
+        // );
 
         if (request('category')) {
             return MovieResource::collection(
@@ -53,8 +52,8 @@ class MoviesController extends Controller
             );
         }
 
-        dd($request);
         
+
         // if ($request->has('category')) {
         //     $query->where('category', $request->category); // adds another where condition
         // }
@@ -63,6 +62,7 @@ class MoviesController extends Controller
 
     public function store(StoreMovieRequest $request)
     {
+
         $movie = new Movie($request->validated());
         $movie->html = '';
         $movie->last_view = now();
