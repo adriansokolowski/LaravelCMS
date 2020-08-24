@@ -62,8 +62,10 @@ class MovieController extends Controller
 
     public function store(StoreMovieRequest $request)
     {
-
-        $movie = new Movie($request->validated());
+        $movie = Movie::firstOrNew(
+            ['title' => $request->title],
+            $request->validated()
+        );
         $movie->html = '';
         $movie->last_view = now();
         $movie->save();
