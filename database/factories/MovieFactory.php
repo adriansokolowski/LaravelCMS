@@ -21,7 +21,6 @@ use function PHPSTORM_META\map;
 
 $factory->define(Movie::class, function (Faker $faker) {
     return [
-        //'user_id' => factory(\App\User::class)->create()->id,
         'title' => $faker->name,
         'release_date' => $faker->dateTime,
         'description' => $faker->text,
