@@ -26,20 +26,18 @@ class MovieController extends Controller
             $category = null;
         }
 
+        $year = request('year', null);
+
         $query = Movie::query();
-        
-        if (request('category'))
-        {
-            $query->whereHas('categories', function($q) {
+        if (request('category') != null) {
+            $query->whereHas('categories', function ($q) {
                 $q->where('categories.name', request('category'));
             });
         }
-        //dd($request->all());
-        if (request('year'))
-        {
-            $query->where('release_date', '1986-03-08 11:23:16');
+        if (request('year') != null) {
+            $query->whereYear('release_date', request('year'));
         }
-        
+
         return MovieResource::collection(
             $query->orderBy($sortBy, 'desc')->get()
         );

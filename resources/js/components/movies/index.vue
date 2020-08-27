@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  props: ["category"],
+  props: ['category', 'year'],
   data() {
     return {
       activeTab: 1,
@@ -76,9 +76,9 @@ export default {
       this.getResults();
     },
     getResults(page = 1) {
-        console.log(this.category);
       axios
         .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category
+        + "&year=" + this.year
          )
         .then((response) => {
           this.movies = response.data;

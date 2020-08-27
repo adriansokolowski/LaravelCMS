@@ -2,8 +2,8 @@
 @section('title', 'Strona Główna')
 @section('content')
 <div id="app">
-    <movies-index :category="'{{ request('category') }}'"></movies-index>
-    </div>
+    <movies-index :category="'{{ request('category') }}'" :year="'{{ request('year') }}'"></movies-index>
+</div>
 <!--     
     <div class="block">
         <div class="bhead text-center">
@@ -84,4 +84,3 @@
         </div>
     </div> -->
 @endsection
-
