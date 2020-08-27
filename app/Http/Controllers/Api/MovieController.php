@@ -25,49 +25,24 @@ class MovieController extends Controller
         if (!in_array($category, $categories)) {
             $category = null;
         }
+
         $query = Movie::query();
+        
         if (request('category'))
         {
-            $query->whereHas('categories', function($c) {
-                $c->where('categories.name', request('category'));
+            $query->whereHas('categories', function($q) {
+                $q->where('categories.name', request('category'));
             });
         }
+        //dd($request->all());
+        if (request('year'))
+        {
+            $query->where('release_date', '1986-03-08 11:23:16');
+        }
+        
         return MovieResource::collection(
             $query->orderBy($sortBy, 'desc')->get()
         );
-        //$release_date = request('year', null);
-
-        // return MovieResource::collection(
-        //     Movie::take(40)
-        //         ->whereYear('release_date', $release_date)
-        //         ->orderBy($sortBy, 'desc')
-        //         ->get()
-        // );
-
-        // if (request('category')) {
-        //     return MovieResource::collection(
-        //         Category::where('name', $category)
-        //             ->firstOrFail()
-        //             ->movies()
-        //             ->orderBy($sortBy, 'desc')
-        //             ->get()
-        //     );
-        // } elseif (request('year2')) {
-        //     // return MovieResource::collection(
-        //     //     Movie::take(2)->orderBy($sortBy, 'desc')->get()
-        //     // );
-        // } else {
-        //     return MovieResource::collection(
-        //         Movie::take(40)->orderBy($sortBy, 'desc')->get()
-        //     );
-        // }
-
-        
-
-        // if ($request->has('category')) {
-        //     $query->where('category', $request->category); // adds another where condition
-        // }
-
     }
 
     public function store(StoreMovieRequest $request)

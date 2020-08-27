@@ -1,0 +1,1 @@
+<div class="col-lg-12 p-5">Copyright @ 2020</div>

@@ -29,16 +29,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 px-lg-1">
-                    @include('layouts.search')
+                    @include('partials.searchbar')
                     @yield('content')
                 </div>
                 <div class="col-lg-5 px-lg-1">
-                    @include('layouts.ucp')
-                    @include('layouts.sb')
-                    @include('layouts.side')
+                    @include('partials.ucp')
+                    @include('partials.shoutbox')
+                    @include('partials.side')
                 </div>
             </div>
-            <div class="col-lg-12 p-5">Copyright @ 2020</div>
+            @include('partials.footer')
         </div>
     </div>
 </body>

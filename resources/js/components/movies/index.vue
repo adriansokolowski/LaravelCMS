@@ -79,7 +79,7 @@ export default {
         console.log(this.category);
       axios
         .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category
-         + "&year=" + this.year)
+         )
         .then((response) => {
           this.movies = response.data;
         });
