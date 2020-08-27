@@ -35,7 +35,7 @@
         <div class="info">
           <a :href="movie.path" title class="font-weight-bold">{{ movie.title }}</a>
           <div class="gen">
-            {{ movie.release_date }} |
+            <a :href="'/filmy?year=' + movie.release_date">{{ movie.release_date }}</a> |
             <a
               v-for="(category, index) in movie.categories"
               :key="category.id"
