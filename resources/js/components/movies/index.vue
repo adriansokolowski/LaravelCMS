@@ -35,12 +35,15 @@
         <div class="info">
           <a :href="movie.path" title class="font-weight-bold">{{ movie.title }}</a>
           <div class="gen">
-            {{ movie.release_date }}
+            {{ movie.release_date }} |
             <a
-              v-for="category in movie.categories"
+              v-for="(category, index) in movie.categories"
               :key="category.id"
               :href="'/filmy?category=' + category.name"
-            >{{ category.name }}</a>
+            >
+              <span v-if="index != 0">,</span>
+              <span>{{ category.name }}</span>
+            </a>
             |
             <a
               v-for="country in movie.countries"
@@ -59,7 +62,7 @@
 
 <script>
 export default {
-  props: ['category', 'year'],
+  props: ["category", "year"],
   data() {
     return {
       activeTab: 1,
@@ -77,9 +80,16 @@ export default {
     },
     getResults(page = 1) {
       axios
-        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy + "&category=" + this.category
-        + "&year=" + this.year
-         )
+        .get(
+          "/api/movies?page=" +
+            page +
+            "&sortBy=" +
+            this.sortBy +
+            "&category=" +
+            this.category +
+            "&year=" +
+            this.year
+        )
         .then((response) => {
           this.movies = response.data;
         });

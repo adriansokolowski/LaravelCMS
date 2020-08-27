@@ -35,12 +35,15 @@
         <div class="info">
           <a :href="movie.path" title class="font-weight-bold">{{ movie.title }}</a>
           <div class="gen">
-            {{ movie.release_date }}
+            {{ movie.release_date }} |
             <a
-              v-for="category in movie.categories"
+              v-for="(category, index) in movie.categories"
               :key="category.id"
               :href="'/filmy?category=' + category.name"
-            >{{ category.name }}</a>
+            >
+              <span v-if="index != 0">,</span>
+              <span>{{ category.name }}</span>
+            </a>
             |
             <a
               v-for="country in movie.countries"
@@ -63,7 +66,7 @@ export default {
     return {
       activeTab: 1,
       movies: {},
-      sortBy: "created_at"
+      sortBy: "created_at",
     };
   },
   mounted() {
@@ -75,7 +78,8 @@ export default {
       this.getResults();
     },
     getResults(page = 1) {
-      axios.get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
+      axios
+        .get("/api/movies?page=" + page + "&sortBy=" + this.sortBy)
         .then((response) => {
           this.movies = response.data;
         });
