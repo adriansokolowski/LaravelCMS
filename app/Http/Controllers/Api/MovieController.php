@@ -25,8 +25,9 @@ class MovieController extends Controller
         if (!in_array($category, $categories)) {
             $category = null;
         }
-
+        //dd(request()->all());
         $year = request('year', null);
+        $country = request('year', null);
 
         $query = Movie::query();
         if (request('category') != null) {
@@ -36,6 +37,12 @@ class MovieController extends Controller
         }
         if (request('year') != null) {
             $query->whereYear('release_date', request('year'));
+        }
+
+        if (request('country') != null) {
+            $query->whereHas('countries', function ($q) {
+                $q->where('countries.name', request('country'));
+            });
         }
 
         return MovieResource::collection(

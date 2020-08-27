@@ -2,7 +2,7 @@
 @section('title', 'Strona Główna')
 @section('content')
 <div id="app">
-    <movies-index :category="'{{ request('category') }}'" :year="'{{ request('year') }}'"></movies-index>
+    <movies-index :category="'{{ request('category') }}'" :year="'{{ request('year') }}'" :country="'{{ request('country') }}'"></movies-index>
 </div>
 <!--     
     <div class="block">

@@ -48,7 +48,7 @@
             <a
               v-for="country in movie.countries"
               :key="country.id"
-              href="#"
+              :href="'/filmy?country=' + country.name"
             >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
