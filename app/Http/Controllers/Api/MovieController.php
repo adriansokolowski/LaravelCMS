@@ -27,19 +27,26 @@ class MovieController extends Controller
         }
         //dd(request()->all());
         $year = request('year', null);
-        $country = request('year', null);
+
+        $country = request('country', null);
+        $countries = Country::all()->pluck('name')->toArray();
+        if (!in_array($country, $countries)) {
+            $country = null;
+        }
 
         $query = Movie::query();
-        if (request('category') != null) {
+
+        if ($category) {
             $query->whereHas('categories', function ($q) {
                 $q->where('categories.name', request('category'));
             });
         }
-        if (request('year') != null) {
-            $query->whereYear('release_date', request('year'));
+
+        if ($year) {
+            $query->whereYear('release_date', $year);
         }
 
-        if (request('country') != null) {
+        if ($country) {
             $query->whereHas('countries', function ($q) {
                 $q->where('countries.name', request('country'));
             });
