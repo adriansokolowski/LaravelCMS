@@ -39,7 +39,7 @@
             <a
               v-for="category in movie.categories"
               :key="category.id"
-              href="#"
+              :href="'/filmy?category=' + category.name"
             >{{ category.name }}</a>
             |
             <a
