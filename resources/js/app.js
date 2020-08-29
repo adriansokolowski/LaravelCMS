@@ -13,7 +13,10 @@ Vue.use(BootstrapVue)
 // Vue assets
 import Multiselect from 'vue-multiselect';
 import VueButtonSpinner from 'vue-button-spinner';
-import InputTag from 'vue-input-tag'
+import InputTag from 'vue-input-tag';
+// import { ContentLoader } from "vue-content-loader";
+
+// Vue.use({ContentLoader});
 
 /**
  * The following block of code may be used to automatically register your

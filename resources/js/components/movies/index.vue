@@ -27,8 +27,29 @@
         Aktualnie przeglądasz
         <b>najpopularniejsze</b> filmy.
       </p>
+      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
+        <rect x="0" y="0" width="50" height="70" />
+        <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
+        <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
+      </ContentLoader>
+      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
+        <rect x="0" y="0" width="50" height="70" />
+        <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
+        <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
+      </ContentLoader>
+      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
+        <rect x="0" y="0" width="50" height="70" />
+        <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
+        <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
+      </ContentLoader>
 
-      <div v-for="movie in movies.data" :key="movie.id" class="item d-flex m-2">
+      <div v-else v-for="movie in movies.data" :key="movie.id" class="item d-flex m-2">
         <div class="poster">
           <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
         </div>
@@ -61,13 +82,19 @@
 </template> 
 
 <script>
+import { ContentLoader } from "vue-content-loader";
+
 export default {
+  components: {
+    ContentLoader,
+  },
   props: ["category", "year", "country"],
   data() {
     return {
       activeTab: 1,
       movies: {},
       sortBy: "created_at",
+      myData: true,
     };
   },
   mounted() {
@@ -75,6 +102,7 @@ export default {
   },
   methods: {
     change_sort(field) {
+      this.myData = false;
       this.sortBy = field;
       this.getResults();
     },
@@ -94,6 +122,7 @@ export default {
         )
         .then((response) => {
           this.movies = response.data;
+          this.myData = true;
         });
     },
   },

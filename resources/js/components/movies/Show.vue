@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <div class="bhead">asd</div>
+    <div class="bhead">Opis filmu Oglądaj online</div>
     <div class="bbody">
       <div class="about_movie_title">{{ movie.title }} ({{ movie.release_date }})</div>
       <div class="about_movie">
