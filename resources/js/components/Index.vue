@@ -3,15 +3,15 @@
     <b-nav class="bhead justify-content-around" pills>
       <b-nav-item
         :active="activeTab === 1"
-        @click.prevent="change_sort('created_at'), activeTab = 1"
+        @click.prevent="changeSort('created_at'), activeTab = 1"
       >Ostatnio dodane</b-nav-item>
       <b-nav-item
         :active="activeTab === 2"
-        @click.prevent="change_sort('last_view'), activeTab = 2"
+        @click.prevent="changeSort('last_view'), activeTab = 2"
       >Ostatnio oglądane</b-nav-item>
       <b-nav-item
         :active="activeTab=== 3"
-        @click.prevent="change_sort('views'), activeTab = 3"
+        @click.prevent="changeSort('views'), activeTab = 3"
       >Najpopularniejsze</b-nav-item>
     </b-nav>
     <div class="bbody">
@@ -80,7 +80,7 @@ export default {
     this.getResults();
   },
   methods: {
-    change_sort(field) {
+    changeSort(field) {
       this.sortBy = field;
       this.getResults();
     },
