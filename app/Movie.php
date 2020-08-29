@@ -37,7 +37,7 @@ class Movie extends Model
 
     public function persons()
     {
-        return $this->belongsToMany(Person::class)->withTimestamps();
+        return $this->belongsToMany(Person::class)->withPivot('type')->withTimestamps();
     }
 
     public function links()

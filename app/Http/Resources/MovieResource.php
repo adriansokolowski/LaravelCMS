@@ -23,6 +23,7 @@ class MovieResource extends JsonResource
             'description' => Str::limit($this->description, 250),
             'categories' => $this->categories,
             'countries' => $this->countries,
+            'persons' => $this->persons,
             'links' => $this->links,
             'views' => $this->views,
             'path' => $this->path()

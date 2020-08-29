@@ -17,6 +17,37 @@
           <div class="poster">
             <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
           </div>
+          <div>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th>Gatunek:</th>
+                  <td>
+                    <a
+                      v-for="(category, index) in movie.categories"
+                      :key="category.id"
+                      :href="'/filmy?category=' + category.name"
+                    >
+                      <span v-if="index != 0">,</span>
+                      <span>{{ category.name }}</span>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Wyświetleń:</th>
+                  <td>{{ movie.views }}</td>
+                  <th>Wyświetleń:</th>
+                  <td>asdasd</td>
+                </tr>
+                <tr>
+                  <th>Wersja:</th>
+                  <td>asdasd</td>
+                  <th>Wersja:</th>
+                  <td>asdasd</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -25,21 +56,40 @@
       <div class="bbody">{{ movie.description }}</div>
     </div>
     <div v-if="activeTab === 2" class="block">
-      <div class="bhead text-center">Linki</div>
+      <div class="bhead text-center">Oglądaj film online</div>
       <div class="bbody">
+        <div style="position:relative;padding-bottom:56%;padding-top:20px;height:0;">
+          <IFRAME
+            src="https://clipwatching.com/embed-3dpgzwuk88e1.html"
+            frameborder="0"
+            marginwidth="0"
+            marginheight="0"
+            scrolling="NO"
+            width="640"
+            height="360"
+            allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+          ></IFRAME>
+        </div>
+
         <table v-if="Object.keys(movie.links).length !== 0" class="table">
           <thead>
             <tr>
-              <th scope="col">Hosting</th>
-              <th scope="col">Wersja</th>
-              <th scope="col">Jakość</th>
+              <th>Hosting</th>
+              <!-- <th>Wersja</th> -->
+              <th>Jakość</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="link in movie.links" :key="link.id">
               <td>{{ link.domain }}</td>
-              <td>{{ link.version }}</td>
+              <!-- <td>{{ link.version }}</td> -->
               <td>{{ link.quality }}</td>
+              <td>
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 222
+                <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -48,6 +98,23 @@
           show
           variant="info"
         >Wygląda na to, że ten materiał nie posiada żadnych linków :(</b-alert>
+      </div>
+    </div>
+    <div v-if="activeTab === 1" class="block">
+      <div class="bhead text-center">Obsada</div>
+      <div class="bbody">
+        <h3>Reżyseria</h3>
+        <div v-for="person in movie.persons" :key="person.id">
+          <span v-if="person.pivot.type === 1">{{ person.name }}</span>
+        </div>
+        <h3>Scenariusz</h3>
+        <div v-for="person in movie.persons" :key="person.id">
+          <span v-if="person.pivot.type === 2">{{ person.name }}</span>
+        </div>
+        <h3>Aktorzy</h3>
+        <div v-for="person in movie.persons" :key="person.id">
+          <span v-if="person.pivot.type === 3">{{ person.name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -70,6 +137,15 @@ export default {
       this.movie = response.data.data;
       console.log(this.movie.links);
     });
+  },
+  computed: {
+    filteredStories() {
+      console.log(this.movie.persons);
+      //return this.movie.filter((i) => i.persons.type === 1);
+    },
+    filteredStories2() {
+      //return this.movie.filter((i) => i.persons.type === 1);
+    },
   },
 };
 </script>
