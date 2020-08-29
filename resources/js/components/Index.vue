@@ -52,7 +52,10 @@
             >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
-          <p class="bar mb-0">1111 odsłon Lektor Napisy</p>
+          <p class="bar mb-0 d-flex justify-content-between">
+            <span>{{ movie.views }} wyświetleń</span>
+            <span>Lektor Napisy</span>
+          </p>
         </div>
       </div>
       <pagination :data="movies" @pagination-change-page="getResults"></pagination>

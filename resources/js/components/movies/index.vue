@@ -3,15 +3,15 @@
     <b-nav class="bhead justify-content-around" pills>
       <b-nav-item
         :active="activeTab === 1"
-        @click.prevent="change_sort('created_at'), activeTab = 1"
+        @click.prevent="changeSort('created_at'), activeTab = 1"
       >Ostatnio dodane</b-nav-item>
       <b-nav-item
         :active="activeTab === 2"
-        @click.prevent="change_sort('last_view'), activeTab = 2"
+        @click.prevent="changeSort('last_view'), activeTab = 2"
       >Ostatnio oglądane</b-nav-item>
       <b-nav-item
         :active="activeTab=== 3"
-        @click.prevent="change_sort('views'), activeTab = 3"
+        @click.prevent="changeSort('views'), activeTab = 3"
       >Najpopularniejsze</b-nav-item>
     </b-nav>
     <div class="bbody">
@@ -27,21 +27,40 @@
         Aktualnie przeglądasz
         <b>najpopularniejsze</b> filmy.
       </p>
-      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
+
+      <ContentLoader
+        :height="80"
+        :speed="1"
+        :primaryColor="'#af9673'"
+        :animate="true"
+        v-if="!myData"
+      >
+        <rect x="0" y="0" width="50" height="70" />
+        <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
+        <rect x="60" y="20" rx="3" ry="3" width="250" height="10" />
+        <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
+        <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
+      </ContentLoader>
+      <ContentLoader
+        :height="80"
+        :speed="1"
+        :primaryColor="'#af9673'"
+        :animate="true"
+        v-if="!myData"
+      >
         <rect x="0" y="0" width="50" height="70" />
         <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
         <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
         <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
         <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
       </ContentLoader>
-      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
-        <rect x="0" y="0" width="50" height="70" />
-        <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
-        <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
-        <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
-        <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
-      </ContentLoader>
-      <ContentLoader :height="80" :speed="1" :primaryColor="'#af9673'" :animate="true" v-if="!myData">
+      <ContentLoader
+        :height="80"
+        :speed="1"
+        :primaryColor="'#af9673'"
+        :animate="true"
+        v-if="!myData"
+      >
         <rect x="0" y="0" width="50" height="70" />
         <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
         <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
@@ -73,7 +92,10 @@
             >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
-          <p class="bar mb-0">1111 odsłon Lektor Napisy</p>
+          <p class="bar mb-0 d-flex justify-content-between">
+            <span>{{ movie.views }} wyświetleń</span>
+            <span>Lektor Napisy</span>
+          </p>
         </div>
       </div>
       <pagination :data="movies" @pagination-change-page="getResults"></pagination>
@@ -101,7 +123,7 @@ export default {
     this.getResults();
   },
   methods: {
-    change_sort(field) {
+    changeSort(field) {
       this.myData = false;
       this.sortBy = field;
       this.getResults();

@@ -3,20 +3,21 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import BootstrapVue from 'bootstrap-vue'
-
-require('./bootstrap');
-
-window.Vue = require('vue');
-Vue.use(BootstrapVue)
+import BootstrapVue from 'bootstrap-vue';
 
 // Vue assets
 import Multiselect from 'vue-multiselect';
 import VueButtonSpinner from 'vue-button-spinner';
 import InputTag from 'vue-input-tag';
-// import { ContentLoader } from "vue-content-loader";
+import { ContentLoader } from "vue-content-loader";
 
-// Vue.use({ContentLoader});
+require('./bootstrap');
+
+window.Vue = require('vue');
+Vue.use(ContentLoader);
+
+Vue.use(BootstrapVue);
+
 
 /**
  * The following block of code may be used to automatically register your

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', $movie->title.' ('.$movie->release_date->year.')')
 @section ('content')
-
+<div id="app">
     <movies-show :movieid="'{{ $movie->id }}'"></movies-show>
-
+</div>
 @endsection
 
 

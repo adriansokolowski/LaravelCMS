@@ -7,6 +7,9 @@
             <div class="poster">
                 <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
             </div>
+            <div>
+                asd
+            </div>
         </div>
     </div>
   </div>
@@ -23,6 +26,7 @@
         mounted() {
             axios.get('/api/movies/' + this.movieid).then((response) => {
                 this.movie = response.data;
+                console.log(this.movie);
             })
         }
     }
