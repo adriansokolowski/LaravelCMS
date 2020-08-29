@@ -70,7 +70,7 @@ class MovieController extends Controller
         $contents = file_get_contents($request->poster);
         Storage::disk("public")->put('/poster/' . $movie->id . '.jpg', $contents);
         $movie->categories()->attach($request->categories);
- 
+
         foreach ($request->countries as $country) {
             $country = Country::query()->firstOrCreate(['name' => $country]);
             $movie->countries()->attach($country);
@@ -97,6 +97,5 @@ class MovieController extends Controller
     public function show(Movie $movie)
     {
         return new MovieResource($movie);
-        return $movie;
     }
 }
