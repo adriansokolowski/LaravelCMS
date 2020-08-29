@@ -52,9 +52,13 @@
             >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
-          <p class="bar mb-0 d-flex justify-content-between">
+          <p class="bar pl-1 pr-1 mb-0 d-flex justify-content-between">
             <span>{{ movie.views }} wyświetleń</span>
-            <span>Lektor Napisy</span>
+            <span>
+              <i class="fa fa-microphone" aria-hidden="true"></i>
+              <i class="fa fa-globe" aria-hidden="true"></i>
+              <i class="fa fa-align-left" aria-hidden="true"></i>
+            </span>
           </p>
         </div>
       </div>

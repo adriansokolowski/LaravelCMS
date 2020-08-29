@@ -92,7 +92,7 @@
             >{{ country.name }}</a>
           </div>
           <div class="description">{{ movie.description }}</div>
-          <p class="bar mb-0 d-flex justify-content-between">
+          <p class="bar pl-1 pr-1 mb-0 d-flex justify-content-between">
             <span>{{ movie.views }} wyświetleń</span>
             <span>Lektor Napisy</span>
           </p>
