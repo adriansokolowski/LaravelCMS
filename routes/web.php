@@ -31,8 +31,8 @@ Route::post('/filmy', 'MovieController@store')->name('movies.store');
 Route::put('/film/{movie}', 'MovieController@update');
 
 // Series
-Route::get('/seriale', 'SeriesController@index')->name('series.index');
-Route::get('/serial/{serie}', 'SeriesController@show')->name('series.show');
+Route::get('/seriale', 'SerieController@index')->name('series.index');
+Route::get('/serial/{serie}', 'SerieController@show')->name('series.show');
 
 // Crawlers
 Route::get('/crawlers', 'CrawlerController@index')->name('crawlers.index');

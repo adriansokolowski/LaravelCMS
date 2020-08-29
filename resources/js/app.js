@@ -10,10 +10,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 Vue.use(BootstrapVue)
 
+// Vue assets
 import Multiselect from 'vue-multiselect';
 import VueButtonSpinner from 'vue-button-spinner';
 import InputTag from 'vue-input-tag'
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,10 +31,15 @@ Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('input-tag', InputTag)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+
+// Movies Resource
 Vue.component('movie-create', require('./components/movies/Create.vue').default);
-Vue.component('movie-all', require('./components/Index.vue').default);
 Vue.component('movies-index', require('./components/movies/Index.vue').default);
+Vue.component('movies-show', require('./components/movies/Show.vue').default);
+
+// Others Resource
 Vue.component('categories', require('./components/Category.vue').default);
+Vue.component('movie-all', require('./components/Index.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

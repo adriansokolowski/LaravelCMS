@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Resources\MovieResource;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 use App\Movie;
 use App\Country;
 use App\Person;
 use App\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -25,7 +26,7 @@ class MovieController extends Controller
         if (!in_array($category, $categories)) {
             $category = null;
         }
-        //dd(request()->all());
+
         $year = request('year', null);
 
         $country = request('country', null);
@@ -69,7 +70,7 @@ class MovieController extends Controller
         $contents = file_get_contents($request->poster);
         Storage::disk("public")->put('/poster/' . $movie->id . '.jpg', $contents);
         $movie->categories()->attach($request->categories);
-
+ 
         foreach ($request->countries as $country) {
             $country = Country::query()->firstOrCreate(['name' => $country]);
             $movie->countries()->attach($country);
@@ -91,5 +92,10 @@ class MovieController extends Controller
         }
 
         return $movie->path();
+    }
+
+    public function show(Movie $movie)
+    {
+        return $movie;
     }
 }

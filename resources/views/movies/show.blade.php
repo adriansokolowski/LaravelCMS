@@ -1,7 +1,13 @@
 @extends('layouts.app')
 @section('title', $movie->title.' ('.$movie->release_date->year.')')
 @section ('content')
-    <div class="block">
+
+    <movies-show :movieid="'{{ $movie->id }}'"></movies-show>
+
+@endsection
+
+
+<!-- <div class="block">
         <div class="head text-center">
             <a href="#wm1" onclick="openCity(event, 'London')">Opis filmu </a> 
             <a href="#wm2" onclick="openCity(event, 'Paris')">Oglądaj online</a>
@@ -62,7 +68,7 @@
             </div>
         </div>
     </div>
-@endsection
+
 
 <script>
     function openCity(evt, cityName) {
@@ -78,4 +84,4 @@
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
     }
-</script>
+</script> -->
