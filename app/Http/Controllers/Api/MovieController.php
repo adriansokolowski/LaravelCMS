@@ -52,10 +52,11 @@ class MovieController extends Controller
                 $q->where('countries.name', request('country'));
             });
         }
-
+        
         return MovieResource::collection(
             $query->orderBy($sortBy, 'desc')->get()
         );
+        dd($request->all());
     }
 
     public function store(StoreMovieRequest $request)

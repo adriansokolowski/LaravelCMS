@@ -21,7 +21,7 @@
     <div class="block">
       <span>
         Aktywne filtry:
-        <span v-for="(val, key) in $props" :key="key">{{ key }}: {{ val }}</span>
+        <span v-for="(val, key) in $props" :key="key">{{ val }}</span>
       </span>
     </div>
     <div class="block">
@@ -54,11 +54,11 @@
         </p>
 
         <ContentLoader
+          v-if="!state"
           :height="80"
           :speed="1"
-          :primaryColor="'#af9673'"
+          primaryColor="#af9673"
           :animate="true"
-          v-if="!state"
         >
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
@@ -67,11 +67,11 @@
           <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
         </ContentLoader>
         <ContentLoader
+          v-if="!state"
           :height="80"
           :speed="1"
-          :primaryColor="'#af9673'"
+          primaryColor="#af9673"
           :animate="true"
-          v-if="!state"
         >
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
@@ -80,11 +80,11 @@
           <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
         </ContentLoader>
         <ContentLoader
+          v-if="!state"
           :height="80"
           :speed="1"
-          :primaryColor="'#af9673'"
+          primaryColor="#af9673"
           :animate="true"
-          v-if="!state"
         >
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
@@ -161,44 +161,44 @@ export default {
       this.state = false;
       this.sortBy = field;
       this.getResults();
+      this.setParams();
     },
     onChangeCategory(event) {
-      if (!this.year) {
-        this.category = event.target.value;
-        this.getResults();
-        history.replaceState(null, null, "/filmy?category=" + this.category);
-      } else {
-        this.category = event.target.value;
-        this.getResults();
-        history.replaceState(
-          null,
-          null,
-          "/filmy?category=" + this.category + "&year=" + this.year
-        );
-      }
+      this.category = event.target.value;
+      this.getResults();
+      this.setParams();
     },
     onChangeYear(event) {
       this.year = event.target.value;
       this.getResults();
-      history.replaceState(null, null, "/filmy?year=" + this.year);
+      this.setParams();
+    },
+    setParams(category = this.category, year = this.year) {
+      const params = new URLSearchParams();
+      if (category) {
+        params.append("category", category);
+      }
+      if (year) {
+        params.append("year", year);
+      }
+      history.replaceState(null, null, "/filmy?" + params.toString());
     },
     getResults(page = 1) {
       this.state = false;
+      const url = "/api/movies";
       axios
-        .get(
-          "/api/movies?page=" +
-            page +
-            "&sortBy=" +
-            this.sortBy +
-            "&category=" +
-            this.category +
-            "&year=" +
-            this.year +
-            "&country=" +
-            this.country
-        )
+        .get(url, {
+          params: {
+            page: this.page,
+            sortBy: this.sortBy,
+            category: this.category,
+            year: this.year,
+            country: this.country,
+          },
+        })
         .then((response) => {
           this.movies = response.data;
+          console.log(response.data);
           this.state = true;
         });
     },
