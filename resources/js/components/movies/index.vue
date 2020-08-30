@@ -2,7 +2,7 @@
   <div>
     <div class="block">
       <span>Gatunek:</span>
-      <select :value="this.category" @change="onChangeCategory">
+      <select :value="this.fields.category" @change="onChangeCategory">
         <option
           v-for="category in categories"
           :value="category.name"
@@ -13,15 +13,25 @@
     <div class="block">
       <span>
         Rok:
-        <select :value="this.year" @change="onChangeYear">
+        <select :value="this.fields.year" @change="onChangeYear">
           <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
+        </select>
+      </span>
+      <span>
+        Kraj:
+        <select :value="this.fields.country" @change="onChangeCountry">
+          <option
+            v-for="country in countries"
+            :value="country.name"
+            :key="country.id"
+          >{{ country.name }}</option>
         </select>
       </span>
     </div>
     <div class="block">
       <span>
         Aktywne filtry:
-        <span v-for="(val, key) in $props" :key="key">{{ val }}</span>
+        <!-- <span v-for="(val, key) in $props" :key="key">{{ val }}</span> -->
       </span>
     </div>
     <div class="block">
@@ -53,39 +63,21 @@
           <b>najpopularniejsze</b> filmy.
         </p>
 
-        <ContentLoader
-          v-if="!state"
-          :height="80"
-          :speed="1"
-          primaryColor="#af9673"
-          :animate="true"
-        >
+        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
           <rect x="60" y="20" rx="3" ry="3" width="250" height="10" />
           <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
           <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
         </ContentLoader>
-        <ContentLoader
-          v-if="!state"
-          :height="80"
-          :speed="1"
-          primaryColor="#af9673"
-          :animate="true"
-        >
+        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
           <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
           <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
           <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
         </ContentLoader>
-        <ContentLoader
-          v-if="!state"
-          :height="80"
-          :speed="1"
-          primaryColor="#af9673"
-          :animate="true"
-        >
+        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
           <rect x="0" y="0" width="50" height="70" />
           <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
           <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
@@ -140,40 +132,62 @@ export default {
   components: {
     ContentLoader,
   },
-  props: ["category", "year", "country"],
+  props: {
+    category: String,
+    year: String,
+    country: String,
+  },
   data() {
     return {
+      fields: {
+        sortBy: "created_at",
+        category: this.category,
+        year: this.year,
+        country: this.country,
+      },
       activeTab: 1,
       movies: {},
-      sortBy: "created_at",
       state: true,
       categories: {},
+      countryies: {},
     };
   },
   mounted() {
-    axios.get("/api/categories").then((response) => {
-      this.categories = response.data.data;
-    });
+    axios.all([axios.get("/api/categories"), axios.get("/api/countries")]).then(
+      axios.spread((...responses) => {
+        this.categories = responses[0].data.data;
+        this.countries = responses[1].data.data;
+      })
+    );
     this.getResults();
   },
   methods: {
     changeSort(field) {
       this.state = false;
-      this.sortBy = field;
+      this.fields.sortBy = field;
       this.getResults();
       this.setParams();
     },
     onChangeCategory(event) {
-      this.category = event.target.value;
+      this.fields.category = event.target.value;
       this.getResults();
       this.setParams();
     },
     onChangeYear(event) {
-      this.year = event.target.value;
+      this.fields.year = event.target.value;
       this.getResults();
       this.setParams();
     },
-    setParams(category = this.category, year = this.year) {
+    onChangeCountry(event) {
+      this.fields.country = event.target.value;
+      this.getResults();
+      this.setParams();
+    },
+    setParams(
+      category = this.fields.category,
+      year = this.fields.year,
+      country = this.fields.country
+    ) {
       const params = new URLSearchParams();
       if (category) {
         params.append("category", category);
@@ -190,10 +204,10 @@ export default {
         .get(url, {
           params: {
             page: this.page,
-            sortBy: this.sortBy,
-            category: this.category,
-            year: this.year,
-            country: this.country,
+            sortBy: this.fields.sortBy,
+            category: this.fields.category,
+            year: this.fields.year,
+            country: this.fields.country,
           },
         })
         .then((response) => {
