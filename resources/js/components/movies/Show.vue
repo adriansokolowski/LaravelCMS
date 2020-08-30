@@ -103,6 +103,9 @@
     <div v-if="activeTab === 1" class="block">
       <div class="bhead text-center">Obsada</div>
       <div class="bbody">
+        <div v-for="person in filteredStories" :key="person">
+          {{ person.type }}
+        </div>
         <h3>Reżyseria</h3>
         <div v-for="person in movie.persons" :key="person.id">
           <span v-if="person.pivot.type === 1">{{ person.name }}</span>
@@ -135,13 +138,12 @@ export default {
   mounted() {
     axios.get("/api/movies/" + this.movieid).then((response) => {
       this.movie = response.data.data;
-      console.log(this.movie.links);
     });
   },
   computed: {
     filteredStories() {
-      console.log(this.movie.persons);
-      //return this.movie.filter((i) => i.persons.type === 1);
+      //console.log(this.movie.filter((i) => i.persons.pivot.type == 1));
+      //return this.movie.filter((i) => i.persons.pivot.type == 1);
     },
     filteredStories2() {
       //return this.movie.filter((i) => i.persons.type === 1);
