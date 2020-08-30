@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="block">
-      <span>
-        Gatunek:
-      </span>
-      <select :value="this.category" @change="onChange">
+      <span>Gatunek:</span>
+      <select :value="this.category" @change="onChangeCategory">
         <option
           v-for="category in categories"
           :value="category.name"
@@ -15,7 +13,9 @@
     <div class="block">
       <span>
         Rok:
-        <input type="text" :value="this.year" />
+        <select :value="this.year" @change="onChangeYear">
+          <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
+        </select>
       </span>
     </div>
     <div class="block">
@@ -162,10 +162,25 @@ export default {
       this.sortBy = field;
       this.getResults();
     },
-    onChange(event) {
-      this.category = event.target.value;
+    onChangeCategory(event) {
+      if (!this.year) {
+        this.category = event.target.value;
+        this.getResults();
+        history.replaceState(null, null, "/filmy?category=" + this.category);
+      } else {
+        this.category = event.target.value;
+        this.getResults();
+        history.replaceState(
+          null,
+          null,
+          "/filmy?category=" + this.category + "&year=" + this.year
+        );
+      }
+    },
+    onChangeYear(event) {
+      this.year = event.target.value;
       this.getResults();
-      history.replaceState(null, null, '/filmy?category=' + this.category);
+      history.replaceState(null, null, "/filmy?year=" + this.year);
     },
     getResults(page = 1) {
       this.state = false;
@@ -186,6 +201,15 @@ export default {
           this.movies = response.data;
           this.state = true;
         });
+    },
+  },
+  computed: {
+    years() {
+      const year = new Date().getFullYear();
+      return Array.from(
+        { length: year - 1888 },
+        (value, index) => 1901 + index
+      );
     },
   },
 };
