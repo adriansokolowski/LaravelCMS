@@ -1,32 +1,33 @@
 <template>
   <div>
     <div class="block">
-      <span>Gatunek:</span>
-      <select :value="this.fields.category" @change="onChangeCategory">
-        <option
-          v-for="category in categories"
-          :value="category.name"
-          :key="category.id"
-        >{{ category.name }}</option>
-      </select>
-    </div>
-    <div class="block">
-      <span>
-        Rok:
-        <select :value="this.fields.year" @change="onChangeYear">
-          <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
-        </select>
-      </span>
-      <span>
-        Kraj:
-        <select :value="this.fields.country" @change="onChangeCountry">
+      <div class="bhead text-center">Filtry</div>
+      <div class="bbody">
+        <span>Gatunek:</span>
+        <select :value="this.fields.category" @change="onChangeCategory">
           <option
-            v-for="country in countries"
-            :value="country.name"
-            :key="country.id"
-          >{{ country.name }}</option>
+            v-for="category in categories"
+            :value="category.name"
+            :key="category.id"
+          >{{ category.name }}</option>
         </select>
-      </span>
+        <span>
+          Rok:
+          <select :value="this.fields.year" @change="onChangeYear">
+            <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
+          </select>
+        </span>
+        <span>
+          Kraj:
+          <select :value="this.fields.country" @change="onChangeCountry">
+            <option
+              v-for="country in countries"
+              :value="country.name"
+              :key="country.id"
+            >{{ country.name }}</option>
+          </select>
+        </span>
+      </div>
     </div>
     <div class="block">
       <span>
@@ -194,6 +195,9 @@ export default {
       }
       if (year) {
         params.append("year", year);
+      }
+      if (country) {
+        params.append("country", country);
       }
       history.replaceState(null, null, "/filmy?" + params.toString());
     },
