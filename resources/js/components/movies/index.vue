@@ -8,13 +8,13 @@
           <option
             v-for="category in categories"
             :value="category.name"
-            :key="category.id"
+            :key="'F' + category.id"
           >{{ category.name }}</option>
         </select>
         <span>
           Rok:
           <select :value="this.fields.year" @change="onChangeYear">
-            <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
+            <option v-for="year in years" :value="year" :key="'A' + year">{{ year }}</option>
           </select>
         </span>
         <span>
@@ -23,7 +23,7 @@
             <option
               v-for="country in countries"
               :value="country.name"
-              :key="country.id"
+              :key="'B' + country.id"
             >{{ country.name }}</option>
           </select>
         </span>
@@ -51,42 +51,31 @@
         >Najpopularniejsze</b-nav-item>
       </b-nav>
       <div class="bbody">
-        <p v-if="activeTab === 1" class="bar mb-0 text-center">
+        <p v-if="activeTab === 1 && state" class="bar mb-0 text-center">
           Aktualnie przeglądasz
           <b>ostatnio dodane</b> filmy.
         </p>
-        <p v-if="activeTab === 2" class="bar mb-0 text-center">
+        <p v-if="activeTab === 2 && state" class="bar mb-0 text-center">
           Aktualnie przeglądasz
           <b>ostatnio oglądane</b> filmy.
         </p>
-        <p v-if="activeTab === 3" class="bar mb-0 text-center">
+        <p v-if="activeTab === 3 && state" class="bar mb-0 text-center">
           Aktualnie przeglądasz
           <b>najpopularniejsze</b> filmy.
         </p>
+        <div class="text-center mt-2" v-if="!state">
+          <div v-for="movie in movies.data" :key="'C' + movie.id">
+            <ContentLoader :height="80" :speed="1" primaryColor="#af9673" :animate="true">
+              <rect x="0" y="0" width="50" height="70" />
+              <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
+              <rect x="60" y="20" rx="3" ry="3" width="250" height="10" />
+              <rect x="60" y="40" rx="3" ry="3" width="330" height="10" />
+              <rect x="60" y="60" rx="3" ry="3" width="330" height="10" />
+            </ContentLoader>
+          </div>
+        </div>
 
-        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
-          <rect x="0" y="0" width="50" height="70" />
-          <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
-          <rect x="60" y="20" rx="3" ry="3" width="250" height="10" />
-          <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
-          <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
-        </ContentLoader>
-        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
-          <rect x="0" y="0" width="50" height="70" />
-          <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
-          <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
-          <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
-          <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
-        </ContentLoader>
-        <ContentLoader v-if="!state" :height="80" :speed="1" primaryColor="#af9673" :animate="true">
-          <rect x="0" y="0" width="50" height="70" />
-          <rect x="60" y="0" rx="3" ry="3" width="150" height="10" />
-          <rect x="60" y="20" rx="3" ry="3" width="300" height="10" />
-          <rect x="60" y="40" rx="3" ry="3" width="300" height="10" />
-          <rect x="60" y="60" rx="3" ry="3" width="300" height="10" />
-        </ContentLoader>
-
-        <div v-else v-for="movie in movies.data" :key="movie.id" class="item d-flex m-2">
+        <div v-else v-for="movie in movies.data" :key="'D' + movie.id" class="item d-flex m-2">
           <div class="poster">
             <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
           </div>
@@ -96,7 +85,7 @@
               <a :href="'/filmy?year=' + movie.release_date">{{ movie.release_date }}</a> |
               <a
                 v-for="(category, index) in movie.categories"
-                :key="category.id"
+                :key="'E' + category.id"
                 :href="'/filmy?category=' + category.name"
               >
                 <span v-if="index != 0">,</span>
@@ -105,7 +94,7 @@
               |
               <a
                 v-for="country in movie.countries"
-                :key="country.id"
+                :key="'F' + country.id"
                 :href="'/filmy?country=' + country.name"
               >{{ country.name }}</a>
             </div>
@@ -120,9 +109,14 @@
             </p>
           </div>
         </div>
-        <pagination align="right" :show-disabled="true" :data="movies" @pagination-change-page="getResults"></pagination>
+        <pagination
+          align="right"
+          :show-disabled="true"
+          :data="movies"
+          @pagination-change-page="getResults"
+        ></pagination>
       </div>
-    </div> 
+    </div>
   </div>
 </template> 
 
@@ -190,15 +184,9 @@ export default {
       country = this.fields.country
     ) {
       const params = new URLSearchParams();
-      if (category) {
-        params.append("category", category);
-      }
-      if (year) {
-        params.append("year", year);
-      }
-      if (country) {
-        params.append("country", country);
-      }
+      category ? params.append("category", category) : "";
+      year ? params.append("year", year) : "";
+      country ? params.append("country", country) : "";
       history.replaceState(null, null, "/filmy?" + params.toString());
     },
     getResults(page = 1) {
@@ -216,7 +204,6 @@ export default {
         })
         .then((response) => {
           this.movies = response.data;
-          console.log(response.data);
           this.state = true;
         });
     },
@@ -226,7 +213,7 @@ export default {
       const year = new Date().getFullYear();
       return Array.from(
         { length: year - 1888 },
-        (value, index) => 1901 + index
+        (value, index) => 1889 + index
       );
     },
   },

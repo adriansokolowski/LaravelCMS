@@ -54,7 +54,7 @@ class MovieController extends Controller
         }
         
         return MovieResource::collection(
-            $query->orderBy($sortBy, 'desc')->paginate(3)
+            $query->orderBy($sortBy, 'desc')->paginate(5)
         );
     }
 
