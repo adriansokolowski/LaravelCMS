@@ -36,8 +36,17 @@
                 <tr>
                   <th>Wyświetleń:</th>
                   <td>{{ movie.views }}</td>
-                  <th>Wyświetleń:</th>
-                  <td>asdasd</td>
+                  <th>Kraj produkcji:</th>
+                  <td>
+                    <a
+                      v-for="(country, index) in movie.countries"
+                      :key="country.id"
+                      :href="'/filmy?country=' + country.name"
+                    >
+                      <span v-if="index != 0">,</span>
+                      <span>{{ country.name }}</span>
+                    </a>
+                  </td>
                 </tr>
                 <tr>
                   <th>Wersja:</th>
@@ -103,9 +112,7 @@
     <div v-if="activeTab === 1" class="block">
       <div class="bhead text-center">Obsada</div>
       <div class="bbody">
-        <div v-for="person in filteredStories" :key="person">
-          {{ person.type }}
-        </div>
+        <div v-for="person in filteredStories" :key="person">{{ person.type }}</div>
         <h3>Reżyseria</h3>
         <div v-for="person in movie.persons" :key="person.id">
           <span v-if="person.pivot.type === 1">{{ person.name }}</span>
