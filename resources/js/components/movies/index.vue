@@ -120,9 +120,9 @@
             </p>
           </div>
         </div>
-        <pagination :data="movies" @pagination-change-page="getResults"></pagination>
+        <pagination align="right" :show-disabled="true" :data="movies" @pagination-change-page="getResults"></pagination>
       </div>
-    </div>
+    </div> 
   </div>
 </template> 
 
@@ -150,7 +150,7 @@ export default {
       movies: {},
       state: true,
       categories: {},
-      countryies: {},
+      countries: {},
     };
   },
   mounted() {
@@ -207,7 +207,7 @@ export default {
       axios
         .get(url, {
           params: {
-            page: this.page,
+            page: page,
             sortBy: this.fields.sortBy,
             category: this.fields.category,
             year: this.fields.year,
