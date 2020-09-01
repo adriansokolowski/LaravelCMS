@@ -109,13 +109,39 @@
           >Kategoria</label>
         </div>
         <div class="td row2">
-          <multi-select
-            track-by="id"
-            label="name"
-            v-model="fields.categories"
-            :options="categories"
-            :multiple="true"
-          ></multi-select>
+          <b-form-group>
+            <b-form-tags
+              v-model="fields.categories"
+              size="lg"
+              add-on-change
+              no-outer-focus
+              class="mb-2"
+            >
+              <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+                <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+                  <li v-for="tag in tags" :key="tag" class="list-inline-item">
+                    <b-form-tag
+                      @remove="removeTag(tag)"
+                      :title="tag"
+                      :disabled="disabled"
+                      variant="info"
+                    >{{ tag }}</b-form-tag>
+                  </li>
+                </ul>
+                <b-form-select
+                  v-bind="inputAttrs"
+                  v-on="inputHandlers"
+                  :disabled="disabled || availableCategories.length === 0"
+                  :options="availableCategories"
+                >
+                  <template v-slot:first>
+                    <!-- Safari bug fix -->
+                    <option disabled value>Wybierz kategorię...</option>
+                  </template>
+                </b-form-select>
+              </template>
+            </b-form-tags>
+          </b-form-group>
         </div>
       </div>
       <div class="tr">
@@ -216,7 +242,13 @@
           >Reżyseria</label>
         </div>
         <div class="td row2">
-          <b-form-tags input-id="tags-basic" v-model="fields.direction" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <b-form-tags
+            input-id="tags-basic"
+            v-model="fields.direction"
+            placeholder
+            addButtonText="dodaj"
+            class="mb-2"
+          ></b-form-tags>
           <div
             class="alert alert-danger"
             v-if="errors && errors.direction"
@@ -231,7 +263,13 @@
           >Scenariusz</label>
         </div>
         <div class="td row2">
-          <b-form-tags input-id="tags-basic" v-model="fields.screenplay" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <b-form-tags
+            input-id="tags-basic"
+            v-model="fields.screenplay"
+            placeholder
+            addButtonText="dodaj"
+            class="mb-2"
+          ></b-form-tags>
           <div
             class="alert alert-danger"
             v-if="errors && errors.screenplay"
@@ -243,7 +281,13 @@
           <label for="trailer" class="col-md-3 col-form-label text-md-right font-weight-bold">Kraj</label>
         </div>
         <div class="td row2">
-          <b-form-tags input-id="tags-basic" v-model="fields.countries" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <b-form-tags
+            input-id="tags-basic"
+            v-model="fields.countries"
+            placeholder
+            addButtonText="dodaj"
+            class="mb-2"
+          ></b-form-tags>
           <div
             class="alert alert-danger"
             v-if="errors && errors.countries"
@@ -299,6 +343,7 @@ export default {
   props: ["user"],
   data() {
     return {
+      value: [],
       form_submitting: false,
       a: false,
       c: "",
@@ -337,7 +382,9 @@ export default {
       const data = {
         ...this.fields,
         user_id: this.user.id,
-        categories: this.fields.categories.map((x) => x.id),
+        categories: this.categories
+          .filter((x) => this.fields.categories.includes(x.name))
+          .map((y) => y.id),
       };
       axios
         .post("/api/movies", data)
@@ -373,9 +420,6 @@ export default {
           this.a = false;
           this.error = false;
           this.fields = response.data;
-          this.fields.categories = this.categories.filter((x) =>
-            this.fields.categories.includes(x.name)
-          );
         })
         .catch((error) => {
           this.error = true;
@@ -383,6 +427,11 @@ export default {
         });
     },
   },
+  computed: {
+    availableCategories() {
+      const categories = this.categories.map((obj) => obj.name);
+      return categories.filter((opt) => this.value.indexOf(opt) === -1);
+    },
+  },
 };
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
