@@ -216,8 +216,11 @@
           >Reżyseria</label>
         </div>
         <div class="td row2">
-          <input-tag v-model="fields.direction"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.direction">{{ errors.direction[0] }}</div>
+          <b-form-tags input-id="tags-basic" v-model="fields.direction" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <div
+            class="alert alert-danger"
+            v-if="errors && errors.direction"
+          >{{ errors.direction[0] }}</div>
         </div>
       </div>
       <div class="tr">
@@ -228,8 +231,11 @@
           >Scenariusz</label>
         </div>
         <div class="td row2">
-          <input-tag v-model="fields.screenplay"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.trailer">{{ errors.trailer[0] }}</div>
+          <b-form-tags input-id="tags-basic" v-model="fields.screenplay" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <div
+            class="alert alert-danger"
+            v-if="errors && errors.screenplay"
+          >{{ errors.screenplay[0] }}</div>
         </div>
       </div>
       <div class="tr">
@@ -237,8 +243,11 @@
           <label for="trailer" class="col-md-3 col-form-label text-md-right font-weight-bold">Kraj</label>
         </div>
         <div class="td row2">
-          <input-tag v-model="fields.countries"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.trailer">{{ errors.trailer[0] }}</div>
+          <b-form-tags input-id="tags-basic" v-model="fields.countries" placeholder addButtonText="dodaj" class="mb-2"></b-form-tags>
+          <div
+            class="alert alert-danger"
+            v-if="errors && errors.countries"
+          >{{ errors.countries[0] }}</div>
         </div>
       </div>
       <div class="tr">
@@ -246,8 +255,14 @@
           <label for="trailer" class="col-md-3 col-form-label text-md-right font-weight-bold">Obsada</label>
         </div>
         <div class="td row2">
-          <input-tag v-model="fields.cast"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.trailer">{{ errors.trailer[0] }}</div>
+          <b-form-tags
+            input-id="tags-basic"
+            v-model="fields.cast"
+            placeholder
+            addButtonText="dodaj"
+            class="mb-2"
+          ></b-form-tags>
+          <div class="alert alert-danger" v-if="errors && errors.cast">{{ errors.cast[0] }}</div>
         </div>
       </div>
       <div class="tr">
@@ -255,18 +270,26 @@
           <label for="trailer" class="col-md-3 col-form-label text-md-right font-weight-bold">Tag</label>
         </div>
         <div class="td row2">
-          <input-tag v-model="fields.tags"></input-tag>
-          <div class="alert alert-danger" v-if="errors && errors.trailer">{{ errors.trailer[0] }}</div>
+          <b-form-tags
+            input-id="tags-basic"
+            v-model="fields.tags"
+            addButtonText="dodaj"
+            placeholder
+            class="mb-2"
+          ></b-form-tags>
+          <div class="alert alert-danger" v-if="errors && errors.tags">{{ errors.trailer[0] }}</div>
         </div>
       </div>
     </div>
     <div style="padding: 1rem; background-color: #b39a76;" class="d-flex justify-content-end">
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="submit" v-on:click="clearAll" class="btn btn-custom2">Wyczyść</button>
-            <button :disabled="form_submitting" type="submit" class="btn btn-custom2">
-              {{ form_submitting ? 'Sprawdzanie...' : 'Zapisz' }}
-            </button>
-        </div>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" v-on:click="clearAll" class="btn btn-custom2">Wyczyść</button>
+        <button
+          :disabled="form_submitting"
+          type="submit"
+          class="btn btn-custom2"
+        >{{ form_submitting ? 'Sprawdzanie...' : 'Zapisz' }}</button>
+      </div>
     </div>
   </form>
 </template>
@@ -282,16 +305,16 @@ export default {
       movie: null,
       categories: [],
       fields: {
-        title: '',
-        user_id: '',
-        release_date: '',
-        poster: '',
+        title: "",
+        user_id: "",
+        release_date: "",
+        poster: "",
         categories: [],
-        description: '',
-        imdb_rate: '',
-        slider: '',
-        trailer: '',
-        fdb: '',
+        description: "",
+        imdb_rate: "",
+        slider: "",
+        trailer: "",
+        fdb: "",
         direction: [],
         screenplay: [],
         countries: [],
@@ -332,7 +355,7 @@ export default {
           }
         });
     },
-    clearAll(e){
+    clearAll(e) {
       e.preventDefault();
       this.fields = {};
       this.errors = {};
@@ -351,7 +374,7 @@ export default {
           this.error = false;
           this.fields = response.data;
           this.fields.categories = this.categories.filter((x) =>
-          this.fields.categories.includes(x.name)
+            this.fields.categories.includes(x.name)
           );
         })
         .catch((error) => {

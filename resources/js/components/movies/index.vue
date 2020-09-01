@@ -3,8 +3,13 @@
     <div class="block">
       <div class="bhead text-center">Filtry</div>
       <div class="bbody">
+        {{ fields }}
         <span>Gatunek:</span>
-        <select :value="this.fields.category" @change="onChangeCategory">
+        <select
+          :value="this.fields.category"
+          class="form-control"
+          @change="onChangeProperty($event, 'category')"
+        >
           <option
             v-for="category in categories"
             :value="category.name"
@@ -13,13 +18,21 @@
         </select>
         <span>
           Rok:
-          <select :value="this.fields.year" @change="onChangeYear">
+          <select
+            :value="this.fields.year"
+            class="form-control"
+            @change="onChangeProperty($event, 'year')"
+          >
             <option v-for="year in years" :value="year" :key="'A' + year">{{ year }}</option>
           </select>
         </span>
         <span>
           Kraj:
-          <select :value="this.fields.country" @change="onChangeCountry">
+          <select
+            :value="this.fields.country"
+            class="form-control"
+            @change="onChangeProperty($event, 'country')"
+          >
             <option
               v-for="country in countries"
               :value="country.name"
@@ -142,9 +155,9 @@ export default {
       },
       activeTab: 1,
       movies: {},
-      state: true,
-      categories: {},
-      countries: {},
+      state: false,
+      categories: [],
+      countries: [],
     };
   },
   mounted() {
@@ -163,18 +176,8 @@ export default {
       this.getResults();
       this.setParams();
     },
-    onChangeCategory(event) {
-      this.fields.category = event.target.value;
-      this.getResults();
-      this.setParams();
-    },
-    onChangeYear(event) {
-      this.fields.year = event.target.value;
-      this.getResults();
-      this.setParams();
-    },
-    onChangeCountry(event) {
-      this.fields.country = event.target.value;
+    onChangeProperty(event, theProp) {
+      this.fields[theProp] = event.target.value;
       this.getResults();
       this.setParams();
     },
@@ -184,9 +187,9 @@ export default {
       country = this.fields.country
     ) {
       const params = new URLSearchParams();
-      category ? params.append("category", category) : "";
-      year ? params.append("year", year) : "";
-      country ? params.append("country", country) : "";
+      category ? params.append("category", category) : void 0;
+      year ? params.append("year", year) : void 0;
+      country ? params.append("country", country) : void 0;
       history.replaceState(null, null, "/filmy?" + params.toString());
     },
     getResults(page = 1) {

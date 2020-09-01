@@ -32,9 +32,7 @@ Vue.use(BootstrapVue);
 
 Vue.component('multi-select', Multiselect);
 Vue.component('button-spinner', VueButtonSpinner);
-Vue.component('input-tag', InputTag)
 Vue.component('pagination', require('laravel-vue-pagination'));
-
 
 // Movies Resource
 Vue.component('movie-create', require('./components/movies/Create.vue').default);
