@@ -3,8 +3,6 @@
 namespace App;
 
 use App\Parser;
-use App\Crawler;
-use App\Category;
 
 class Fdb
 {

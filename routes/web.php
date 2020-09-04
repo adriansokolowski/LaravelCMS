@@ -25,7 +25,11 @@ Route::get('/wyloguj', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 // Movies
 Route::get('/filmy', 'MovieController@index')->name('movies.index');
 Route::get('/film/{movie}/{slug?}', 'MovieController@show')->name('movies.show');
-Route::get('/dodaj-film', 'MovieController@create')->name('movies.create')->middleware('auth');
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/dodaj-film', 'MovieController@create')->name('movies.create');
+});
+
 Route::get('/film/{movie}/{slug?}/edit', 'MovieController@edit');
 Route::post('/filmy', 'MovieController@store')->name('movies.store');
 Route::put('/film/{movie}', 'MovieController@update');

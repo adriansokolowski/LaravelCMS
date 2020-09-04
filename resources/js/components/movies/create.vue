@@ -45,7 +45,11 @@
               autofocus
             />
             <div class="input-group-append">
-              <button-spinner :is-loading="a" :disabled="a" :status="c">
+              <button-spinner
+                :is-loading="isBtnLoading"
+                :disabled="isBtnDisabled"
+                :status="btnStatus"
+              >
                 <span v-on:click="importData">Importuj</span>
               </button-spinner>
             </div>
@@ -340,13 +344,15 @@
 
 <script>
 export default {
-  props: ["user"],
+  props: {
+    user: Object,
+  },
   data() {
     return {
-      value: [],
       form_submitting: false,
-      a: false,
-      c: "",
+      isBtnLoading: false,
+      isBtnDisabled: false,
+      btnStatus: "",
       movie: null,
       categories: [],
       fields: {
@@ -382,9 +388,7 @@ export default {
       const data = {
         ...this.fields,
         user_id: this.user.id,
-        categories: this.categories
-          .filter((x) => this.fields.categories.includes(x.name))
-          .map((y) => y.id),
+        categories: this.getCategoriesIDs(),
       };
       axios
         .post("/api/movies", data)
@@ -410,27 +414,37 @@ export default {
     },
     importData(e) {
       e.preventDefault();
-      this.a = true;
+      this.isBtnLoading = true;
+      this.isBtnDisabled = true;
       this.errors = {};
       axios
         .post("/import", {
           title: this.fields.title,
         })
         .then((response) => {
-          this.a = false;
+          this.isBtnLoading = false;
+          this.isBtnDisabled = false;
           this.error = false;
           this.fields = response.data;
         })
         .catch((error) => {
           this.error = true;
-          this.a = false;
+          this.isBtnLoading = false;
+          this.isBtnDisabled = false;
         });
+    },
+    getCategoriesIDs() {
+      return this.categories
+        .filter((x) => this.fields.categories.includes(x.name))
+        .map((y) => y.id);
     },
   },
   computed: {
     availableCategories() {
       const categories = this.categories.map((obj) => obj.name);
-      return categories.filter((opt) => this.value.indexOf(opt) === -1);
+      return categories.filter(
+        (opt) => this.fields.categories.indexOf(opt) === -1
+      );
     },
   },
 };

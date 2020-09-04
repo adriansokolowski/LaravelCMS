@@ -19,7 +19,7 @@ class MovieResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'release_date' => $this->release_date->year,
-            'last_view' =>$this->last_view,
+            'last_view' => $this->last_view,
             'description' => Str::limit($this->description, 250),
             'categories' => $this->categories,
             'countries' => $this->countries,
