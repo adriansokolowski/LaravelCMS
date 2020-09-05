@@ -121,35 +121,77 @@ export default {
           faIcon: ["fas", "tint"],
           children: [
             {
-              name: "Ustawienia",
+              name: "Wersje",
               href: {
                 name: "child-item-1",
               },
               faIcon: ["fas", "child"],
             },
             {
-              name: "SEO",
+              name: "Jakość",
               href: {
                 name: "child-item-2",
               },
               faIcon: ["fas", "child"],
             },
             {
-              name: "Reklama",
+              name: "Kraje",
               href: {
                 name: "child-item-2",
               },
               faIcon: ["fas", "child"],
             },
             {
-              name: "Odtwarzacz",
+              name: "Kategorie",
               href: {
                 name: "child-item-2",
               },
               faIcon: ["fas", "child"],
             },
             {
-              name: "Premium",
+              name: "Podstrony",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Obsługiwane serwisy",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Upload",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Wyczyść stronę",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Opróżnij cache",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Wyczyść shoutbox",
+              href: {
+                name: "child-item-2",
+              },
+              faIcon: ["fas", "child"],
+            },
+            {
+              name: "Informacje o systemie",
               href: {
                 name: "child-item-2",
               },
