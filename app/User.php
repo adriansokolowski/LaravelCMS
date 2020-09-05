@@ -37,6 +37,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getIsUploaderAttribute()
+    {
+        return $this->role_id == 2;
+    }
+
+    public function getIsModeratorAttribute()
+    {
+        return $this->role_id == 3;
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role_id == 4;
+    }
+
     public function movies()
     {
         return $this->hasMany(Movie::class);
