@@ -49,6 +49,6 @@ Route::get('/test', function(){
 });
 
 // Admin panel
-Route::get('/admin', function(){
+Route::get('/admin/{any?}', function () {
     return view('admin.index');
-});
+})->where('any', '.*');

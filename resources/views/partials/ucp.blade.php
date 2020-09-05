@@ -42,7 +42,11 @@
 @else
 <div class="block mb-1">
     <div class="bhead text-center">
-        {{ Auth::user()->email }} {{ Auth::user()->name }} <a href="{{ route('logout') }}"> Wyloguj </a>
+        {{ auth()->user()->email }} {{ auth()->user()->name }} <a href="{{ route('logout') }}"> Wyloguj </a>
+
+        @if (auth()->user()->is_admin)
+        <a href="/admin">Panel administratora</a>
+        @endif
     </div>
     <div class="bbody">
         Panel uzytkownika
