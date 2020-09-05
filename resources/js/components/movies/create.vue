@@ -378,6 +378,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.user);
     axios.get("/api/categories").then((response) => {
       this.categories = response.data.data;
     });
