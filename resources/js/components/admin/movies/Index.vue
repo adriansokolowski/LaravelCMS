@@ -1,19 +1,19 @@
 <template>
-    <div>
-        {{ categories }}
-    </div>
+  <div>
+    <b-table striped hover :items="movies"></b-table>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      categories: null
+      movies: null,
     };
   },
   mounted() {
-    axios.get("/api/categories").then((response) => {
-      this.categories = response.data.data;
+    axios.get("/api/adminmovies").then((response) => {
+      this.movies = response.data.data;
     });
   },
 };
