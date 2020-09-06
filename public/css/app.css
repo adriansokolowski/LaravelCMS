@@ -14122,6 +14122,10 @@ input[type=color].form-control:disabled {
   vertical-align: text-bottom;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .vue-btn {
   background-color: #a49484 !important;
   color: white !important;

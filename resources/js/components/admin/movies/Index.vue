@@ -1,6 +1,19 @@
 <template>
-  <div>
+  <b-container fluid>
     <h1>Przegląd filmów</h1>
+    <b-col lg="4" class="my-1">
+      <b-input-group size="sm">
+        <b-form-input
+          v-model="filter"
+          type="search"
+          id="filterInput"
+          placeholder="Przeszukaj tę tabelę"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button :disabled="!filter" @click="filter = ''">Wyczyść</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-col>
     <b-table
       striped
       bordered
@@ -10,6 +23,9 @@
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :items="movies"
+      :per-page="perPage"
+      :filter="filter"
+      @filtered="onFiltered"
     >
       <template v-slot:cell(visiblity)>
         <font-awesome-icon :icon="['fas', 'dot-circle']" />
@@ -23,10 +39,14 @@
       <template v-slot:cell(actions)="data">
         <font-awesome-icon :icon="['fas', 'edit']" />
         <font-awesome-icon :icon="['fas', 'list']" />
-        <font-awesome-icon @click="deleteMovie(data.item.id)" :icon="['fas', 'trash-alt']" />
+        <font-awesome-icon
+          :class="pointer"
+          @click="deleteMovie(data.item)"
+          :icon="['fas', 'trash-alt']"
+        />
       </template>
     </b-table>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -48,6 +68,8 @@ export default {
         { key: "report", label: "Zgłoszenie", class: "text-center" },
         { key: "actions", label: "" },
       ],
+      filter: null,
+      filterOn: [],
       movies: null,
     };
   },
@@ -60,20 +82,23 @@ export default {
         this.movies = response.data.data;
       });
     },
-    deleteMovie(movieID) {
+    deleteMovie(movie) {
       this.$swal({
-        title: "Jesteś pewien?",
-        text: "Nie będziesz mógł cofnąć zmian!",
-        icon: "warning",
+        title: "Potwierdź",
+        text:
+          "Czy na pewno chcesz usunąć film " +
+          movie.title +
+          "? Zmian nie można cofnąć.",
+        icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Tak, usuń!",
-        cancelButtonText: "Powrót",
+        confirmButtonText: "OK",
+        cancelButtonText: "Anuluj",
       }).then((result) => {
         if (result.value) {
           axios
-            .delete("/api/adminmovies/" + movieID)
+            .delete("/api/adminmovies/" + movie.id)
             .then((response) => {
               this.$swal({ icon: "success", title: "Film został usunięty" });
               this.getResults();

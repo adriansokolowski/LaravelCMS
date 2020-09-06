@@ -8,6 +8,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
 
+.pointer {
+    cursor: pointer;
+}
+
 .vue-btn {
     background-color: #a49484!important;
     color: white!important;

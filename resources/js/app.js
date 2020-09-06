@@ -8,10 +8,7 @@ import { ContentLoader } from "vue-content-loader";
 import BootstrapSidebar from 'vue-bootstrap-sidebar';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { faList } from '@fortawesome/free-solid-svg-icons'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faList, faTrashAlt, faDotCircle } from '@fortawesome/free-solid-svg-icons'
 
 import VueSweetalert2 from 'vue-sweetalert2';
 
