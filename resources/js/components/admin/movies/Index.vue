@@ -52,7 +52,7 @@ export default {
     };
   },
   mounted() {
-      this.getResults();
+    this.getResults();
   },
   methods: {
     getResults() {
@@ -61,12 +61,28 @@ export default {
       });
     },
     deleteMovie(movieID) {
-      axios
-        .delete("/api/adminmovies/" + movieID)
-        .then((response) => {
-          this.getResults();
-        })
-        .catch((error) => {});
+      this.$swal({
+        title: "Jesteś pewien?",
+        text: "Nie będziesz mógł cofnąć zmian!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Tak, usuń!",
+        cancelButtonText: "Powrót",
+      }).then((result) => {
+        if (result.value) {
+          axios
+            .delete("/api/adminmovies/" + movieID)
+            .then((response) => {
+              this.$swal({ icon: "success", title: "Film został usunięty" });
+              this.getResults();
+            })
+            .catch((error) => {
+              this.$swal({ icon: "error", title: "Wystąpił błąd" });
+            });
+        }
+      });
     },
   },
 };

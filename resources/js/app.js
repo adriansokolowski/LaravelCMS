@@ -13,11 +13,15 @@ import { faList } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faDotCircle } from '@fortawesome/free-solid-svg-icons'
 
+import VueSweetalert2 from 'vue-sweetalert2';
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faList, faTrashAlt, faDotCircle)
 
 window.Vue = require('vue');
+
+Vue.use(VueSweetalert2);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
