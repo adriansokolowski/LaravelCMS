@@ -3,6 +3,7 @@
     <h1>Przegląd filmów</h1>
     <b-table
       striped
+      bordered
       small
       hover
       :fields="fields"
@@ -19,10 +20,10 @@
       <template v-slot:cell(report)>
         <font-awesome-icon :icon="['fas', 'dot-circle']" />
       </template>
-      <template v-slot:cell(actions)>
+      <template v-slot:cell(actions)="data">
         <font-awesome-icon :icon="['fas', 'edit']" />
         <font-awesome-icon :icon="['fas', 'list']" />
-        <font-awesome-icon :icon="['fas', 'trash-alt']" />
+        <font-awesome-icon @click="deleteMovie(data.item.id)" :icon="['fas', 'trash-alt']" />
       </template>
     </b-table>
   </div>
@@ -51,9 +52,22 @@ export default {
     };
   },
   mounted() {
-    axios.get("/api/adminmovies").then((response) => {
-      this.movies = response.data.data;
-    });
+      this.getResults();
+  },
+  methods: {
+    getResults() {
+      axios.get("/api/adminmovies").then((response) => {
+        this.movies = response.data.data;
+      });
+    },
+    deleteMovie(movieID) {
+      axios
+        .delete("/api/adminmovies/" + movieID)
+        .then((response) => {
+          this.getResults();
+        })
+        .catch((error) => {});
+    },
   },
 };
 </script> 

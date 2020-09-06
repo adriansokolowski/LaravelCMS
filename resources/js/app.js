@@ -13,7 +13,6 @@ import { faList } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faDotCircle } from '@fortawesome/free-solid-svg-icons'
 
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faList, faTrashAlt, faDotCircle)

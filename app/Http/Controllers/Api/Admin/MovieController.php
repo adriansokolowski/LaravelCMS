@@ -13,4 +13,12 @@ class MovieController extends Controller
     {
         return MovieResource::collection(Movie::all());
     }
+
+    public function destroy($id)
+    {
+        $movie = Movie::find($id);
+        $movie->delete();
+
+        return response()->noContent();
+    }
 }
