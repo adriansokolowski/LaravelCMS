@@ -26,6 +26,7 @@
       :per-page="perPage"
       :filter="filter"
       @filtered="onFiltered"
+      :busy="isBusy"
     >
       <template v-slot:cell(visiblity)>
         <font-awesome-icon :icon="['fas', 'dot-circle']" />
@@ -44,6 +45,12 @@
           @click="deleteMovie(data.item)"
           :icon="['fas', 'trash-alt']"
         />
+      </template>
+      <template v-slot:table-busy>
+        <div class="text-center my-2">
+          <b-spinner class="align-middle" label="Spinning"></b-spinner>
+          <strong>Wczytywanie...</strong>
+        </div>
       </template>
     </b-table>
   </b-container>
@@ -66,11 +73,12 @@ export default {
         { key: "visiblity", label: "Widoczność", class: "text-center" },
         { key: "slider", label: "Slider", class: "text-center" },
         { key: "report", label: "Zgłoszenie", class: "text-center" },
-        { key: "actions", label: "" },
+        { key: "actions", label: "", class: "text-center" },
       ],
       filter: null,
       filterOn: [],
       movies: null,
+      isBusy: true
     };
   },
   mounted() {
@@ -78,8 +86,10 @@ export default {
   },
   methods: {
     getResults() {
+      this.isBusy = true;
       axios.get("/api/adminmovies").then((response) => {
         this.movies = response.data.data;
+        this.isBusy = false;
       });
     },
     deleteMovie(movie) {
