@@ -7,7 +7,22 @@ import VueButtonSpinner from 'vue-button-spinner';
 import { ContentLoader } from "vue-content-loader";
 import BootstrapSidebar from 'vue-bootstrap-sidebar';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faList } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faDotCircle } from '@fortawesome/free-solid-svg-icons'
+
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faEdit, faList, faTrashAlt, faDotCircle)
+
 window.Vue = require('vue');
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.config.productionTip = false
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
@@ -20,7 +35,8 @@ Vue.use(BootstrapSidebar);
 import routes from './routes'
 
 import App from './components/admin/Dashboard.vue';
-
+import Vue from 'vue';
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('pagination', require('laravel-vue-pagination'));
 

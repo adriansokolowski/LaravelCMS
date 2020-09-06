@@ -1,16 +1,5 @@
 <template>
   <div>
-    <!-- <section class="container">
-      <router-link
-        active-class="active-menu"
-        exact
-        :to="{ name: 'admin.movies.index' }"
-        class="nav-link"
-      >Filmy</router-link>
-      <main class="py-4">
-        <router-view></router-view>
-      </main>
-    </section>-->
     <BootstrapSidebar
       :initial-show="initialShow"
       :links="links"
@@ -54,7 +43,7 @@ export default {
               href: {
                 name: "child-item-1",
               },
-              faIcon: ["fas", "child"],
+              faIcon: ["fas", "edit"],
             },
             {
               name: "SEO",
