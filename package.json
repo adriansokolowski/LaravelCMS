@@ -35,6 +35,7 @@
         "vue-bootstrap-sidebar": "^1.0.8",
         "vue-content-loader": "^0.2.3",
         "vue-router": "^3.4.3",
-        "vue-sweetalert2": "^3.0.8"
+        "vue-sweetalert2": "^3.0.8",
+        "vue-typeahead-bootstrap": "^2.5.1"
     }
 }

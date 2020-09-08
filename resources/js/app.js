@@ -1,5 +1,7 @@
 require('./bootstrap');
 
+import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
+
 // Vue imports assets
 
 import BootstrapVue from 'bootstrap-vue';
@@ -29,7 +31,7 @@ Vue.use(VueRouter)
 
 Vue.use(ContentLoader);
 Vue.use(BootstrapVue);
-
+Vue.component('vue-typeahead-bootstrap', VueTypeaheadBootstrap)
 Vue.use(BootstrapSidebar);
 
 import routes from './routes'
@@ -39,6 +41,9 @@ import Vue from 'vue';
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('pagination', require('laravel-vue-pagination'));
+
+// Searchbar
+Vue.component('searchbar', require('./components/Search.vue').default);
 
 // Movies Resource
 Vue.component('movie-create', require('./components/movies/Create.vue').default);
