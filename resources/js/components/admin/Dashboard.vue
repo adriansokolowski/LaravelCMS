@@ -196,9 +196,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scope>
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-vue/src/index.scss';
-@import "node_modules/vue-bootstrap-sidebar/src/scss/default-theme";
-</style> 
