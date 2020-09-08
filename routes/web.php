@@ -14,7 +14,7 @@ Route::get('/wyloguj', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 Route::get('/filmy', 'MovieController@index')->name('movies.index');
 Route::get('/film/{movie}/{slug?}', 'MovieController@show')->name('movies.show');
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/dodaj-film', 'MovieController@create')->name('movies.create');
 });
 
@@ -34,21 +34,23 @@ Route::post('/import', 'MovieController@import')->name('import');
 
 
 // Custom pages
-Route::get('/regulamin', function(){
+Route::get('/regulamin', function () {
     return view('pages.rules');
 });
-Route::get('/pomoc', function(){
+Route::get('/pomoc', function () {
     return view('pages.help');
 });
-Route::get('/kontakt', function(){
+Route::get('/kontakt', function () {
     return view('pages.contact');
 });
 
-Route::get('/test', function(){
-
+Route::get('/test', function () {
 });
 
 // Admin panel
-Route::get('/admin/{any?}', function () {
-    return view('admin.index');
-})->where('any', '.*');
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/{any?}', function () {
+        return view('admin.index');
+    })->where('any', '.*')->middleware('auth');
+});
