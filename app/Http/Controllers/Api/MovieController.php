@@ -35,7 +35,7 @@ class MovieController extends Controller
             $country = null;
         }
 
-        $results = Cache()->remember('homepage-movies', 60 * 1, function () use ($category, $year, $country, $sortBy) {
+        $results = Cache()->remember("homepage-movies-${sortBy}-${year}-${country}-${category}", 60 * 1, function () use ($category, $year, $country, $sortBy) {
             $query = Movie::query();
 
             if ($category) {
