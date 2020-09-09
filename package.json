@@ -25,17 +25,18 @@
         "vue": "^2.6.11",
         "vue-button-spinner": "^2.2.1",
         "vue-input-tag": "^2.0.7",
-        "vue-multiselect": "^2.1.6",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.30",
         "@fortawesome/free-solid-svg-icons": "^5.14.0",
         "@fortawesome/vue-fontawesome": "^2.0.0",
+        "@mdi/font": "^5.5.55",
         "vue-bootstrap-sidebar": "^1.0.8",
         "vue-content-loader": "^0.2.3",
         "vue-router": "^3.4.3",
         "vue-sweetalert2": "^3.0.8",
-        "vue-typeahead-bootstrap": "^2.5.1"
+        "vue-typeahead-bootstrap": "^2.5.1",
+        "vuetify": "^2.3.10"
     }
 }

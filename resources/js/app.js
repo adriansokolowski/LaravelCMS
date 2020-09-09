@@ -54,8 +54,12 @@ Vue.component('categories', require('./components/Category.vue').default);
 // Others Resource
 Vue.component('movie-all', require('./components/Index.vue').default);
 
+import Vuetify from 'vuetify';
+Vue.use(Vuetify);
+
 const app = new Vue({
     el: '#app',
     components: { App },
-    router: new VueRouter(routes)
+    router: new VueRouter(routes),
+    vuetify: new Vuetify()
 });

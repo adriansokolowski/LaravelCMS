@@ -35,27 +35,29 @@ class MovieController extends Controller
             $country = null;
         }
 
-        $query = Movie::query();
+        $results = Cache()->remember('homepage-movies', 60 * 1, function () use ($category, $year, $country, $sortBy) {
+            $query = Movie::query();
 
-        if ($category) {
-            $query->whereHas('categories', function ($q) {
-                $q->where('categories.name', request('category'));
-            });
-        }
+            if ($category) {
+                $query->whereHas('categories', function ($q) {
+                    $q->where('categories.name', request('category'));
+                });
+            }
 
-        if ($year) {
-            $query->whereYear('release_date', $year);
-        }
+            if ($year) {
+                $query->whereYear('release_date', $year);
+            }
 
-        if ($country) {
-            $query->whereHas('countries', function ($q) {
-                $q->where('countries.name', request('country'));
-            });
-        }
-        
-        return MovieResource::collection(
-            $query->orderBy($sortBy, 'desc')->paginate(5)
-        );
+            if ($country) {
+                $query->whereHas('countries', function ($q) {
+                    $q->where('countries.name', request('country'));
+                });
+            }
+
+            return $query->orderBy($sortBy, 'desc')->paginate(5);
+        });
+
+        return MovieResource::collection($results);
     }
 
     public function store(StoreMovieRequest $request)
