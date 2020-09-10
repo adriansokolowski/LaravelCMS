@@ -1,84 +1,77 @@
 <template>
-  <b-container fluid>
-    <h1>Przegląd filmów</h1>
-    <b-col lg="4" class="my-1">
-      <b-input-group size="sm">
-        <b-form-input
-          v-model="filter"
-          type="search"
-          id="filterInput"
-          placeholder="Przeszukaj tę tabelę"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button :disabled="!filter" @click="filter = ''">Wyczyść</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-col>
-    <b-table
-      striped
-      bordered
-      small
-      hover
-      :fields="fields"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
+  <div>
+    <v-data-table
+      dense
+      :headers="headers"
       :items="movies"
-      :per-page="perPage"
-      :filter="filter"
-      @filtered="onFiltered"
-      :busy="isBusy"
+      :items-per-page="5"
+      show-select
+      class="elevation-1"
+      :loading="isLoading"
+      loading-text="Wczytywanie..."
+      :footer-props="{
+           'items-per-page-text':'liczba wierszy'
+      }"
     >
-      <template v-slot:cell(visiblity)>
-        <font-awesome-icon :icon="['fas', 'dot-circle']" />
+      <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>Przegląd filmów</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="red" dark class="mb-2" v-bind="attrs" v-on="on">Usuń zaznaczone</v-btn>
+            </template>
+          </v-dialog>
+        </v-toolbar>
       </template>
-      <template v-slot:cell(slider)>
-        <font-awesome-icon :icon="['fas', 'dot-circle']" />
+      <template v-slot:item.actions="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="blue" dark v-bind="attrs" v-on="on">mdi-clipboard-edit</v-icon>
+          </template>
+          <span>Edytuj</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-format-list-bulleted</v-icon>
+          </template>
+          <span>Edycja linków</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              color="red"
+              @click="deleteMovie(item)"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >mdi-trash-can</v-icon>
+          </template>
+          <span>Usuń</span>
+        </v-tooltip>
       </template>
-      <template v-slot:cell(report)>
-        <font-awesome-icon :icon="['fas', 'dot-circle']" />
-      </template>
-      <template v-slot:cell(actions)="data">
-        <font-awesome-icon :icon="['fas', 'edit']" />
-        <font-awesome-icon :icon="['fas', 'list']" />
-        <font-awesome-icon
-          :class="pointer"
-          @click="deleteMovie(data.item)"
-          :icon="['fas', 'trash-alt']"
-        />
-      </template>
-      <template v-slot:table-busy>
-        <div class="text-center my-2">
-          <b-spinner class="align-middle" label="Spinning"></b-spinner>
-          <strong>Wczytywanie...</strong>
-        </div>
-      </template>
-    </b-table>
-  </b-container>
+      <template slot="no-data">Brak danych do wyświetlenia</template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      fields: [
-        { key: "title2", label: "", sortable: true },
-        { key: "title", label: "Tytuł", sortable: true },
-        {
-          key: "views",
-          label: "Wyświetlenia",
-          sortable: true,
-          class: "text-center",
-        },
-        { key: "links", label: "Linki", sortable: true, class: "text-center" },
-        { key: "visiblity", label: "Widoczność", class: "text-center" },
-        { key: "slider", label: "Slider", class: "text-center" },
-        { key: "report", label: "Zgłoszenie", class: "text-center" },
-        { key: "actions", label: "", class: "text-center" },
+      isLoading: true,
+      selected: [],
+      movies: [],
+      headers: [
+        { text: "Tytuł filmu", value: "title" },
+        { text: "Wyświetlenia", align: "center", value: "views" },
+        { text: "Linki", align: "center", value: "views" },
+        { text: "Widoczność", align: "center", value: "views" },
+        { text: "Slider", align: "center", value: "views" },
+        { text: "Zgłoszenie", align: "center", value: "views" },
+        { text: "", value: "actions", sortable: false },
       ],
-      filter: null,
-      filterOn: [],
-      movies: null,
-      isBusy: true
     };
   },
   mounted() {
@@ -86,10 +79,10 @@ export default {
   },
   methods: {
     getResults() {
-      this.isBusy = true;
+      this.isLoading = true;
       axios.get("/api/adminmovies").then((response) => {
         this.movies = response.data.data;
-        this.isBusy = false;
+        this.isLoading = false;
       });
     },
     deleteMovie(movie) {
