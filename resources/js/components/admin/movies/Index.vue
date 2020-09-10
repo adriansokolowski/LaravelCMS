@@ -33,6 +33,30 @@
           </v-dialog>
         </v-toolbar>
       </template>
+      <template v-slot:item.visiblity="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+          </template>
+          <span>Ukryj</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.slider="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+          </template>
+          <span>Ukryj</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.report="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+          </template>
+          <span>Ukryj</span>
+        </v-tooltip>
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -68,7 +92,7 @@
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       isLoading: true,
       selected: [],
       movies: [],
@@ -76,9 +100,9 @@ export default {
         { text: "Tytuł", value: "title" },
         { text: "Wyświetlenia", align: "center", value: "views" },
         { text: "Linki", align: "center", value: "views" },
-        { text: "Widoczność", align: "center", value: "views" },
-        { text: "Slider", align: "center", value: "views" },
-        { text: "Zgłoszenie", align: "center", value: "views" },
+        { text: "Widoczność", align: "center", value: "visiblity" },
+        { text: "Slider", align: "center", value: "slider" },
+        { text: "Zgłoszenie", align: "center", value: "report" },
         { text: "", value: "actions", sortable: false },
       ],
     };
