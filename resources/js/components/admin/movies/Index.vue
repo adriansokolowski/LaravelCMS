@@ -1,9 +1,17 @@
 <template>
   <div>
+    <v-text-field
+      v-model="search"
+      append-icon="mdi-magnify"
+      label="Szukaj"
+      single-line
+      hide-details
+    ></v-text-field>
     <v-data-table
       dense
       :headers="headers"
       :items="movies"
+      :search="search"
       :items-per-page="5"
       show-select
       class="elevation-1"
@@ -60,11 +68,12 @@
 export default {
   data() {
     return {
+      search: '',
       isLoading: true,
       selected: [],
       movies: [],
       headers: [
-        { text: "Tytuł filmu", value: "title" },
+        { text: "Tytuł", value: "title" },
         { text: "Wyświetlenia", align: "center", value: "views" },
         { text: "Linki", align: "center", value: "views" },
         { text: "Widoczność", align: "center", value: "views" },
