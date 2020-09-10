@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-text-field
-      v-model="search"
-      append-icon="mdi-magnify"
-      label="Szukaj"
-      single-line
-      hide-details
-    ></v-text-field>
+    <v-toolbar-title>Przegląd filmów</v-toolbar-title>
     <v-data-table
       dense
       :headers="headers"
@@ -23,8 +17,13 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Przegląd filmów</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Szukaj"
+            single-line
+            hide-details
+          ></v-text-field>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
@@ -100,9 +99,19 @@ export default {
         { text: "Tytuł", value: "title" },
         { text: "Wyświetlenia", align: "center", value: "views" },
         { text: "Linki", align: "center", value: "views" },
-        { text: "Widoczność", align: "center", value: "visiblity" },
-        { text: "Slider", align: "center", value: "slider" },
-        { text: "Zgłoszenie", align: "center", value: "report" },
+        {
+          text: "Widoczność",
+          align: "center",
+          value: "visiblity",
+          sortable: false,
+        },
+        { text: "Slider", align: "center", value: "slider", sortable: false },
+        {
+          text: "Zgłoszenie",
+          align: "center",
+          value: "report",
+          sortable: false,
+        },
         { text: "", value: "actions", sortable: false },
       ],
     };
