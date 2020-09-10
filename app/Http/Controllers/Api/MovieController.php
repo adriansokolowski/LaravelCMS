@@ -29,14 +29,17 @@ class MovieController extends Controller
 
         $year = request('year', null);
 
+        $page = request('page', null);
+
         $country = request('country', null);
         $countries = Country::all()->pluck('name')->toArray();
         if (!in_array($country, $countries)) {
             $country = null;
         }
 
-        $results = Cache()->remember("homepage-movies-${sortBy}-${year}-${country}-${category}", 60 * 1, function () use ($category, $year, $country, $sortBy) {
+        $results = Cache()->remember("homepage-movies-${sortBy}-${year}-${country}-${category}-${page}", 60 * 1, function () use ($category, $year, $country, $sortBy) {
             $query = Movie::query();
+            //Movie::query()->select(['title', 'description']);
 
             if ($category) {
                 $query->whereHas('categories', function ($q) {

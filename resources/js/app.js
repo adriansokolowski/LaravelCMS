@@ -36,7 +36,7 @@ Vue.use(BootstrapSidebar);
 
 import routes from './routes'
 
-import App from './components/admin/Dashboard.vue';
+import App from './components/admin/App.vue';
 import Vue from 'vue';
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('button-spinner', VueButtonSpinner);
@@ -62,4 +62,4 @@ const app = new Vue({
     components: { App },
     router: new VueRouter(routes),
     vuetify: new Vuetify()
-});
+})

@@ -1,4 +1,4 @@
-import AdminDasboard from '../components/admin/Dashboard.vue';
+import AdminDasboard from '../components/admin/App.vue';
 import MoviesIndex from '../components/admin/movies/Index.vue';
 
 export default {
