@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app>
+  <v-navigation-drawer v-model="drawer" app >
     <v-list dense>
       <v-list-item link exact :to="{ name: 'home' }">
         <v-list-item-action>
@@ -12,11 +12,11 @@
 
       <v-list-group :value="false">
         <template v-slot:activator>
-          <v-list-item-action>
+          <!-- <v-list-item-action>
             <v-icon>mdi-cog</v-icon>
-          </v-list-item-action>
+          </v-list-item-action> -->
           <v-list-item-content>
-            <v-list-item-title>Ustawienia serwisu</v-list-item-title>
+            <v-list-item-title>USTAWIENIA SERWISU</v-list-item-title>
           </v-list-item-content>
         </template>
         <v-list-item link exact :to="{ name: 'home' }">
@@ -110,11 +110,11 @@
       </v-list-item>
       <v-list-group :value="false">
         <template v-slot:activator>
-          <v-list-item-action>
+          <!-- <v-list-item-action>
             <v-icon>mdi-cog</v-icon>
-          </v-list-item-action>
+          </v-list-item-action> -->
           <v-list-item-content>
-            <v-list-item-title>Pozostałe</v-list-item-title>
+            <v-list-item-title>POZOSTAŁE</v-list-item-title>
           </v-list-item-content>
         </template>
         <v-list-item link exact :to="{ name: 'home' }">

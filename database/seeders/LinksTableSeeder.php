@@ -1,8 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
-class MovieTableSeeder extends Seeder
+class LinksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +13,6 @@ class MovieTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Movie::class, 500)->create();
+        factory(App\Link::class, 20)->create();
     }
 }

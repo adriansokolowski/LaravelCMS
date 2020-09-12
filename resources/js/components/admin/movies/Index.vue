@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar-title>Przegląd filmów</v-toolbar-title>
+    <h3 class="text-uppercase light-blue--text text--darken-2">Przegląd filmów</h3>
     <v-data-table
       dense
       :headers="headers"
@@ -43,17 +43,17 @@
       <template v-slot:item.slider="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+            <v-icon color="grey" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
           </template>
-          <span>Ukryj</span>
+          <span>Dodaj</span>
         </v-tooltip>
       </template>
       <template v-slot:item.report="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+            <v-icon color="grey" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
           </template>
-          <span>Ukryj</span>
+          <span>Dodaj</span>
         </v-tooltip>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -88,6 +88,26 @@
 </template>
 
 <script>
+const headers = [
+  { text: "Tytuł", value: "title" },
+  { text: "Wyświetlenia", align: "center", value: "views" },
+  { text: "Linki", align: "center", value: "views" },
+  {
+    text: "Widoczność",
+    align: "center",
+    value: "visiblity",
+    sortable: false,
+  },
+  { text: "Slider", align: "center", value: "slider", sortable: false },
+  {, 
+    text: "Zgłoszenie",
+    align: "center",
+    value: "report",
+    sortable: false,
+  },
+  { text: "", value: "actions", sortable: false },
+];
+
 export default {
   data() {
     return {
@@ -95,25 +115,6 @@ export default {
       isLoading: true,
       selected: [],
       movies: [],
-      headers: [
-        { text: "Tytuł", value: "title" },
-        { text: "Wyświetlenia", align: "center", value: "views" },
-        { text: "Linki", align: "center", value: "views" },
-        {
-          text: "Widoczność",
-          align: "center",
-          value: "visiblity",
-          sortable: false,
-        },
-        { text: "Slider", align: "center", value: "slider", sortable: false },
-        {
-          text: "Zgłoszenie",
-          align: "center",
-          value: "report",
-          sortable: false,
-        },
-        { text: "", value: "actions", sortable: false },
-      ],
     };
   },
   mounted() {
@@ -155,5 +156,10 @@ export default {
       });
     },
   },
+  computed: {
+    headers () {
+      return headers;
+    }
+  }
 };
 </script> 
