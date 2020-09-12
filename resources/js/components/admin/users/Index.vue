@@ -72,8 +72,8 @@ const headers = [
   { text: "Adres e-mail", value: "email" },
   {
     text: "Data rejestracji",
-    value: "email_verified_at",
-    sortable: false,
+    value: "created_at",
+    sortable: true,
   },
   { text: "Aktywowane", align: "center", value: "slider", sortable: false },
   { text: "", value: "actions", sortable: false },

@@ -18,6 +18,7 @@ class UserApiController extends Controller
      */
     public function index()
     {
+        
         return UserResource::collection(User::all());
     }
 
