@@ -123,7 +123,7 @@ export default {
   methods: {
     getResults() {
       this.isLoading = true;
-      axios.get("/api/adminmovies").then((response) => {
+      axios.get("/api/admin/movies/").then((response) => {
         this.movies = response.data.data;
         this.isLoading = false;
       });
@@ -144,7 +144,7 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios
-            .delete("/api/adminmovies/" + movie.id)
+            .delete("/api/admin/movies/" + movie.id)
             .then((response) => {
               this.$swal({ icon: "success", title: "Film został usunięty" });
               this.getResults();

@@ -18,12 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('countries', 'Api\\CountryController');
-Route::apiResource('categories', 'Api\\CategoryController');
-Route::apiResource('movies', 'Api\\MovieController');
+Route::apiResource('countries', 'Api\\CountryApiController');
+Route::apiResource('categories', 'Api\\CategoryApiController');
+Route::apiResource('movies', 'Api\\MovieApiController');
 
 //Route::get('movies', 'Api\\MovieController@index');
 
 // Admin panel
-Route::apiResource('adminmovies', 'Api\\Admin\\MovieController');
-Route::apiResource('adminusers', 'Api\\Admin\\UserController');
+Route::group(['prefix' => 'admin', 'as' => 'api.', 'namespace' => 'Api\Admin'], function () {
+    // Movies
+    Route::apiResource('movies', 'MovieApiController');
+
+    // Users
+    Route::apiResource('users', 'UserApiController');
+});

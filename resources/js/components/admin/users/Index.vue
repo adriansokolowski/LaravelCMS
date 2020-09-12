@@ -6,7 +6,7 @@
       :headers="headers"
       :items="users"
       :search="search"
-      :items-per-page="5"
+      :items-per-page="10"
       show-select
       class="elevation-1"
       :loading="isLoading"
@@ -32,28 +32,12 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.visiblity="{ item }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
-          </template>
-          <span>Ukryj</span>
-        </v-tooltip>
-      </template>
       <template v-slot:item.slider="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-icon color="grey" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
+            <v-icon color="red" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
           </template>
-          <span>Dodaj</span>
-        </v-tooltip>
-      </template>
-      <template v-slot:item.report="{ item }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon color="grey" dark v-bind="attrs" v-on="on">mdi-radiobox-marked</v-icon>
-          </template>
-          <span>Dodaj</span>
+          <span>Aktywuj</span>
         </v-tooltip>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -62,12 +46,6 @@
             <v-icon color="blue" dark v-bind="attrs" v-on="on">mdi-clipboard-edit</v-icon>
           </template>
           <span>Edytuj</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon color="green" dark v-bind="attrs" v-on="on">mdi-format-list-bulleted</v-icon>
-          </template>
-          <span>Edycja linków</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -98,7 +76,7 @@ const headers = [
     sortable: false,
   },
   { text: "Aktywowane", align: "center", value: "slider", sortable: false },
-  { text: "", value: "actions", sortable: false }
+  { text: "", value: "actions", sortable: false },
 ];
 
 export default {
@@ -116,7 +94,7 @@ export default {
   methods: {
     getResults() {
       this.isLoading = true;
-      axios.get("/api/adminusers").then((response) => {
+      axios.get("/api/admin/users/").then((response) => {
         this.users = response.data.data;
         this.isLoading = false;
       });
@@ -137,9 +115,12 @@ export default {
       }).then((result) => {
         if (result.value) {
           axios
-            .delete("/api/adminusers/" + user.id)
+            .delete("/api/admin/users/" + user.id)
             .then((response) => {
-              this.$swal({ icon: "success", title: "Użytkownik został usunięty" });
+              this.$swal({
+                icon: "success",
+                title: "Użytkownik został usunięty",
+              });
               this.getResults();
             })
             .catch((error) => {
@@ -150,9 +131,9 @@ export default {
     },
   },
   computed: {
-    headers () {
+    headers() {
       return headers;
-    }
-  }
+    },
+  },
 };
 </script> 
