@@ -141,6 +141,7 @@ export default {
       this.isLoading = true;
       axios.get("/api/admin/users/").then((response) => {
         this.users = response.data.data;
+        console.log(response.data.data);
         this.additional = response.data.users;
         this.isLoading = false;
       });
