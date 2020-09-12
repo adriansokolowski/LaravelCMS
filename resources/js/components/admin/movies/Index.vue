@@ -19,10 +19,11 @@
         <v-toolbar flat color="white">
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
             label="Szukaj"
+            solo
             single-line
             hide-details
+            prepend-inner-icon="mdi-magnify"
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">

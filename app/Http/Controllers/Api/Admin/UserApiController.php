@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\Admin\UserResource;
+use App\Http\Resources\Admin\UserCollection;
 
 use App\Models\User;
 
@@ -18,8 +19,8 @@ class UserApiController extends Controller
      */
     public function index()
     {
-        
-        return UserResource::collection(User::all());
+        return new UserCollection(User::all());
+        //return UserResource::collection(User::all());
     }
 
     /**

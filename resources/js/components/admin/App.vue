@@ -6,7 +6,7 @@
 
     <v-main>
       <v-container>
-        <router-view />
+        <router-view></router-view>
       </v-container>
     </v-main>
 
@@ -18,6 +18,7 @@
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Footer from "./Footer";
+
 export default {
   name: "App",
   components: {

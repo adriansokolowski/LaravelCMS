@@ -1,6 +1,49 @@
 <template>
   <div>
-    <h3 class="text-uppercase light-blue--text text--darken-2">Przegląd użytkowników</h3>
+    <v-row>
+      <v-col>
+        <v-card max-width="344" :loading="isLoading">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-card-title class="p-0 subtitle-2">Wszyscy użytkownicy</v-card-title>
+              <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
+              <v-list-item-subtitle>3.41%</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card max-width="344" :loading="isLoading">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-card-title class="p-0 subtitle-2">Nowi użytkownicy</v-card-title>
+              <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
+              <v-list-item-subtitle>3.41%</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card max-width="344" :loading="isLoading">
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-card-title class="p-0 subtitle-2">Aktywni użytkownicy</v-card-title>
+              <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
+              <v-list-item-subtitle>3.41%</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-toolbar flat color="white">
+      <h3 class="text-uppercase light-blue--text text--darken-2">Przegląd użytkowników</h3>
+      <v-spacer></v-spacer>
+      <v-dialog v-model="dialog" max-width="500px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="blue" dark class="mb-2" v-bind="attrs" v-on="on">Dodaj użytkownika</v-btn>
+        </template>
+      </v-dialog>
+    </v-toolbar>
     <v-data-table
       dense
       :headers="headers"
@@ -19,12 +62,13 @@
         <v-toolbar flat color="white">
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            prepend-inner-icon="mdi-magnify"
             label="Szukaj"
             single-line
             hide-details
           ></v-text-field>
           <v-spacer></v-spacer>
+
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="red" dark class="mb-2" v-bind="attrs" v-on="on">Usuń zaznaczone</v-btn>
@@ -86,6 +130,7 @@ export default {
       isLoading: true,
       selected: [],
       users: [],
+      additional: [],
     };
   },
   mounted() {
@@ -96,6 +141,7 @@ export default {
       this.isLoading = true;
       axios.get("/api/admin/users/").then((response) => {
         this.users = response.data.data;
+        this.additional = response.data.users;
         this.isLoading = false;
       });
     },
