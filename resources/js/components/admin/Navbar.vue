@@ -76,7 +76,7 @@
           <v-list-item-title>Seriale</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link exact :to="{ name: 'home' }">
+      <v-list-item link exact :to="{ name: 'admin.users.index' }">
         <v-list-item-action>
           <v-icon>mdi-account-multiple</v-icon>
         </v-list-item-action>

@@ -26,3 +26,4 @@ Route::apiResource('movies', 'Api\\MovieController');
 
 // Admin panel
 Route::apiResource('adminmovies', 'Api\\Admin\\MovieController');
+Route::apiResource('adminusers', 'Api\\Admin\\UserController');

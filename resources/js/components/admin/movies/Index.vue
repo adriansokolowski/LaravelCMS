@@ -99,13 +99,13 @@ const headers = [
     sortable: false,
   },
   { text: "Slider", align: "center", value: "slider", sortable: false },
-  {, 
+  { 
     text: "Zgłoszenie",
     align: "center",
     value: "report",
     sortable: false,
   },
-  { text: "", value: "actions", sortable: false },
+  { text: "", value: "actions", sortable: false }
 ];
 
 export default {
