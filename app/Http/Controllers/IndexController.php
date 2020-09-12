@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Movie;
-use App\Serie;
+use App\Models\Movie;
+use App\Models\Serie;
 
 class IndexController extends Controller
 {

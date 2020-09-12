@@ -8,11 +8,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CreateMovie;
 use App\Http\Requests\EditMovie;
 
-use App\Fdb;
-use App\Movie;
-use App\Category;
-use App\Serie;
-use App\Link;
+use App\Models\Fdb;
+use App\Models\Movie;
+use App\Models\Category;
+use App\Models\Serie;
+use App\Models\Link;
 
 class MovieController extends Controller
 {

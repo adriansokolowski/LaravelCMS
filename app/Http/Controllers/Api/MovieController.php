@@ -8,10 +8,10 @@ use App\Http\Resources\MovieResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-use App\Movie;
-use App\Country;
-use App\Person;
-use App\Category;
+use App\Models\Movie;
+use App\Models\Country;
+use App\Models\Person;
+use App\Models\Category;
 
 class MovieController extends Controller
 {

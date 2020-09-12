@@ -12,8 +12,8 @@ use KubAT\PhpSimple\HtmlDomParser;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
-use App\Fdb;
-use App\Category;
+use App\Models\Fdb;
+use App\Models\Category;
 
 
 class CrawlerController extends Controller
