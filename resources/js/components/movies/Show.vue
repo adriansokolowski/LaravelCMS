@@ -131,7 +131,14 @@
       <div class="bhead text-center">Opinie widzów</div>
       <div class="bbody">
         <v-container fluid>
-          <v-textarea counter label="Treść komentarza..." :rules="rules" :value="value"></v-textarea>
+          <v-textarea
+            filled
+            name="input-7-4"
+            counter
+            label="Treść komentarza..."
+            :rules="rules"
+            :value="value"
+          ></v-textarea>
           <v-btn small dark color="primary">Dodaj komentarz</v-btn>
         </v-container>
 

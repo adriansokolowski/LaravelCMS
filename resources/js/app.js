@@ -43,6 +43,7 @@ Vue.component('button-spinner', VueButtonSpinner);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Searchbar
+Vue.component('ucp', require('./components/ucp/Index.vue').default);
 Vue.component('searchbar', require('./components/Search.vue').default);
 
 // Movies Resource
