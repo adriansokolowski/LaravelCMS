@@ -4,6 +4,8 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use Illuminate\Support\Carbon;
+
 class UserResource extends JsonResource
 {
     /**
@@ -21,7 +23,7 @@ class UserResource extends JsonResource
             'role' => $this->role_id,
             'email_verified_at' => $this->email_verified_at,
             'created_at' => $this->created_at->format('h:i d/m/Y'),
-            'total' => $this->count()
+            'isNew' => ($this->created_at > Carbon::now()->subDays(1)) ? 1 : 0
         ];
     }
 }

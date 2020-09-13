@@ -2,8 +2,9 @@
   <div>
     <v-row>
       <v-col>
-        <v-card max-width="344" :loading="isLoading">
+        <v-card color="#00b297" dark max-width="344" :loading="isLoading">
           <v-list-item three-line>
+            <v-icon left size="100">mdi-account-group</v-icon>
             <v-list-item-content>
               <v-card-title class="p-0 subtitle-2">Wszyscy użytkownicy</v-card-title>
               <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
@@ -13,19 +14,21 @@
         </v-card>
       </v-col>
       <v-col>
-        <v-card max-width="344" :loading="isLoading">
+        <v-card color="blue" dark max-width="344" :loading="isLoading">
           <v-list-item three-line>
+            <v-icon left size="100">mdi-account-question</v-icon>
             <v-list-item-content>
               <v-card-title class="p-0 subtitle-2">Nowi użytkownicy</v-card-title>
               <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
-              <v-list-item-subtitle>3.41%</v-list-item-subtitle>
+              <v-list-item-subtitle>3.41% więcej niż wczoraj</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-card>
       </v-col>
       <v-col>
-        <v-card max-width="344" :loading="isLoading">
+        <v-card color="red" dark max-width="344" :loading="isLoading">
           <v-list-item three-line>
+            <v-icon left size="100">mdi-account-hard-hat</v-icon>
             <v-list-item-content>
               <v-card-title class="p-0 subtitle-2">Aktywni użytkownicy</v-card-title>
               <v-list-item-title class="headline mb-1">{{ additional.total }}</v-list-item-title>
@@ -40,7 +43,9 @@
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="blue" dark class="mb-2" v-bind="attrs" v-on="on">Dodaj użytkownika</v-btn>
+          <v-btn color="blue" dark class="mb-2" v-bind="attrs" v-on="on">
+            <v-icon left>mdi-account-plus</v-icon>Dodaj użytkownika
+          </v-btn>
         </template>
       </v-dialog>
     </v-toolbar>
@@ -71,7 +76,9 @@
 
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="red" dark class="mb-2" v-bind="attrs" v-on="on">Usuń zaznaczone</v-btn>
+              <v-btn depressed color="red" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-icon left>mdi-delete</v-icon>Usuń zaznaczone
+              </v-btn>
             </template>
           </v-dialog>
         </v-toolbar>
