@@ -26,6 +26,7 @@ class MovieResource extends JsonResource
             'persons' => $this->persons,
             'links' => $this->links,
             'views' => $this->views,
+            'comments' => $this->comments,
             'path' => $this->path()
         ];
     }
