@@ -5,7 +5,26 @@
       <a href="/seriale">Seriale</a>
     </div>
     <div class="bbody">
-      <vue-typeahead-bootstrap
+      <v-toolbar flat class="ma-0 pa-0">
+        <v-autocomplete
+          background-color="#F3E7E0"
+          v-model="select"
+          :loading="loading"
+          :items="items"
+          :search-input.sync="search"
+          cache-items
+          full-width
+          height="11"
+          class="ma-0 pa-0 mr-4"
+          flat
+          hide-no-data
+          hide-details
+          label="Tytuł filmu lub serialu"
+          solo
+        ></v-autocomplete>
+        <v-btn color="#a49484" dark>Szukaj</v-btn>
+      </v-toolbar>
+      <!-- <vue-typeahead-bootstrap
         v-model="movie"
         :data="movies"
         @keydown.enter="search"
@@ -16,7 +35,7 @@
         <template slot="append">
           <button class="btn btn-custom">Szukaj</button>
         </template>
-      </vue-typeahead-bootstrap>
+      </vue-typeahead-bootstrap>-->
     </div>
   </div>
 </template>
@@ -31,7 +50,7 @@ export default {
   },
   methods: {
     handleEnter: function (event) {
-        console.log(this.movie);
+      console.log(this.movie);
     },
   },
   mounted() {

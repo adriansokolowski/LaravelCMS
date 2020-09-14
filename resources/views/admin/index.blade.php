@@ -1,4 +1,3 @@
-    <!-- File: ./resources/views/admin/dashboard.blade.php -->
     <!DOCTYPE html>
     <html lang="en">
 
@@ -16,5 +15,5 @@
         </div>
         <script src="{{ mix('js/app.js') }}"></script>
     </body>
- 
+
     </html>

@@ -40,8 +40,8 @@
     </div>
 </div>
 @else
-<ucp :user="{{ auth()->user() }}"></ucp>
-<div class="block mb-1">
+    <ucp :user="{{ auth()->user() }}"></ucp>
+<!-- <div class="block mb-1">
     <div class="bhead text-center">
         {{ auth()->user()->name }} Konto Ulubione
         <a href="{{ route('logout') }}"> Wyloguj </a>
@@ -52,5 +52,5 @@
     <div class="bbody">
         <a href="{{ route('movies.create') }}">Dodaj film</a>
     </div>
-</div>
+</div> -->
 @endguest

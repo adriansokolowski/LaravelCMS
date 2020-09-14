@@ -22,25 +22,31 @@
 
 <body>
     <div id="app">
-        <div class="container">
-            <div id="top">
-                <a href="{{ url('/') }}">Logo</a>
+        <v-app>
+            <div class="body">
+                <v-container>
+                    <div id="top">
+                        <a href="{{ url('/') }}">Logo</a>
+                    </div>
+                </v-container>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" lg="7">
+                            <!-- col-lg-7 px-lg-1 -->
+                            @include('partials.searchbar')
+                            @yield('content')
+                        </v-col>
+                        <!-- col-lg-5 px-lg-1 -->
+                        <v-col>
+                            @include('partials.ucp')
+                            @include('partials.shoutbox')
+                            @include('partials.side')
+                        </v-col>
+                    </v-row>
+                    @include('partials.footer')
+                </v-container>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 px-lg-1">
-                    @include('partials.searchbar')
-                    @yield('content')
-                </div>
-                <div class="col-lg-5 px-lg-1">
-                    @include('partials.ucp')
-                    @include('partials.shoutbox')
-                    @include('partials.side')
-                </div>
-            </div>
-            @include('partials.footer')
-        </div>
+        </v-app>
     </div>
 </body>
 
