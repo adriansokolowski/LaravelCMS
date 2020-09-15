@@ -6,6 +6,14 @@
 
 // REWRITE VUETIFY DEFAULT STYLES
 
+.theme--light.v-skeleton-loader .v-skeleton-loader__actions, .theme--light.v-skeleton-loader .v-skeleton-loader__article, .theme--light.v-skeleton-loader .v-skeleton-loader__card-heading, .theme--light.v-skeleton-loader .v-skeleton-loader__card-text, .theme--light.v-skeleton-loader .v-skeleton-loader__date-picker, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-avatar, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-avatar-three-line, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-avatar-two-line, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-text, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-three-line, .theme--light.v-skeleton-loader .v-skeleton-loader__list-item-two-line, .theme--light.v-skeleton-loader .v-skeleton-loader__table-heading, .theme--light.v-skeleton-loader .v-skeleton-loader__table-tbody, .theme--light.v-skeleton-loader .v-skeleton-loader__table-tfoot, .theme--light.v-skeleton-loader .v-skeleton-loader__table-thead {
+    background: none!important;
+}
+
+.v-chip.v-size--default {
+    height: 27px!important;
+}
+
 .theme--light.v-chip--active:before, .theme--light.v-chip--active:hover:before, .theme--light.v-chip:focus:before {
     opacity: 0!important;
 }
@@ -16,7 +24,7 @@
 }
 
 .theme--light.v-chip:not(.v-chip--active) {
-    background: none!important;
+    background: #9e886d!important;
     color: #E9E9E9!important;
     opacity: 1!important;
 

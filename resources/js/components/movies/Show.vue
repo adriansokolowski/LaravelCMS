@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="block">
-      <b-nav class="bhead justify-content-center" pills>
-        <b-nav-item
-          :active="activeTab === 1"
-          @click.prevent="changeTab('created_at'), activeTab = 1"
-        >Opis filmu</b-nav-item>
-        <b-nav-item
-          :active="activeTab === 2"
-          @click.prevent="changeTab('last_view'), activeTab = 2"
-        >Oglądaj online</b-nav-item>
-      </b-nav>
+      <div class="bhead">
+        <v-chip-group column mandatory>
+          <v-row justify="center">
+            <v-chip @click="changeTab('created_at'), activeTab = 1" label link>Opis filmu</v-chip>
+            <v-chip @click="changeTab('last_view'), activeTab = 2" label link>Oglądaj online</v-chip>
+          </v-row>
+        </v-chip-group>
+      </div>
       <div class="bbody">
         <div class="about_movie_title">{{ movie.title }} ({{ movie.release_date }})</div>
         <div class="about_movie">

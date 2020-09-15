@@ -49,7 +49,16 @@
       </span>
     </div>
     <div class="block">
-      <b-nav class="bhead justify-content-around" pills>
+      <div class="bhead">
+        <v-chip-group column mandatory>
+          <v-row justify="space-around">
+            <v-chip @click="changeSort('created_at')" label link>Ostatnio dodane</v-chip>
+            <v-chip @click="changeSort('last_view')" label link>Ostatnio oglądane</v-chip>
+            <v-chip @click="changeSort('views')" label link>Najpopularniejsze</v-chip>
+          </v-row>
+        </v-chip-group>
+      </div>
+      <!-- <b-nav class="bhead justify-content-around" pills>
         <b-nav-item
           :active="activeTab === 1"
           @click.prevent="changeSort('created_at'), activeTab = 1"
@@ -62,7 +71,7 @@
           :active="activeTab=== 3"
           @click.prevent="changeSort('views'), activeTab = 3"
         >Najpopularniejsze</b-nav-item>
-      </b-nav>
+      </b-nav>-->
       <div class="bbody">
         <p v-if="activeTab === 1 && state" class="bar mb-0 text-center">
           Aktualnie przeglądasz
@@ -92,7 +101,7 @@
           <div class="poster">
             <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
           </div>
-          <div class="info">
+          <div class="info2">
             <a :href="movie.path" title class="font-weight-bold">{{ movie.title }}</a>
             <div class="gen">
               <a :href="'/filmy?year=' + movie.release_date">{{ movie.release_date }}</a> |
@@ -114,10 +123,32 @@
             <div class="description">{{ movie.description }}</div>
             <p class="bar pl-1 pr-1 mb-0 d-flex justify-content-between">
               <span>{{ movie.views }} wyświetleń</span>
+              <v-spacer></v-spacer>
               <span>
-                <i class="fa fa-microphone" aria-hidden="true"></i>
-                <i class="fa fa-globe" aria-hidden="true"></i>
-                <i class="fa fa-align-left" aria-hidden="true"></i>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon small dark v-bind="attrs" v-on="on">mdi-volume-medium</v-icon>
+                  </template>
+                  <span>Dubbing</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon small dark v-bind="attrs" v-on="on">mdi-microphone</v-icon>
+                  </template>
+                  <span>Lektor</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon small dark v-bind="attrs" v-on="on">mdi-earth</v-icon>
+                  </template>
+                  <span>ENG</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon small dark v-bind="attrs" v-on="on">mdi-format-align-left</v-icon>
+                  </template>
+                  <span>Napisy</span>
+                </v-tooltip>
               </span>
             </p>
           </div>

@@ -31,13 +31,13 @@
                 </v-container>
                 <v-container>
                     <v-row>
-                        <v-col cols="12" lg="7">
+                        <v-col cols="12" lg="7" class="pr-lg-1 pr-md-1">
                             <!-- col-lg-7 px-lg-1 -->
                             @include('partials.searchbar')
                             @yield('content')
                         </v-col>
                         <!-- col-lg-5 px-lg-1 -->
-                        <v-col>
+                        <v-col class="pl-lg-1 pl-md-1">
                             @include('partials.ucp')
                             @include('partials.shoutbox')
                             @include('partials.side')
