@@ -36,11 +36,16 @@
                 <div class="col-lg-3">
                     <button type="submit" class="btn btn-custom">Zaloguj się</button>
                 </div>
+            </div>
         </form>
     </div>
 </div>
 @else
+<div class="block mb-1">
+
     <ucp :user="{{ auth()->user() }}"></ucp>
+</div>
+
 <!-- <div class="block mb-1">
     <div class="bhead text-center">
         {{ auth()->user()->name }} Konto Ulubione

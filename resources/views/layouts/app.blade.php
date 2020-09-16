@@ -25,25 +25,28 @@
         <v-app>
             <div class="body">
                 <v-container>
-                    <div id="top">
-                        <a href="{{ url('/') }}">Logo</a>
-                    </div>
-                </v-container>
-                <v-container>
                     <v-row>
-                        <v-col cols="12" lg="7" class="pr-lg-1 pr-md-1">
+                        <div id="top">
+                            <a href="{{ url('/') }}">Logo</a>
+                        </div>
+                    </v-row>
+                    <v-row cols="12">
+                        <v-col lg="7" class="pr-lg-1 pr-md-1">
                             <!-- col-lg-7 px-lg-1 -->
                             @include('partials.searchbar')
                             @yield('content')
                         </v-col>
                         <!-- col-lg-5 px-lg-1 -->
-                        <v-col class="pl-lg-1 pl-md-1">
+                        <v-col lg="5" class="pl-lg-1 pl-md-1">
                             @include('partials.ucp')
                             @include('partials.shoutbox')
                             @include('partials.side')
                         </v-col>
                     </v-row>
-                    @include('partials.footer')
+                    <v-row cols="12">
+                        <v-col> Copyright @ 2020
+                        </v-col>
+                    </v-row>
                 </v-container>
             </div>
         </v-app>

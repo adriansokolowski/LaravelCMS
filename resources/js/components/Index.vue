@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     changeSort(sortType) {
-      this.sortBy = sortType.valu;
+      this.sortBy = sortType.value;
       this.text = sortType.text;
       this.getResults();
     },
