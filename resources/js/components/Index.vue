@@ -19,7 +19,7 @@
           Aktualnie przeglądasz
           <b>{{ text }}</b> filmy.
         </p>
-        <div v-for="movie in movies" :key="movie.id" class="item d-flex m-2">
+        <div v-for="movie in movies" :key="movie.id" class="item d-flex ma-2">
           <div class="poster">
             <img :src="'/storage/poster/'+movie.id+'.jpg'" class="thumb" alt />
           </div>

@@ -42,7 +42,6 @@
 </div>
 @else
 <div class="block mb-1">
-
     <ucp :user="{{ auth()->user() }}"></ucp>
 </div>
 

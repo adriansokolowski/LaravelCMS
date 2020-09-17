@@ -26,9 +26,9 @@
             <div class="body">
                 <v-container>
                     <v-row>
-                        <div id="top">
-                            <a href="{{ url('/') }}">Logo</a>
-                        </div>
+                        <v-col>
+                            <h3>  <a href="{{ url('/') }}">Logo</a></h1>
+                        </v-col>
                     </v-row>
                     <v-row cols="12">
                         <v-col lg="7" class="pr-lg-1 pr-md-1">
